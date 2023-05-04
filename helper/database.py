@@ -8,6 +8,7 @@ class Database:
         self._client = motor.motor_asyncio.AsyncIOMotorClient(uri)
         self.db = self._client[database_name]
         self.col = self.db.user
+        self.user_data_col = self.db.user_data  # added line to create user_data collection
 
     def new_user(self, id):
         return dict(
@@ -22,6 +23,10 @@ class Database:
             user = self.new_user(u.id)
             await self.col.insert_one(user)            
             await send_log(b, u)
+            
+            # add empty user data document
+            await self.user_data_col.insert_one({"user_id": u.id, "data": {}})
+            
 
     async def is_user_exist(self, id):
         user = await self.col.find_one({'_id': int(id)})
@@ -37,7 +42,9 @@ class Database:
 
     async def delete_user(self, user_id):
         await self.col.delete_many({'_id': int(user_id)})
-    
+        # delete user data document
+        await self.user_data_col.delete_many({"user_id": user_id})
+
     async def set_thumbnail(self, id, file_id):
         await self.col.update_one({'_id': int(id)}, {'$set': {'file_id': file_id}})
 
@@ -52,9 +59,12 @@ class Database:
         user = await self.col.find_one({'_id': int(id)})
         return user.get('caption', None)
 
+    async def get_user_data(self, user_id):
+        user_data = await self.user_data_col.find_one({"user_id": user_id})
+        return user_data.get('data', {})
+
+    async def update_user_data(self, user_id, data):
+        await self.user_data_col.update_one({"user_id": user_id}, {'$set': {'data': data}}, upsert=True)
+
 
 db = Database(Config.DB_URL, Config.DB_NAME)
-
-
-
-
