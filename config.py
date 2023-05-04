@@ -7,7 +7,8 @@ class Config(object):
     API_ID    = os.environ.get("API_ID", "")
     API_HASH  = os.environ.get("API_HASH", "")
     BOT_TOKEN = os.environ.get("BOT_TOKEN", "") 
-   
+    BOT_NAME  = os.environ.get("BOT_NAME", "")
+    
     # database config
     DB_NAME = os.environ.get("DB_NAME","pyro-botz")     
     DB_URL  = os.environ.get("DB_URL","")
