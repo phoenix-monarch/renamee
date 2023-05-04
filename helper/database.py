@@ -1,3 +1,4 @@
+
 import motor.motor_asyncio
 from config import Config
 from .utils import send_log
@@ -63,8 +64,12 @@ class Database:
         user_data = await self.user_data_col.find_one({"user_id": user_id})
         return user_data.get('data', {})
 
-    async def update_user_data(self, user_id, data):
-        await self.user_data_col.update_one({"user_id": user_id}, {'$set': {'data': data}}, upsert=True)
-
+    async def update_user_data(self, user_id):
+        data = await self.get_user_data(user_id)
+        if data.get('token'):
+            del data['token']
+        if data.get('time'):
+            del data['time']
+        await self.user_data_col.replace_one({'_id': user_id}, data, upsert=True)
 
 db = Database(Config.DB_URL, Config.DB_NAME)
