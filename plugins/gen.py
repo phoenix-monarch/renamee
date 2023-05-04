@@ -1,6 +1,6 @@
 from config import Config
 from helper import database as db
-from helpers import shortner as short_url
+from helper import shortener as short_url
 from time import time
 from uuid import uuid4
 from pyrogram.types import InlineKeyboardButton
