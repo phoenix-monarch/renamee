@@ -6,7 +6,10 @@ from urllib.parse import quote
 from cloudscraper import create_scraper
 from urllib3 import disable_warnings
 
-from config import LOGGER, shorteners_list
+from config import Config
+
+LOGGER = Config.LOGGER
+shorteners_list = Config().shorteners_list
 
 
 def short_url(longurl, attempt=0):
