@@ -22,12 +22,12 @@
         "BOT_NAME": {
             "description": "Your Bot userName without [@]",
             "value": "",
-            "required": true,
+            "required": true
         },
         "TOKEN_TIMEOUT": {
             "description": "Token for recheck",
             "value": "",
-            "required": true,
+            "required": true
         },
         "FORCE_SUB": {
             "description": "Your force sub channel user name without [@] ",
