@@ -11,7 +11,7 @@ class Config(object):
     TOKEN_TIMEOUT = os.environ.get("TOKEN_TIMEOUT", "")
     
     # database config
-    shortner_list = []
+    shorteneres_list = []
     DB_NAME = os.environ.get("DB_NAME","pyro-botz")     
     DB_URL  = os.environ.get("DB_URL","")
  
