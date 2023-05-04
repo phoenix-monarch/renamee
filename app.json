@@ -20,7 +20,7 @@
             "value": "False"
         },
         "BOT_NAME": {
-            "description": "Your Bot Name",
+            "description": "Your Bot userName without [@]",
             "value": "",
             "required": true,
         },
