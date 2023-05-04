@@ -19,6 +19,16 @@
             "description": "if your server is need web service! value = True else value = False",
             "value": "False"
         },
+        "BOT_NAME": {
+            "description": "Your Bot Name",
+            "value": "",
+            "required": true,
+        },
+        "TOKEN_TIMEOUT": {
+            "description": "Token for recheck",
+            "value": "",
+            "required": true,
+        },
         "FORCE_SUB": {
             "description": "Your force sub channel user name without [@] ",
             "value": "",
