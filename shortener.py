@@ -6,15 +6,15 @@ from urllib.parse import quote
 from cloudscraper import create_scraper
 from urllib3 import disable_warnings
 
-from bot import LOGGER, shorteneres_list
+from config import LOGGER, shorteners_list
 
 
 def short_url(longurl, attempt=0):
-    if not shorteneres_list:
+    if not shorteners_list:
         return longurl
     if attempt >= 4:
         return longurl
-    i = 0 if len(shorteneres_list) == 1 else randrange(len(shorteneres_list))
+    i = 0 if len(shorteners_list) == 1 else randrange(len(shorteners_list))
     _shorten_dict = shorteneres_list[i]
     _shortener = _shorten_dict['domain']
     _shortener_api =  _shorten_dict['api_key']
