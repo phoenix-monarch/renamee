@@ -11,7 +11,7 @@ class Config(object):
     TOKEN_TIMEOUT = os.environ.get("TOKEN_TIMEOUT", "")
     
     # database config
-    shorteneres_list = []
+    
     DB_NAME = os.environ.get("DB_NAME","pyro-botz")     
     DB_URL  = os.environ.get("DB_URL","")
  
@@ -24,7 +24,16 @@ class Config(object):
 
     # wes response configuration     
     WEBHOOK = bool(os.environ.get("WEBHOOK", True))
-
+    
+    #shorteners_list
+        shorteneres_list = []
+    if os.path.exists('shorteners.txt'):
+        with open('shorteners.txt', 'r') as f:
+            lines = f.readlines()
+            for line in lines:
+                temp = line.strip().split()
+                if len(temp) == 2:
+                    Config.shorteneres_list.append({'domain': temp[0],'api_key': temp[1]})
 
 
 class Txt(object):
