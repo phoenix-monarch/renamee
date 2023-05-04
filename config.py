@@ -1,41 +1,37 @@
 import re, os, time, logging
-logging.basicConfig(level=logging.INFO, filename='error.log')
-LOG=logging.getLogger("Bot by @YUITOAKASH")
-LOG.setLevel(level=logging.INFO)
 
+logging.basicConfig(level=logging.INFO, filename='error.log')
+LOG = logging.getLogger("Bot by @YUITOAKASH")
+LOG.setLevel(level=logging.INFO)
 id_pattern = re.compile(r'^.\d+$')
 
 class Config(object):
     # pyro client config
-    API_ID    = os.environ.get("API_ID", "")
-    API_HASH  = os.environ.get("API_HASH", "")
+    API_ID = os.environ.get("API_ID", "")
+    API_HASH = os.environ.get("API_HASH", "")
     BOT_TOKEN = os.environ.get("BOT_TOKEN", "")
-    BOT_NAME  = os.environ.get("BOT_NAME", "")
+    BOT_NAME = os.environ.get("BOT_NAME", "")
     TOKEN_TIMEOUT = int(os.environ.get("TOKEN_TIMEOUT", 86400))
-
     # database config
     DB_NAME = os.environ.get("DB_NAME","pyro-botz")
-    DB_URL  = os.environ.get("DB_URL","")
-
+    DB_URL = os.environ.get("DB_URL","")
     # other configs
-    BOT_UPTIME  = time.time()
-    START_PIC   = os.environ.get("START_PIC", "")
-    ADMIN       = [int(admin) if id_pattern.search(admin) else admin for admin in os.environ.get('ADMIN', '').split()]
-    FORCE_SUB   = os.environ.get("FORCE_SUB", "")
+    BOT_UPTIME = time.time()
+    START_PIC = os.environ.get("START_PIC", "")
+    ADMIN = [int(admin) if id_pattern.search(admin) else admin for admin in os.environ.get('ADMIN', '').split()]
+    FORCE_SUB = os.environ.get("FORCE_SUB", "")
     LOG_CHANNEL = int(os.environ.get("LOG_CHANNEL", None))
-
     # wes response configuration
     WEBHOOK = bool(os.environ.get("WEBHOOK", True))
-
-# shorteners_list
-    shorteners_list = []
-    if os.path.exists('shorteners.txt'):
-        with open('shorteners.txt', 'r') as f:
-            lines = f.readlines()
-            for line in lines:
-                temp = line.strip().split()
-                if len(temp) == 2:
-                    Config.shorteners_list.append({'domain': temp[0], 'api_key': temp[1]})
+    # shorteners_list
+    shorteners_list = []
+    if os.path.exists('shorteners.txt'):
+        with open('shorteners.txt', 'r') as f:
+            lines = f.readlines()
+            for line in lines:
+                temp = line.strip().split()
+                if len(temp) == 2:
+                    Config.shorteners_list.append({'domain': temp[0], 'api_key': temp[1]})
 
 LOG.info('Config loaded successfully')
 
