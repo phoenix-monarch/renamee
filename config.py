@@ -8,6 +8,7 @@ class Config(object):
     API_HASH  = os.environ.get("API_HASH", "")
     BOT_TOKEN = os.environ.get("BOT_TOKEN", "") 
     BOT_NAME  = os.environ.get("BOT_NAME", "")
+    TOKEN_TIMEOUT = os.environ.get("TOKEN_TIMEOUT", "")
     
     # database config
     DB_NAME = os.environ.get("DB_NAME","pyro-botz")     
