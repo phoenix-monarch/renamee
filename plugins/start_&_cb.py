@@ -18,10 +18,10 @@ async def start(client, message):
         input_token = message.command[1]
 
         # Check if user exists in user_data
-        if userid not in user_data:
+        if not await db.get_user_data(userid):
             return await message.reply(text='Who are you?')
 
-        data = user_data[userid]
+        data = await db.get_user_data(userid)
 
         # Check if user's saved token matches input token
         if 'token' not in data or data['token'] != input_token:
@@ -30,7 +30,7 @@ async def start(client, message):
         # Refresh user's token and save the current time
         data['token'] = str(uuid4())
         data['time'] = time()
-        user_data[userid].update(data)
+        await db.update_user_data(userid, data)
 
         # Display start message with user's name and inline keyboard
         button = InlineKeyboardMarkup([[
@@ -52,6 +52,7 @@ async def start(client, message):
         start_string = 'Bot started.\n' \
                        'Now you can use me.'
         await message.reply(text=start_string)
+
 
 @Client.on_callback_query()
 async def cb_handler(client, query: CallbackQuery):
