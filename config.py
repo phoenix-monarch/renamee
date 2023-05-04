@@ -11,7 +11,7 @@ class Config(object):
     API_HASH  = os.environ.get("API_HASH", "")
     BOT_TOKEN = os.environ.get("BOT_TOKEN", "")
     BOT_NAME  = os.environ.get("BOT_NAME", "")
-    TOKEN_TIMEOUT = int(os.environ.get("TOKEN_TIMEOUT", ""))
+    TOKEN_TIMEOUT = int(os.environ.get("TOKEN_TIMEOUT", 86400))
 
     # database config
     DB_NAME = os.environ.get("DB_NAME","pyro-botz")
@@ -28,14 +28,14 @@ class Config(object):
     WEBHOOK = bool(os.environ.get("WEBHOOK", True))
 
 # shorteners_list
-    shorteneres_list = []
+    shorteners_list = []
     if os.path.exists('shorteners.txt'):
         with open('shorteners.txt', 'r') as f:
             lines = f.readlines()
             for line in lines:
                 temp = line.strip().split()
                 if len(temp) == 2:
-                    Config.shorteneres_list.append({'domain': temp[0], 'api_key': temp[1]})
+                    Config.shorteners_list.append({'domain': temp[0], 'api_key': temp[1]})
 
 LOG.info('Config loaded successfully')
 
