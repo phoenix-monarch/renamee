@@ -13,7 +13,7 @@
         "API_HASH": {
             "description": "Your API Hash From my.telegram.org ",
             "value": "",
-            "required": true,
+            "required": true
         },
         "WEBHOOK": {
             "description": "if your server is need web service! value = True else value = False",
