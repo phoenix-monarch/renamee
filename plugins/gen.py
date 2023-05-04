@@ -3,6 +3,7 @@ from helper import database as db
 from shortener import short_url
 from time import time
 from uuid import uuid4
+from pyrogram import Client, filters
 from pyrogram.types import InlineKeyboardButton
 
 @Client.on_message(filters.private & filters.command("gen"))
