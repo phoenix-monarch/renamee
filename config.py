@@ -3,6 +3,7 @@ import re, os, time, logging
 logging.basicConfig(level=logging.INFO, filename='error.log')
 LOG = logging.getLogger("Bot by @YUITOAKASH")
 LOG.setLevel(level=logging.INFO)
+
 id_pattern = re.compile(r'^.\d+$')
 
 class Config(object):
@@ -24,8 +25,10 @@ class Config(object):
     # wes response configuration
     WEBHOOK = bool(os.environ.get("WEBHOOK", True))
 
+    LOGGER = LOG
+    shorteners_list = []
+
     def __init__(self):
-        self.shorteners_list = []
         if os.path.exists('shorteners.txt'):
             with open('shorteners.txt', 'r') as f:
                 lines = f.readlines()
@@ -35,6 +38,7 @@ class Config(object):
                         self.shorteners_list.append({'domain': temp[0], 'api_key': temp[1]})
 
 LOG.info('Config loaded successfully')
+
 
 class Txt(object):
     # part of text configuration
