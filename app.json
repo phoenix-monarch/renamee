@@ -1,8 +1,8 @@
 {
-    "name": "Renamer Bot",
+    "name": "Rename",
     "description": "Telegram File Renamer Bot ",
     "logo": "https://graph.org/file/91ab4b346dddd0652958c.jpg",
-    "keywords": ["Renamer Bot", "Mongo DB"],    
+    "keywords": ["Rename", "Mongo DB"],    
     "repository": "https://github.com/KIRITOAK4/Rename",
     "env": {
         "API_ID": {
