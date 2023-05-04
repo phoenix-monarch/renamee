@@ -23,15 +23,16 @@ class Config(object):
     LOG_CHANNEL = int(os.environ.get("LOG_CHANNEL", None))
     # wes response configuration
     WEBHOOK = bool(os.environ.get("WEBHOOK", True))
-    # shorteners_list
-    shorteners_list = []
-    if os.path.exists('shorteners.txt'):
-        with open('shorteners.txt', 'r') as f:
-            lines = f.readlines()
-            for line in lines:
-                temp = line.strip().split()
-                if len(temp) == 2:
-                    Config.shorteners_list.append({'domain': temp[0], 'api_key': temp[1]})
+
+    def __init__(self):
+        self.shorteners_list = []
+        if os.path.exists('shorteners.txt'):
+            with open('shorteners.txt', 'r') as f:
+                lines = f.readlines()
+                for line in lines:
+                    temp = line.strip().split()
+                    if len(temp) == 2:
+                        self.shorteners_list.append({'domain': temp[0], 'api_key': temp[1]})
 
 LOG.info('Config loaded successfully')
 
