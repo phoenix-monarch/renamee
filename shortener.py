@@ -2,15 +2,12 @@ from base64 import b64encode
 from random import choice, random, randrange
 from time import sleep
 from urllib.parse import quote
-
 from cloudscraper import create_scraper
 from urllib3 import disable_warnings
-
 from config import Config
 
 LOGGER = Config.LOGGER
 shorteners_list = Config().shorteners_list
-
 
 def short_url(longurl, attempt=0):
     if not shorteners_list:
@@ -18,7 +15,7 @@ def short_url(longurl, attempt=0):
     if attempt >= 4:
         return longurl
     i = 0 if len(shorteners_list) == 1 else randrange(len(shorteners_list))
-    _shorten_dict = shorteneres_list[i]
+    _shorten_dict = shorteners_list[i]
     _shortener = _shorten_dict['domain']
     _shortener_api =  _shorten_dict['api_key']
     cget = create_scraper().request
