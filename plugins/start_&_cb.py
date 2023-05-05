@@ -46,14 +46,7 @@ async def start(client, message):
             await message.reply_photo(Config.START_PIC, caption=Txt.START_TXT.format(user.mention), reply_markup=button)       
         else:
             await message.reply_text(text=Txt.START_TXT.format(user.mention), reply_markup=button, disable_web_page_preview=True)
-
-    # Handle case where user does not provide an input token
-    else:
-        start_string = 'Bot started.\n' \
-                       'Now you can use me.'
-        await message.reply(text=start_string)
-
-
+            
 @Client.on_callback_query()
 async def cb_handler(client, query: CallbackQuery):
     data = query.data 
