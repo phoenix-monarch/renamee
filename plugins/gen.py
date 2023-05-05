@@ -5,7 +5,6 @@ from time import time
 from uuid import uuid4
 from pyrogram import Client, filters
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
-import pdb; pdb.set_trace()
 
 @Client.on_message(filters.private & filters.command("gen"))
 async def gen(client, message):
