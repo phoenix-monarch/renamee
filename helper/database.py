@@ -1,4 +1,3 @@
-
 import motor.motor_asyncio
 from config import Config
 from .utils import send_log
@@ -70,6 +69,6 @@ class Database:
             del data['token']
         if data.get('time'):
             del data['time']
-        await self.user_data_col.replace_one({'_id': user_id}, data, upsert=True)
+        await self.user_data_col.replace_one({'user_id': user_id}, data, upsert=True)
 
 db = Database(Config.DB_URL, Config.DB_NAME)
