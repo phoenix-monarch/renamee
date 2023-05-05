@@ -6,9 +6,6 @@ from uuid import uuid4
 from pyrogram import Client, filters
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 import pdb; pdb.set_trace()
-import logging
-
-logger = logging.getLogger(__name__)
 
 @Client.on_message(filters.private & filters.command("gen"))
 async def gen(client, message):
@@ -31,4 +28,4 @@ async def gen(client, message):
         text = "Token is expired, refresh your token and try again." if isExpired else "Your token is valid."
         await message.reply(text=text, reply_markup=InlineKeyboardMarkup([buttons]))
     except Exception as e:
-        logger.exception(f"An error occurred while generating token: {e}")
+        print(f"An error occurred while generating token: {e}")
