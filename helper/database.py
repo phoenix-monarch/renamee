@@ -63,12 +63,13 @@ class Database:
         user_data = await self.user_data_col.find_one({"user_id": user_id})
         return user_data.get('data', {})
 
-    async def update_user_data(self, user_id):
-        data = await self.get_user_data(user_id)
-        if data.get('token'):
-            del data['token']
-        if data.get('time'):
-            del data['time']
-        await self.user_data_col.replace_one({'user_id': user_id}, data, upsert=True)
+    async def update_user_data(self, user_id, data):
+        current_data = await self.get_user_data(user_id)
+        current_data.update(data)
+        if current_data.get('token'):
+            del current_data['token']
+        if current_data.get('time'):
+            del current_data['time']
+        await self.user_data_col.update_one({'user_id': user_id}, {'$set': current_data}, upsert=True)
 
 db = Database(Config.DB_URL, Config.DB_NAME)
