@@ -1,10 +1,10 @@
 from config import Config
 from helper.database import db
-from shortener import url
 from time import time
 from uuid import uuid4
 from pyrogram import Client, filters
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
+from shortener import shorten_url
 
 @Client.on_message(filters.private & filters.command("gen"))
 async def gen(client, message):
@@ -23,8 +23,10 @@ async def gen(client, message):
             data['token'] = token
             user_data['data'] = data
             await db.update_user_data(user_id, user_data)
+            url = f'https://t.me/{Config.BOT_NAME}?start={token}'
+            shortened_url = shorten_url(url)  # pass the generated URL to the `shorten_url` function
         buttons = [InlineKeyboardButton(text="Refresh Token", url=f'https://t.me/{Config.BOT_NAME}?start={token}')]
         text = "Token is expired, refresh your token and try again." if isExpired else "Your token is valid."
-        await message.reply(text=text, reply_markup=InlineKeyboardMarkup([buttons]))
+        await message.reply(text=text, reply_markup=InlineKeyboardMarkup([buttons, [InlineKeyboardButton(text="Shortened URL", url=shortened_url)]])) # add a button with the shortened URL to the inline keyboard
     except Exception as e:
         print(f"An error occurred while generating token: {e}")
