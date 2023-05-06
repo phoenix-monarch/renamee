@@ -9,10 +9,8 @@ from config import Config
 LOGGER = Config.LOGGER
 shorteners_list = Config().shorteners_list
 
-def url(longurl, attempt=0):
+def shorten_url(longurl):
     if not shorteners_list:
-        return longurl
-    if attempt >= 4:
         return longurl
     i = 0 if len(shorteners_list) == 1 else randrange(len(shorteners_list))
     _shorten_dict = shorteners_list[i]
@@ -54,5 +52,4 @@ def url(longurl, attempt=0):
     except Exception as e:
         LOGGER.error(e)
         sleep(1)
-        attempt +=1
-        return url(longurl, attempt)
+        return None
