@@ -11,33 +11,22 @@ async def start(client, message):
     user = message.from_user
     await db.add_user(client, message)
     # Get user data from the database
-    if len(message.command) > 1:
-        data = await db.get_user_data(user.id)
-        input_token = message.command[1].upper()
-        # Check if user ID is in user_data dictionary
-        if user.id not in data:
-            return await message.reply(text='User not found. Please generate a new token using /gen')
-        # Check if user's saved token matches input token
-        if 'token' not in data[user.id] or data[user.id]['token'] != input_token:
-            return await message.reply(text='Invalid token. Please renew it using /gen')
-        # Check if user's token has expired
-        if time() - data[user.id]['time'] > Config.TOKEN_TIMEOUT:
-            await message.reply(text='Your token has expired. Please generate a new one using /gen')
-            return
-    else:
-        # Check if user's token has expired
-        data = await db.get_user_data(user.id)
-        if user.id not in data:
-            return await message.reply(text='User not found. Please generate a new token using /gen')
-        if 'token' not in data[user.id] or time() - data[user.id]['time'] > Config.TOKEN_TIMEOUT:
-            await message.reply(text='Your token has expired. Please generate a new one using /gen')
-            return
-    else:
-    # if token is not expired
     data = await db.get_user_data(user.id)
+    if user.id not in data:
+        return await message.reply(text='User not found. Please generate a new token using /gen')
+    # Check if user's token has expired
+    token_data = data[user.id]
+    if 'token' not in token_data or time() - token_data['time'] > Config.TOKEN_TIMEOUT:
+        return await message.reply(text='Your token has expired. Please generate a new one using /gen')
+    # Check if user provided an input token
+    if len(message.command) > 1:
+        input_token = message.command[1].upper()
+        # Check if user's saved token matches input token
+        if token_data['token'] != input_token:
+            return await message.reply(text='Invalid token. Please renew it using /gen')
     # Refresh user's token and save the current time
-    data[user.id]['token'] = str(uuid4())
-    data[user.id]['time'] = time()
+    token_data['token'] = str(uuid4())
+    token_data['time'] = time()
     await db.update_user_data(user.id, data)
     button = InlineKeyboardMarkup([[
         InlineKeyboardButton("👨‍💻 Dᴇᴠꜱ 👨‍💻", callback_data='dev')
