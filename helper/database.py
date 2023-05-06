@@ -8,7 +8,7 @@ class Database:
         self._client = motor.motor_asyncio.AsyncIOMotorClient(uri)
         self.db = self._client[database_name]
         self.col = self.db.user
-        self.user_data_col = self.db.user_data  # added line to create user_data collection
+        self.user_data_col = self.db.user_data
 
     def new_user(self, id):
         return dict(
@@ -70,6 +70,6 @@ class Database:
             del current_data['token']
         if current_data.get('time'):
             del current_data['time']
-        await self.user_data_col.update_one({'user_id': user_id}, {'$set': current_data}, upsert=True)
+        await self.user_data_col.update_one({'user_id': user_id}, {'$set': {'data': current_data}}, upsert=True)
 
 db = Database(Config.DB_URL, Config.DB_NAME)
