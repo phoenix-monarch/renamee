@@ -32,6 +32,7 @@ async def start(client, message):
         if 'token' not in data[user.id] or time() - data[user.id]['time'] > Config.TOKEN_TIMEOUT:
             await message.reply(text='Your token has expired. Please generate a new one using /gen')
             return
+    else:
     # if token is not expired
     data = await db.get_user_data(user.id)
     # Refresh user's token and save the current time
