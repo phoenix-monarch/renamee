@@ -12,7 +12,7 @@ class Database:
 
     def new_user(self, id):
         return dict(
-            _id=int(id),                                   
+            _id=int(id),
             file_id=None,
             caption=None
         )
@@ -21,12 +21,11 @@ class Database:
         u = m.from_user
         if not await self.is_user_exist(u.id):
             user = self.new_user(u.id)
-            await self.col.insert_one(user)            
+            await self.col.insert_one(user)
             await send_log(b, u)
-            
+
             # add empty user data document
             await self.user_data_col.insert_one({"user_id": u.id, "data": {}})
-            
 
     async def is_user_exist(self, id):
         user = await self.col.find_one({'_id': int(id)})
@@ -61,15 +60,11 @@ class Database:
 
     async def get_user_data(self, user_id):
         user_data = await self.user_data_col.find_one({"user_id": user_id})
+        if user_data is None:
+            user_data = {}
         return user_data.get('data', {})
 
     async def update_user_data(self, user_id, data):
-        current_data = await self.get_user_data(user_id)
-        current_data.update(data)
-        if current_data.get('token'):
-            del current_data['token']
-        if current_data.get('time'):
-            del current_data['time']
-        await self.user_data_col.update_one({'user_id': user_id}, {'$set': {'data': current_data}}, upsert=True)
+        await self.user_data_col.update_one({'user_id': user_id}, {'$set': {'data': data}}, upsert=True)
 
 db = Database(Config.DB_URL, Config.DB_NAME)
