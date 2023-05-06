@@ -1,6 +1,6 @@
 from config import Config
 from helper.database import db
-from shortener import short_url as url
+from shortener import short_url
 from time import time
 from uuid import uuid4
 from pyrogram import Client, filters
@@ -23,7 +23,7 @@ async def gen(client, message):
             data['token'] = token
             user_data['data'] = data
             await db.update_user_data(user_id, user_data)
-        buttons = [InlineKeyboardButton(text="Refresh Token", url=f'https://t.me/{Config.BOT_NAME}?start={token}')]
+        buttons = [InlineKeyboardButton(text="Refresh Token", short_url=f'https://t.me/{Config.BOT_NAME}?start={token}')]
         text = "Token is expired, refresh your token and try again." if isExpired else "Your token is valid."
         await message.reply(text=text, reply_markup=InlineKeyboardMarkup([buttons]))
     except Exception as e:
