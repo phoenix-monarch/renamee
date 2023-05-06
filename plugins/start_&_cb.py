@@ -4,7 +4,7 @@ from time import time
 from pyrogram import Client, filters
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, ForceReply, CallbackQuery
 from helper.database import db
-from config import Config, Txt  
+from config import Config, Txt
 
 @Client.on_message(filters.private & filters.command("start"))
 async def start(client, message):
@@ -19,32 +19,34 @@ async def start(client, message):
             return await message.reply(text='This token has expired. Please renew it using /gen')
         # Check if user's token has expired
         if time() - data['time'] > Config.TOKEN_TIMEOUT:
-            return await message.reply(text='Your token has expired. Please generate a new one using /gen')
+            await message.reply(text='Your token has expired. Please generate a new one using /gen')
+            return
     else:
         # Check if user's token has expired
         data = await db.get_user_data(user.id)
         if 'token' not in data or time() - data['time'] > Config.TOKEN_TIMEOUT:
-            return await message.reply(text='Your token has expired. Please generate a new one using /gen')
-        # if token is not expired
-        data = await db.get_user_data(user.id)
-        if 'token' not in data or time() - data['time'] < Config.TOKEN_TIMEOUT:
-            # Refresh user's token and save the current time
-            data['token'] = str(uuid4())
-            data['time'] = time()
-            await db.update_user_data(user.id, data)
-            button = InlineKeyboardMarkup([[
-                InlineKeyboardButton("👨‍💻 Dᴇᴠꜱ 👨‍💻", callback_data='dev')
-            ],[
-                InlineKeyboardButton('📯 Uᴩᴅᴀᴛᴇꜱ', url='https://t.me/kirigayaakash'),
-                InlineKeyboardButton('💁‍♂️ Sᴜᴩᴩᴏʀᴛ', url='https://t.me/kirigaya_asuna')
-            ],[
-                InlineKeyboardButton('🎛️ Aʙᴏᴜᴛ', callback_data='about'),
-                InlineKeyboardButton('🛠️ Hᴇʟᴩ', callback_data='help')
-            ]])
-            if Config.START_PIC:
-                await message.reply_photo(Config.START_PIC, caption=Txt.START_TXT.format(user.mention), reply_markup=button)
-            else:
-                await message.reply_text(text=Txt.START_TXT.format(user.mention), reply_markup=button, disable_web_page_preview=True)
+            await message.reply(text='Your token has expired. Please generate a new one using /gen')
+            return
+    # if token is not expired
+    data = await db.get_user_data(user.id)
+    # Refresh user's token and save the current time
+    data['token'] = str(uuid4())
+    data['time'] = time()
+    await db.update_user_data(user.id, data)
+    button = InlineKeyboardMarkup([[
+        InlineKeyboardButton("👨‍💻 Dᴇᴠꜱ 👨‍💻", callback_data='dev')
+    ],[
+        InlineKeyboardButton('📯 Uᴩᴅᴀᴛᴇꜱ', url='https://t.me/kirigayaakash'),
+        InlineKeyboardButton('💁‍♂️ Sᴜᴩᴩᴏʀᴛ', url='https://t.me/kirigaya_asuna')
+    ],[
+        InlineKeyboardButton('🎛️ Aʙᴏᴜᴛ', callback_data='about'),
+        InlineKeyboardButton('🛠️ Hᴇʟᴩ', callback_data='help')
+    ]])
+    if Config.START_PIC:
+        await message.reply_photo(Config.START_PIC, caption=Txt.START_TXT.format(user.mention), reply_markup=button)
+    else:
+        await message.reply_text(text=Txt.START_TXT.format(user.mention), reply_markup=button, disable_web_page_preview=True)
+
 
 @Client.on_callback_query()
 async def cb_handler(client, query: CallbackQuery):
