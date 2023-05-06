@@ -9,7 +9,7 @@ from config import Config
 LOGGER = Config.LOGGER
 shorteners_list = Config().shorteners_list
 
-def short_url(longurl, attempt=0):
+def url(longurl, attempt=0):
     if not shorteners_list:
         return longurl
     if attempt >= 4:
@@ -55,4 +55,4 @@ def short_url(longurl, attempt=0):
         LOGGER.error(e)
         sleep(1)
         attempt +=1
-        return short_url(longurl, attempt)
+        return url(longurl, attempt)
