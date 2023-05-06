@@ -1,5 +1,5 @@
 from config import Config
-from helper import database as db
+from helper.database import db
 from shortener import short_url as url
 from time import time
 from uuid import uuid4
