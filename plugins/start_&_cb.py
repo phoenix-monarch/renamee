@@ -2,7 +2,7 @@ import random
 from uuid import uuid4
 from time import time
 from pyrogram import Client, filters
-from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, ForceReply, CallbackQuery
+from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton, ForceReply, CallbackQuery
 from helper.database import db
 from config import Config, Txt
 
