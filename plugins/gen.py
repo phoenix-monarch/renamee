@@ -26,8 +26,14 @@ async def gen(client, message):
             user_data['data'] = data
             await db.update_user_data(user_id, user_data)
             url = f'https://t.me/{Config.BOT_NAME}?start={token}'
-            shortened_url = shorten_url(url)  # pass the generated URL to the `shorten_url` function
-            text = "Token is expired, refresh your token and try again."
-        await message.reply(text=text, reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton(text="Shortened URL", url=shortened_url)]])) # add a button with the shortened URL to the inline keyboard
+            shortened_url = shorten_url(url)  # pass the generated URL to the shorten_url function
+            text = "🤣Here is your wedding ring🤣:"
+            await message.reply(
+                text=text,
+                reply_markup=InlineKeyboardMarkup([
+                    [InlineKeyboardButton(text="Start bot", url=shortened_url)],
+                ])
+            ) # add a button with the shortened URL to the inline keyboard
+        await message.reply(text=text)
     except Exception as e:
         print(f"An error occurred while generating token: {e}")
