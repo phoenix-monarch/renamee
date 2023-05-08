@@ -10,13 +10,13 @@ class Database:
         self.col = self.db.user
         self.user_data_col = self.db.user_data
 
-def new_user(self, id):
-    return dict(
-        _id=int(id),
-        file_id=None,
-        caption="",
-        user_data=[]
-    )
+    def new_user(self, id):
+        return dict(
+            _id=int(id),
+            file_id=None,
+            caption=None,
+            user_data=[]
+        )
 
     async def add_user(self, b, m):
         u = m.from_user
@@ -24,8 +24,6 @@ def new_user(self, id):
             user = self.new_user(u.id)
             await self.col.insert_one(user)
             await send_log(b, u)
-
-            # add empty user data document
             await self.user_data_col.insert_one({"user_id": u.id, "data": {}})
 
     async def is_user_exist(self, id):
@@ -42,7 +40,6 @@ def new_user(self, id):
 
     async def delete_user(self, user_id):
         await self.col.delete_many({'_id': int(user_id)})
-        # delete user data document
         await self.user_data_col.delete_many({"user_id": user_id})
 
     async def set_thumbnail(self, id, file_id):
