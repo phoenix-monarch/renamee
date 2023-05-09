@@ -56,10 +56,13 @@ class Database:
         user = await self.col.find_one({'_id': int(id)})
         return user.get('caption', None)
 
-    async def get_user_data(self, user_id):
+    async def get_user_data(self, user_id, data):
         user_data = await self.user_data_col.find_one({"user_id": user_id})
         if user_data is None:
-            user_data = {}
+            user_data = {
+                'token': data[user_id]['token'],
+                'time': data[user_id]['time']
+            }
         return user_data.get('data', {})
 
     async def update_user_data(self, user_id, data):
