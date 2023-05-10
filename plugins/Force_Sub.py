@@ -72,6 +72,5 @@ async def forces_sub(client, message):
             return False
     except UserNotParticipant:
         pass
-    return True
     except Exception as e:
         print(f"An error occurred while generating token: {e}")
