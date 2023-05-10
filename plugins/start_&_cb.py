@@ -13,14 +13,14 @@ async def start(client, message):
         user = message.from_user
         await db.add_user(client, message)
         data = await db.get_user_data(user.id)
-        if 'token' not in data[user.id]:
-               return await message.reply(text='User not found.')
+        if 'token' not in data:
+            return await message.reply(text='User not found.')
         if len(message.command) > 1:
             input_token = message.command[1].upper()
-            if data[user.id]['token'] != input_token:
+            if 'token' not in data or data['token'] != input_token:
                 return await message.reply(text='Invalid token.')
-        data[user.id]['token'] = str(uuid4())
-        data[user.id]['time'] = int(time.time())
+        data['token'] = str(uuid4())
+        data['time'] = int(time())
         await db.update_user_data(user.id, data)
         button = InlineKeyboardMarkup([[
             InlineKeyboardButton("👨‍💻 Dᴇᴠꜱ 👨‍💻", callback_data='dev')
@@ -37,7 +37,6 @@ async def start(client, message):
             await message.reply_text(text=Txt.START_TXT.format(user.mention), reply_markup=button, disable_web_page_preview=True)
     except Exception as e:
         print(f"An error occurred while executing: {e}")
-
 
 @Client.on_callback_query()
 async def cb_handler(client, query: CallbackQuery):
