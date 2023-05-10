@@ -36,7 +36,7 @@ async def start(client, message):
         else:
             await message.reply_text(text=Txt.START_TXT.format(user.mention), reply_markup=button, disable_web_page_preview=True)
     except Exception as e:
-        print(f"An error occurred while generating token: {e}")
+        print(f"An error occurred while executing: {e}")
 
 
 @Client.on_callback_query()
