@@ -13,8 +13,8 @@ async def start(client, message):
         user = message.from_user
         await db.add_user(client, message)
         data = await db.get_user_data(user.id)
-        if user.id not in data:
-            return await message.reply(text='User not found.')
+        if 'token' not in data[user.id]:
+               return await message.reply(text='User not found.')
         if len(message.command) > 1:
             input_token = message.command[1].upper()
             if data[user.id]['token'] != input_token:
