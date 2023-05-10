@@ -11,17 +11,13 @@ from config import Config, Txt
 async def start(client, message):
     user = message.from_user
     await db.add_user(client, message)
-    # Get user data from the database
     data = await db.get_user_data(user.id)
     if user.id not in data:
-        return await message.reply(text='User not found. Please generate a new token using /gen')
-    # Check if user provided an input token
+        return await message.reply(text='User not found.')
     if len(message.command) > 1:
         input_token = message.command[1].upper()
-        # Check if user's saved token matches input token
         if data[user.id]['token'] != input_token:
-            return await message.reply(text='Invalid token. Please renew it using /gen')
-    # Refresh user's token and save the current time
+            return await message.reply(text='Invalid token.')
     data[user.id]['token'] = str(uuid4())
     data[user.id]['time'] = int(time.time())
     await db.update_user_data(user.id, data)
