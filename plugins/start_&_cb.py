@@ -1,11 +1,13 @@
 import random
-from uuid import uuid4
+from datetime import datetime
 from time import time
+from uuid import uuid4
 from pyrogram import Client, filters
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton, ForceReply, CallbackQuery
-from helper.database import db
 from config import Config, Txt
+from helper.database import db
 from plugins.Force_Sub import checking_access
+
 
 @Client.on_message(filters.private & filters.command("start"))
 async def start(client, message):
@@ -19,23 +21,28 @@ async def start(client, message):
             input_token = message.command[1].upper()
             if 'token' not in data or data['token'] != input_token:
                 return await message.reply(text='Invalid token.')
-        is_token_valid, data = await checking_access(message, data)
-        if is_token_valid is not None:
-            button = InlineKeyboardMarkup([[
+        valid_token, data = await checking_access(message, data)
+        if valid_token is None:
+            return await message.reply(text='An error occurred while processing your request.')
+        elif valid_token is False:
+            return
+        button = InlineKeyboardMarkup([
+            [
                 InlineKeyboardButton("👨‍💻 Dᴇᴠꜱ 👨‍💻", callback_data='dev')
-            ],[
+            ],
+            [
                 InlineKeyboardButton('📯 Uᴩᴅᴀᴛᴇꜱ', url='https://t.me/kirigayaakash'),
                 InlineKeyboardButton('💁‍♂️ Sᴜᴩᴩᴏʀᴛ', url='https://t.me/kirigaya_asuna')
-            ],[
+            ],
+            [
                 InlineKeyboardButton('🎛️ Aʙᴏᴜᴛ', callback_data='about'),
                 InlineKeyboardButton('🛠️ Hᴇʟᴩ', callback_data='help')
-            ]])
-            if Config.START_PIC:
-                await message.reply_photo(Config.START_PIC, caption=Txt.START_TXT.format(user.mention), reply_markup=button)
-            else:
-                await message.reply_text(text=Txt.START_TXT.format(user.mention), reply_markup=button, disable_web_page_preview=True)
+            ]
+        ])
+        if Config.START_PIC:
+            await message.reply_photo(Config.START_PIC, caption=Txt.START_TXT.format(user.mention), reply_markup=button)
         else:
-            await message.reply(text='Your token has expired. Please click the button to generate a new one.', reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton(text='Renew token', callback_data='renew_token')]]))
+            await message.reply_text(text=Txt.START_TXT.format(user.mention), reply_markup=button, disable_web_page_preview=True)
     except Exception as e:
         print(f"An error occurred while executing: {e}")
 
