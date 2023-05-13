@@ -1,4 +1,8 @@
-import re, os, time, logging
+import re
+import os
+import time
+import logging
+from pyrogram.errors import FloodWait, RPCError
 
 logging.basicConfig(level=logging.INFO, filename='error.log')
 LOG = logging.getLogger("Bot by @YUITOAKASH")
@@ -37,6 +41,22 @@ class Config(object):
                     if len(temp) == 2:
                         self.shorteners_list.append({'domain': temp[0], 'api_key': temp[1]})
 
+    async def sendMessage(client, message, text):
+        try:
+            return await message.reply_text(
+                text=text,
+                quote=True,
+                disable_web_page_preview=True,
+                disable_notification=True
+            )
+        except FloodWait as f:
+            LOGGER.warning(str(f))
+            await sleep(f.value * 1.2)
+            return await sendMessage(client, message, text)
+        except RPCError as e:
+            LOGGER.error(f"{e.NAME}: {e.MESSAGE}")
+        except Exception as e:
+            LOGGER.error(str(e))
 LOG.info('Config loaded successfully')
 
 
