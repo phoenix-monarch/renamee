@@ -2,7 +2,7 @@ from pyrogram import Client, filters
 from pyrogram.enums import MessageMediaType
 from pyrogram.errors import FloodWait
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, ForceReply
-
+from plugins.start import validate_user
 from hachoir.metadata import extractMetadata
 from hachoir.parser import createParser
 
@@ -38,14 +38,8 @@ async def rename_start(client, message):
     except:
         pass
 
-
-
 @Client.on_message(filters.private & filters.reply)
 async def refunc(client, message):
-   try:
-       is_valid = await validate_user(client, message)
-       if not is_valid:
-            return
     reply_message = message.reply_to_message
     if (reply_message.reply_markup) and isinstance(reply_message.reply_markup, ForceReply):
         new_name = message.text 
@@ -73,6 +67,20 @@ async def refunc(client, message):
         )
 
 
+async def validate_user(client, message):
+    chat_id = message.chat.id
+    user_id = message.from_user.id
+    if await db.is_user_exist(user_id) == False:
+        await db.add_user(user_id)
+        return True
+    elif await db.get_user_status(user_id) == "Banned":
+        return False
+    elif await db.get_user_status(user_id) == "Admin":
+        return True
+    elif await db.get_user_status(user_id) == "Member":
+        return True
+    else:
+        return False           
 
 @Client.on_callback_query(filters.regex("upload"))
 async def doc(bot, update):    
