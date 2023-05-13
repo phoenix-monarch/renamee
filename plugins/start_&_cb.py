@@ -1,5 +1,4 @@
-import random
-import os
+import random, os
 from pyrogram import Client, filters
 from pyrogram.errors import FloodWait, RPCError
 from asyncio import sleep
@@ -7,7 +6,7 @@ from time import time
 from uuid import uuid4
 from gif import *
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton, ForceReply, CallbackQuery
-from config import Config, Txt
+from config import Config
 from helper.database import db
 
 async def sendMessage(client, message, text):
