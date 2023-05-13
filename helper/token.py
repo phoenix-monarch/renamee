@@ -19,16 +19,16 @@ async def checking_access(user_id, message):
     expire = data.get('time')
     isExpired = (expire is None or expire is not None and (time() - expire) > Config.TOKEN_TIMEOUT)
     if isExpired:
-        token = data.get('token') or str(uuid4())
+        data['token'] = str(uuid4())
         if expire is not None:
             del data['time']
-        data['token'] = token
+        data['time'] = time()
         user_data['data'] = data
         await db.user_data_col.update_one({'user_id': user_id}, {'$set': {'data': data}})
-    url = f'https://t.me/{Config.BOT_NAME}?start={token}'
+    url = f'https://t.me/{Config.BOT_NAME}?start={data["token"]}'
     shortened_url = shorten_url(url)  # pass the generated URL to the shorten_url function
     text = "🤣Here is your wedding ring🤣:"
-    button = InlineKeyboardButton(text="Start bot", url=shorten_url)
+    button = InlineKeyboardButton(text="Start bot", url=shortened_url)
     await message.reply(
         text=text,
         reply_markup=InlineKeyboardMarkup([[button]])
