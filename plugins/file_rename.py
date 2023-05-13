@@ -6,6 +6,7 @@ from hachoir.metadata import extractMetadata
 from hachoir.parser import createParser
 from helper.utils import progress_for_pyrogram, convert, humanbytes
 from helper.database import db
+from plugins.start import validate_user
 from asyncio import sleep
 from PIL import Image
 import os, time
@@ -28,6 +29,9 @@ async def rename(bot,update):
 
 @Client.on_message(filters.private & filters.reply)
 async def refunc(client, message):
+    is_valid = await check_user_validity(client, message)
+    if not is_valid:
+        return
     reply_message = message.reply_to_message
     if (reply_message.reply_markup) and isinstance(reply_message.reply_markup, ForceReply):
         new_name = message.text 
