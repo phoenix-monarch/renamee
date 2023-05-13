@@ -3,7 +3,7 @@ from uuid import uuid4
 from config import Config
 from helper.database import db
 from shortener import shorten_url
-from pyrogram import InlineKeyboardButton, InlineKeyboardMarkup
+from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 from datetime import datetime
 
 
