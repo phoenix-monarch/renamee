@@ -1,110 +1,71 @@
 import random
-from datetime import datetime
+import os
+from pyrogram import Client, filters
+from pyrogram.errors import FloodWait, RPCError
+from asyncio import sleep
 from time import time
 from uuid import uuid4
-from pyrogram import Client, filters
+from gif import *
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton, ForceReply, CallbackQuery
 from config import Config, Txt
 from helper.database import db
-from plugins.Force_Sub import checking_access
 
-
-@Client.on_message(filters.private & filters.command("start"))
-async def start(client, message):
+async def sendMessage(client, message, text):
     try:
-        user = message.from_user
-        await db.add_user(client, message)
-        data = await db.get_user_data(user.id)
-        if 'token' not in data:
-            return await message.reply(text='User not found.')
-        if len(message.command) > 1:
-            input_token = message.command[1].upper()
-            if 'token' not in data or data['token'] != input_token:
-                return await message.reply(text='Invalid token.')
-        valid_token, data = await checking_access(message, data)
-        if valid_token is None:
-            return await message.reply(text='An error occurred while processing your request.')
-        elif valid_token is False:
-            return
-        button = InlineKeyboardMarkup([
-            [
-                InlineKeyboardButton("👨‍💻 Dᴇᴠꜱ 👨‍💻", callback_data='dev')
-            ],
-            [
-                InlineKeyboardButton('📯 Uᴩᴅᴀᴛᴇꜱ', url='https://t.me/kirigayaakash'),
-                InlineKeyboardButton('💁‍♂️ Sᴜᴩᴩᴏʀᴛ', url='https://t.me/kirigaya_asuna')
-            ],
-            [
-                InlineKeyboardButton('🎛️ Aʙᴏᴜᴛ', callback_data='about'),
-                InlineKeyboardButton('🛠️ Hᴇʟᴩ', callback_data='help')
-            ]
-        ])
-        if Config.START_PIC:
-            await message.reply_photo(Config.START_PIC, caption=Txt.START_TXT.format(user.mention), reply_markup=button)
-        else:
-            await message.reply_text(text=Txt.START_TXT.format(user.mention), reply_markup=button, disable_web_page_preview=True)
+        return await message.reply(text=text, quote=True, disable_web_page_preview=True,
+                                    disable_notification=True)
+    except FloodWait as f:
+        LOGGER.warning(str(f))
+        await sleep(f.value * 1.2)
+        return await sendMessage(client, message, text)
+    except RPCError as e:
+        LOGGER.error(f"{e.NAME}: {e.MESSAGE}")
     except Exception as e:
-        print(f"An error occurred while executing: {e}")
+        LOGGER.error(str(e))
 
-@Client.on_callback_query()
-async def cb_handler(client, query: CallbackQuery):
-    data = query.data 
-    if data == "start":
-        await query.message.edit_text(
-            text=Txt.START_TXT.format(query.from_user.mention),
-            disable_web_page_preview=True,
-            reply_markup = InlineKeyboardMarkup([[
-                InlineKeyboardButton("👨‍💻 Dᴇᴠꜱ 👨‍💻", callback_data='dev')
-                ],[
-                InlineKeyboardButton('📯 Uᴩᴅᴀᴛᴇꜱ', url='https://t.me/kirigayaakash'),
-                InlineKeyboardButton('💁‍♂️ Sᴜᴩᴩᴏʀᴛ', url='https://t.me/kirigaya_asuna')
-                ],[
-                InlineKeyboardButton('🎛️ Aʙᴏᴜᴛ', callback_data='about'),
-                InlineKeyboardButton('🛠️ Hᴇʟᴩ', callback_data='help')
-            ]])
+@Client.on_message(filters.command(['start', ]))
+async def start(client, message):
+    if len(message.command) > 1:
+        userid = message.from_user.id
+        input_token = message.command[1]
+        if not await db.is_user_exist(userid):
+            return await sendMessage(client, message, 'wait a minute who are you?')
+        data = await db.get_user_data(userid)
+        if 'token' not in data or data['token'] != input_token:
+            return await sendMessage(client, message, 'This is a token already expired')
+        data['token'] = str(uuid4())
+        data['time'] = time()
+        await db.update_user_data(userid, data)
+        await sendMessage(client, message, 'Token refreshed successfully!')
+        gifs = os.listdir('./gif')
+        await message.reply_animation(
+            animation=f'./gif/{random.choice(gifs)}',
+            caption=f'**Hi There** `'
         )
-    elif data == "help":
-        await query.message.edit_text(
-            text=Txt.HELP_TXT,
-            disable_web_page_preview=True,
-            reply_markup=InlineKeyboardMarkup([[
-                #⚠️ don't change source code & source link ⚠️ #
-                InlineKeyboardButton("❣️ Sᴏᴜʀᴄᴇ Cᴏᴅᴇ", url="https://t.me/kirigayaakash/1063")
-                ],[
-                InlineKeyboardButton("🔒 Cʟᴏꜱᴇ", callback_data = "close"),
-                InlineKeyboardButton("◀️ Bᴀᴄᴋ", callback_data = "start")
-            ]])            
-        )
-    elif data == "about":
-        await query.message.edit_text(
-            text=Txt.ABOUT_TXT.format(client.mention),
-            disable_web_page_preview = True,
-            reply_markup=InlineKeyboardMarkup([[
-                #⚠️ don't change source code & source link ⚠️ #
-                InlineKeyboardButton("❣️ Sᴏᴜʀᴄᴇ Cᴏᴅᴇ", url="https://t.me/kirigayaakash/1063")
-                ],[
-                InlineKeyboardButton("🔒 Cʟᴏꜱᴇ", callback_data = "close"),
-                InlineKeyboardButton("◀️ Bᴀᴄᴋ", callback_data = "start")
-            ]])            
-        )
-    elif data == "dev":
-        await query.message.edit_text(
-            text=Txt.DEV_TXT,
-            disable_web_page_preview=True,
-            reply_markup=InlineKeyboardMarkup([[
-                #⚠️ don't change source code & source link ⚠️ #
-                InlineKeyboardButton("❣️ Sᴏᴜʀᴄᴇ Cᴏᴅᴇ", url="https://t.me/kirigayaakash/1063")
-                ],[
-                InlineKeyboardButton("🔒 Cʟᴏꜱᴇ", callback_data = "close"),
-                InlineKeyboardButton("◀️ Bᴀᴄᴋ", callback_data = "start")
-            ]])          
-        )
-    elif data == "close":
-        try:
-            await query.message.delete()
-            await query.message.reply_to_message.delete()
-            await query.message.continue_propagation()
-        except:
-            await query.message.delete()
-            await query.message.continue_propagation()
+    else:
+        if message.reply_to_message:
+            reply = message.reply_to_message
+            user_id = reply.from_user.id  
+        else:
+            user_id = message.from_user.id  
+        if not await db.is_user_exist(user_id):
+            return await sendMessage(client, message, 'Who are you?')
+        data = await db.get_user_data(user_id)
+        if 'time' not in data or time() - data['time'] >= Config.TOKEN_TIMEOUT:
+            await sendMessage(client, message, "Please provide a token to renew!")
+        else:
+            gifs = os.listdir('./gif')
+            await message.reply_animation(
+                animation=f'./gif/{random.choice(gifs)}',
+                caption=f'**Hi There** `'
+            )
+           
+@Client.on_message(filters.command(['ping']))
+async def ping(client, message):
+    start = time()
+    await sendMessage(client, message, "😐😑😶")
+    end = time()
+    duration = round((end - start) * 1000, 3)
+    await sendMessage(client, message, f"Ping: {duration}ms")
+
             
