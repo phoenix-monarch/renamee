@@ -13,41 +13,38 @@ LOGGER = Config.LOGGER
 @Client.on_message(filters.private & filters.command(['start']))
 async def start(client, message):
     try:
-        if len(message.command) > 1:
-            userid = message.from_user.id
-            input_token = message.command[1]
-            if not await db.is_user_exist(userid):
-                await client.send_message(message.chat.id, 'wait a minute who are you?')
+        userid = message.from_user.id
+        data = await db.get_user_data(userid)
+        if data is None:
+            data = {}
+            await db.update_user_data(userid, data)
+        if Config.TOKEN_TIMEOUT:
+            expire = data.get('time')
+            isExpired = (expire is None or (time() - expire) > Config.TOKEN_TIMEOUT)
+            if isExpired:
+                data['token'] = str(uuid4())
+                data['time'] = time()
+                await db.update_user_data(userid, data)
+                url = f'https://t.me/{Config.BOT_NAME}?start={data["token"]}'
+                shortened_url = shorten_url(url)
+                button = InlineKeyboardButton(text='Refresh Token', url=shortened_url)
+                await client.send_message(
+                    chat_id=message.chat.id,
+                    text='Token is expired, refresh your token and try again.',
+                    reply_markup=InlineKeyboardMarkup([[button]])
+                )
                 return
-            data = await db.get_user_data(userid)
+        if len(message.command) > 1:
+            input_token = message.command[1]
             if 'token' not in data or data['token'] != input_token:
-                await client.send_message(message.chat.id, 'This is a token already expired')
+                await client.send_message(
+                    chat_id=message.chat.id,
+                    text='Invalid or expired token.'
+                )
                 return
             data['token'] = str(uuid4())
             data['time'] = time()
             await db.update_user_data(userid, data)
-        else:
-            userid = message.from_user.id
-            data = await db.get_user_data(userid)
-            if data is None or 'token' not in data:
-                await client.send_message(message.chat.id, 'Please provide a valid token')
-                return
-            expire = data.get('time')
-            isExpired = (expire is None or expire is not None and (time() - expire) > Config.TOKEN_TIMEOUT)
-            if isExpired:
-                data['token'] = str(uuid4())
-                if expire is not None:
-                    del data['time']
-                data['time'] = time()
-                await db.update_user_data(userid, data)
-                url = f'https://t.me/{Config.BOT_NAME}?start={data["token"]}'
-                shortened_url = shorten_url(url)  # pass the generated URL to the shorten_url function
-                text = "🤣Here is your wedding ring🤣:"
-                button = InlineKeyboardButton(text="Start bot", url=shortened_url)
-                await message.reply(
-                    text=text, reply_markup=InlineKeyboardMarkup([[button]])
-                )
-                return
         gifs = os.listdir('./gif')
         selected_gif = random.choice(gifs)
         caption = f'Hello {message.from_user.first_name}! Welcome to the bot'
@@ -62,9 +59,8 @@ async def start(client, message):
 @Client.on_message(filters.command(['ping']))
 async def ping(client, message):
     start = time()
-    await sendMessage(client, message, "😐😑😶")
+    sent_message = await message.reply("😐😑😶")
     end = time()
     duration = round((end - start) * 1000, 3)
-    await sendMessage(client, message, f"Ping: {duration}ms")
-
-            
+    await sent_message.edit_text(f"😶😑😏: {duration}ms")
+          
