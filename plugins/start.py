@@ -6,9 +6,10 @@ from time import time
 from uuid import uuid4
 from gif import *
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton, ForceReply, CallbackQuery
-from config import Config
 from helper.database import db
 from helper.token import checking_access
+from config import Config 
+LOGGER = Config.LOGGER
 
 @Client.on_message(filters.command(['start']))
 async def start(client, message):
@@ -16,7 +17,7 @@ async def start(client, message):
         if len(message.command) > 1:
             userid = message.from_user.id
             input_token = message.command[1]
-            if not await db.is_user_exist(userid):
+            if not await db.user_exist(userid):
                 return await Config.sendMessage(client, message, 'wait a minute who are you?')
             data = await db.get_user_data(userid)
             if 'token' not in data or data['token'] != input_token:
@@ -30,9 +31,8 @@ async def start(client, message):
             caption=f'**Hi There** `',
             supports_streaming=True
         )
-    except Exception as e:
-        print(f"An error occurred while executing: {e}")
-        
+LOGGER.error(f"An error occurred while executing: {e}")
+
 @Client.on_message(filters.command(['ping']))
 async def ping(client, message):
     start = time()
