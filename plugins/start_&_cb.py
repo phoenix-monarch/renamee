@@ -22,27 +22,31 @@ async def sendMessage(client, message, text):
         LOGGER.error(f"{e.NAME}: {e.MESSAGE}")
     except Exception as e:
         LOGGER.error(str(e))
+        print(f"An error occurred while executing: {e}")
 
 @Client.on_message(filters.command(['start', ]))
 async def start(client, message):
-    if len(message.command) > 1:
-        userid = message.from_user.id
-        input_token = message.command[1]
-        if not await db.is_user_exist(userid):
-            return await sendMessage(client, message, 'wait a minute who are you?')
-        data = await db.get_user_data(userid)
-        if 'token' not in data or data['token'] != input_token:
-            return await sendMessage(client, message, 'This is a token already expired')
-        await checking_access(userid, message)
-        data = await db.get_user_data(userid)
-        await sendMessage(client, message, 'Token refreshed successfully!')
-        gifs = os.listdir('./gif')
-        await message.reply_animation(
-            animation=f'./gif/{random.choice(gifs)}',
-            caption=f'**Hi There** `'
-        )
-
-           
+    try:
+        if len(message.command) > 1:
+            userid = message.from_user.id
+            input_token = message.command[1]
+            if not await db.is_user_exist(userid):
+                return await sendMessage(client, message, 'wait a minute who are you?')
+            data = await db.get_user_data(userid)
+            if 'token' not in data or data['token'] != input_token:
+                return await sendMessage(client, message, 'This is a token already expired')
+            await checking_access(userid, message)
+            data = await db.get_user_data(userid)
+            await sendMessage(client, message, 'Token refreshed successfully!')
+            gifs = os.listdir('./gif')
+            await message.reply_animation(
+                animation=f'./gif/{random.choice(gifs)}',
+                caption=f'**Hi There** `'
+            )
+    except Exception as e:
+        LOGGER.error(str(e))
+        print(f"An error occurred while executing: {e}")
+     
 @Client.on_message(filters.command(['ping']))
 async def ping(client, message):
     start = time()
