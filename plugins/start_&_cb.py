@@ -8,6 +8,7 @@ from gif import *
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton, ForceReply, CallbackQuery
 from config import Config
 from helper.database import db
+from helper.token import checking_access 
 
 async def sendMessage(client, message, text):
     try:
@@ -32,15 +33,15 @@ async def start(client, message):
         data = await db.get_user_data(userid)
         if 'token' not in data or data['token'] != input_token:
             return await sendMessage(client, message, 'This is a token already expired')
-        data['token'] = str(uuid4())
-        data['time'] = time()
-        await db.update_user_data(userid, data)
+        await checking_access(userid, message)
+        data = await db.get_user_data(userid)
         await sendMessage(client, message, 'Token refreshed successfully!')
         gifs = os.listdir('./gif')
         await message.reply_animation(
             animation=f'./gif/{random.choice(gifs)}',
             caption=f'**Hi There** `'
         )
+
            
 @Client.on_message(filters.command(['ping']))
 async def ping(client, message):
