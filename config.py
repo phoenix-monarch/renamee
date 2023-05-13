@@ -1,7 +1,4 @@
-import re
-import os
-import time
-import logging
+import re, os, time, logging 
 from pyrogram.errors import FloodWait, RPCError
 
 logging.basicConfig(level=logging.INFO, filename='error.log')
@@ -52,7 +49,7 @@ class Config(object):
         except FloodWait as f:
             LOGGER.warning(str(f))
             await sleep(f.value * 1.2)
-            return await sendMessage(client, message, text)
+            return await Config.sendMessage(client, message, text)
         except RPCError as e:
             LOGGER.error(f"{e.NAME}: {e.MESSAGE}")
         except Exception as e:
