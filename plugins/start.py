@@ -1,6 +1,7 @@
 import random, os, asyncio 
 from pyrogram import Client, filters
 from time import time
+from concurrent.futures import ThreadPoolExecutor
 from uuid import uuid4
 from gif import *
 from shortener import shorten_url
@@ -25,12 +26,29 @@ async def validate_user(client, message):
             url = f'https://t.me/{Config.BOT_NAME}?start={data["token"]}'
             shortened_url = shorten_url(url)
             button = InlineKeyboardButton(text='Refresh Token', url=shortened_url)
-            await client.send_message(
-                chat_id=message.chat.id,
-                text='Token is expired, refresh your token and try again.',
-                reply_markup=InlineKeyboardMarkup([[button]])
-            )
-            return False
+            loop = asyncio.get_event_loop()
+            with ThreadPoolExecutor() as pool:
+                while True:
+                    await client.send_message(
+                        chat_id=message.chat.id,
+                        text='Token is expired, refresh your token and try again.',
+                        reply_markup=InlineKeyboardMarkup([[button]])
+                    )
+                    await asyncio.sleep(10)
+                    data = await loop.run_in_executor(pool, db.get_user_data, userid)
+                    if data is None:
+                        data = {}
+                    if 'token' in data and data['token'] != input_token:
+                        break
+                if 'token' not in data or data['token'] != input_token:
+                    await client.send_message(
+                        chat_id=message.chat.id,
+                        text='Invalid or expired token.'
+                    )
+                    return False
+                data['token'] = str(uuid4())
+                data['time'] = time()
+                await loop.run_in_executor(pool, db.update_user_data, userid, data)
     if len(message.command) > 1:
         input_token = message.command[1]
         if 'token' not in data or data['token'] != input_token:
