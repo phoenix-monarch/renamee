@@ -11,24 +11,9 @@ from asyncio import sleep
 from PIL import Image
 import os, time
 
-@Client.on_callback_query(filters.regex('cancel'))
-async def cancel(bot,update):
-    try:
-        await update.message.delete()
-    except:
-        return
-
-@Client.on_callback_query(filters.regex('rename'))
-async def rename(bot,update):
-    user_id = update.message.chat.id
-    date = update.message.date
-    await update.message.delete()
-    await update.message.reply_text("__𝙿𝚕𝚎𝚊𝚜𝚎 𝙴𝚗𝚝𝚎𝚛 𝙽𝚎𝚠 𝙵𝚒𝚕𝚎𝙽𝚊𝚖𝚎...__",    
-        reply_to_message_id=update.message.reply_to_message.id,  
-        reply_markup=ForceReply(True))
-
 @Client.on_message(filters.private & filters.reply)
 async def refunc(client, message):
+  try:
     is_valid = await check_user_validity(client, message)
     if not is_valid:
         return
@@ -57,6 +42,27 @@ async def refunc(client, message):
             reply_to_message_id=file.id,
             reply_markup=InlineKeyboardMarkup(button)
         )
+  except Exception as e: 
+    print(f"An error occurred while executing: {e}")
+
+@Client.on_callback_query(filters.regex('cancel'))
+async def cancel(bot,update):
+    try:
+        await update.message.delete()
+    except:
+        return
+
+@Client.on_callback_query(filters.regex('rename'))
+async def rename(bot,update):
+    try:
+        user_id = update.message.chat.id
+        date = update.message.date
+        await update.message.delete()
+        await update.message.reply_text("__𝙿𝚕𝚎𝚊𝚜𝚎 𝙴𝚗𝚝𝚎𝚛 𝙽𝚎𝚠 𝙵𝚒𝚕𝚎𝙽𝚊𝚖𝚎...__",    
+            reply_to_message_id=update.message.reply_to_message.id,  
+            reply_markup=ForceReply(True))
+    except Exception as e:
+        print(f"An error occurred while executing: {e}")	
 
 @Client.on_callback_query(filters.regex("upload"))
 async def doc(bot, update):    
@@ -64,21 +70,18 @@ async def doc(bot, update):
     new_filename = new_name.split(":-")[1]
     file_path = f"downloads/{new_filename}"
     file = update.message.reply_to_message
+
     ms = await update.message.edit("Tʀyɪɴɢ Tᴏ Dᴏᴡɴʟᴏᴀᴅɪɴɢ....")    
-    c_time = time.time()
     try:
-        path = await bot.download_media(message=file, file_name=file_path, progress=progress_for_pyrogram, progress_args=("Dᴏᴡɴʟᴏᴀᴅ Sᴛᴀʀᴛᴇᴅ....", ms, time.time()))                    
+     	path = await bot.download_media(message=file, file_name=file_path, progress=progress_for_pyrogram,progress_args=("Dᴏᴡɴʟᴏᴀᴅ Sᴛᴀʀᴛᴇᴅ....", ms, time.time()))                    
     except Exception as e:
-        return await ms.edit(str(e))
-    splitpath = path.split("/downloads/")
-    dow_file_name = splitpath[1]
-    old_file_name = f"downloads/{dow_file_name}"
-    os.rename(old_file_name, file_path)
+     	return await ms.edit(e)
+     	     
     duration = 0
     try:
         metadata = extractMetadata(createParser(file_path))
         if metadata.has("duration"):
-            duration = metadata.get('duration').seconds
+           duration = metadata.get('duration').seconds
     except:
         pass
     ph_path = None
@@ -88,22 +91,22 @@ async def doc(bot, update):
     c_thumb = await db.get_thumbnail(update.message.chat.id)
 
     if c_caption:
-        try:
-            caption = c_caption.format(filename=new_filename, filesize=humanbytes(media.file_size), duration=convert(duration))
-        except Exception as e:
-            return await ms.edit(text=f"Yᴏᴜʀ Cᴀᴩᴛɪᴏɴ Eʀʀᴏʀ Exᴄᴇᴩᴛ Kᴇyᴡᴏʀᴅ Aʀɢᴜᴍᴇɴᴛ ●> ({e})")             
+         try:
+             caption = c_caption.format(filename=new_filename, filesize=humanbytes(media.file_size), duration=convert(duration))
+         except Exception as e:
+             return await ms.edit(text=f"Yᴏᴜʀ Cᴀᴩᴛɪᴏɴ Eʀʀᴏʀ Exᴄᴇᴩᴛ Kᴇyᴡᴏʀᴅ Aʀɢᴜᴍᴇɴᴛ ●> ({e})")             
     else:
-        caption = f"**{new_filename}**"
+         caption = f"**{new_filename}**"
  
     if (media.thumbs or c_thumb):
-        if c_thumb:
-            ph_path = await bot.download_media(c_thumb) 
-        else:
-            ph_path = await bot.download_media(media.thumbs[0].file_id)
-        Image.open(ph_path).convert("RGB").save(ph_path)
-        img = Image.open(ph_path)
-        img.resize((320, 320))
-        img.save(ph_path, "JPEG")
+         if c_thumb:
+             ph_path = await bot.download_media(c_thumb) 
+         else:
+             ph_path = await bot.download_media(media.thumbs[0].file_id)
+         Image.open(ph_path).convert("RGB").save(ph_path)
+         img = Image.open(ph_path)
+         img.resize((320, 320))
+         img.save(ph_path, "JPEG")
 
     await ms.edit("Tʀyɪɴɢ Tᴏ Uᴩʟᴏᴀᴅɪɴɢ....")
     type = update.data.split("_")[1]
@@ -118,11 +121,11 @@ async def doc(bot, update):
                 progress_args=("Uᴩʟᴏᴅ Sᴛᴀʀᴛᴇᴅ....", ms, time.time()))
         elif type == "video": 
             await bot.send_video(
-                update.message.chat.id,
-                video=file_path,
-                caption=caption,
-                thumb=ph_path,
-                duration=duration,
+		update.message.chat.id,
+	        video=file_path,
+	        caption=caption,
+		thumb=ph_path,
+		duration=duration,
 	        progress=progress_for_pyrogram,
 		progress_args=("Uᴩʟᴏᴅ Sᴛᴀʀᴛᴇᴅ....", ms, time.time()))
         elif type == "audio": 
@@ -139,6 +142,7 @@ async def doc(bot, update):
         if ph_path:
             os.remove(ph_path)
         return await ms.edit(f" Eʀʀᴏʀ {e}")
+ 
     await ms.delete() 
     os.remove(file_path) 
     if ph_path: os.remove(ph_path) 
