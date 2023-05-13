@@ -43,14 +43,16 @@ async def start(client, message):
             await checking_access(userid, message)
             data = await db.get_user_data(userid)
         gifs = os.listdir('./gif')
-        await message.reply_animation(
-            animation=f'./gif/{random.choice(gifs)}',
-            caption=f'**Hi There** `'
+        selected_gif = random.choice(gifs)
+        await message.reply_video(
+            video=f'./gif/{selected_gif}',
+            caption=f'**Hi There** `',
+            supports_streaming=True
         )
     except Exception as e:
         LOGGER.error(str(e))
         print(f"An error occurred while executing: {e}")
-
+        
 @Client.on_message(filters.command(['ping']))
 async def ping(client, message):
     start = time()
