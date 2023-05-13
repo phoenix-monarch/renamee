@@ -1,6 +1,5 @@
-import random, os 
+import random, os, asyncio 
 from pyrogram import Client, filters
-from asyncio
 from time import time
 from uuid import uuid4
 from gif import *
