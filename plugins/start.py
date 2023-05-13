@@ -60,6 +60,7 @@ async def start(client, message):
 async def ping(client, message):
     start = time()
     sent_message = await message.reply("😐😑😶")
+    await asyncio.sleep(3)
     end = time()
     duration = round((end - start) * 1000, 3)
     await sent_message.edit_text(f"😶😑😏: {duration}ms")
