@@ -1,4 +1,5 @@
-import random, os
+import random
+import os
 from pyrogram import Client, filters
 from pyrogram.errors import FloodWait, RPCError
 from asyncio import sleep
@@ -8,12 +9,16 @@ from gif import *
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton, ForceReply, CallbackQuery
 from config import Config
 from helper.database import db
-from helper.token import checking_access 
+from helper.token import checking_access
 
 async def sendMessage(client, message, text):
     try:
-        return await message.reply(text=text, quote=True, disable_web_page_preview=True,
-                                    disable_notification=True)
+        return await message.reply_text(
+            text=text,
+            quote=True,
+            disable_web_page_preview=True,
+            disable_notification=True
+        )
     except FloodWait as f:
         LOGGER.warning(str(f))
         await sleep(f.value * 1.2)
@@ -24,7 +29,7 @@ async def sendMessage(client, message, text):
         LOGGER.error(str(e))
         print(f"An error occurred while executing: {e}")
 
-@Client.on_message(filters.command(['start', ]))
+@Client.on_message(filters.command(['start']))
 async def start(client, message):
     try:
         if len(message.command) > 1:
@@ -37,16 +42,15 @@ async def start(client, message):
                 return await sendMessage(client, message, 'This is a token already expired')
             await checking_access(userid, message)
             data = await db.get_user_data(userid)
-            await sendMessage(client, message, 'Token refreshed successfully!')
-            gifs = os.listdir('./gif')
-            await message.reply_animation(
-                animation=f'./gif/{random.choice(gifs)}',
-                caption=f'**Hi There** `'
-            )
+        gifs = os.listdir('./gif')
+        await message.reply_animation(
+            animation=f'./gif/{random.choice(gifs)}',
+            caption=f'**Hi There** `'
+        )
     except Exception as e:
         LOGGER.error(str(e))
         print(f"An error occurred while executing: {e}")
-     
+
 @Client.on_message(filters.command(['ping']))
 async def ping(client, message):
     start = time()
