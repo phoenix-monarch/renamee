@@ -41,23 +41,6 @@ async def start(client, message):
             animation=f'./gif/{random.choice(gifs)}',
             caption=f'**Hi There** `'
         )
-    else:
-        if message.reply_to_message:
-            reply = message.reply_to_message
-            user_id = reply.from_user.id  
-        else:
-            user_id = message.from_user.id  
-        if not await db.is_user_exist(user_id):
-            return await sendMessage(client, message, 'Who are you?')
-        data = await db.get_user_data(user_id)
-        if 'time' not in data or time() - data['time'] >= Config.TOKEN_TIMEOUT:
-            await sendMessage(client, message, "Please provide a token to renew!")
-        else:
-            gifs = os.listdir('./gif')
-            await message.reply_animation(
-                animation=f'./gif/{random.choice(gifs)}',
-                caption=f'**Hi There** `'
-            )
            
 @Client.on_message(filters.command(['ping']))
 async def ping(client, message):
