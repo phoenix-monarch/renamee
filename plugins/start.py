@@ -1,4 +1,4 @@
-import random, os, asyncio 
+import random, os, asyncio, time
 from pyrogram import Client, filters
 from gif import *
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton, ForceReply, CallbackQuery
