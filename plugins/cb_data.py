@@ -1,53 +1,61 @@
 from helper.utils import progress_for_pyrogram, convert
 from pyrogram import Client, filters
-from pyrogram.types import (  InlineKeyboardButton, InlineKeyboardMarkup,ForceReply)
+from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, ForceReply
 from hachoir.metadata import extractMetadata
 from hachoir.parser import createParser
 from helper.database import db
-import os 
+from plugins.start import validate_user  # import the validate_user function from start.py
+import os
 import humanize
 from PIL import Image
 import time
 
+
 @Client.on_callback_query(filters.regex('cancel'))
-async def cancel(bot,update):
-	try:
-           await update.message.delete()
-	except:
-           return
+async def cancel(bot, update):
+    try:
+        await update.message.delete()
+    except:
+        return
+
 
 @Client.on_callback_query(filters.regex('rename'))
-async def rename(bot,update):
-	user_id = update.message.chat.id
-	date = update.message.date
-	await update.message.delete()
-	await update.message.reply_text("__𝙿𝚕𝚎𝚊𝚜𝚎 𝙴𝚗𝚝𝚎𝚛 𝙽𝚎𝚠 𝙵𝚒𝚕𝚎𝙽𝚊𝚖𝚎...__",	
-	reply_to_message_id=update.message.reply_to_message.id,  
-	reply_markup=ForceReply(True))
-	
+async def rename(bot, update):
+    user_id = update.message.chat.id
+    date = update.message.date
+    await update.message.delete()
+    await update.message.reply_text("__𝙿𝚕𝚎𝚊𝚜𝚎 𝙴𝚗𝚝𝚎𝚛 𝙽𝚎𝚠 𝙵𝚒𝚕𝚎𝙽𝚊𝚖𝚎...__",
+                                     reply_to_message_id=update.message.reply_to_message.id,
+                                     reply_markup=ForceReply(True))
+
+
 @Client.on_callback_query(filters.regex("upload"))
-async def doc(bot,update):
-     type = update.data.split("_")[1]
-     new_name = update.message.text
-     new_filename = new_name.split(":-")[1]
-     file_path = f"downloads/{new_filename}"
-     file = update.message.reply_to_message
-     ms = await update.message.edit("𝚃𝚁𝚈𝙸𝙽𝙶 𝚃𝙾 𝙳𝙾𝚆𝙽𝙻𝙾𝙰𝙳...")
-     c_time = time.time()
-     try:
-     	path = await bot.download_media(message = file, progress=progress_for_pyrogram,progress_args=( "𝚃𝚁𝚈𝙸𝙽𝙶 𝚃𝙾 𝙳𝙾𝚆𝙽𝙻𝙾𝙰𝙳....",  ms, c_time   ))
-     except Exception as e:
-     	await ms.edit(e)
-     	return 
-     splitpath = path.split("/downloads/")
-     dow_file_name = splitpath[1]
-     old_file_name =f"downloads/{dow_file_name}"
-     os.rename(old_file_name,file_path)
-     duration = 0
-     try:
+async def doc(bot, update):
+    type = update.data.split("_")[1]
+    new_name = update.message.text
+    new_filename = new_name.split(":-")[1]
+    file_path = f"downloads/{new_filename}"
+    file = update.message.reply_to_message
+    ms = await update.message.edit("𝚃𝚁𝚈𝙸𝙽𝙶 𝚃𝙾 𝙳𝙾𝚆𝙽𝙻𝙾𝙰𝙳...")
+    c_time = time.time()
+    try:
+        is_valid = await validate_user(bot, update.message)  # check if user is valid
+        if not is_valid:
+            return
+        path = await bot.download_media(message=file, progress=progress_for_pyrogram,
+                                        progress_args=("𝚃𝚁𝚈𝙸𝙽𝙶 𝚃𝙾 𝙳𝙾𝚆𝙽𝙻𝙾𝙰𝙳....", ms, c_time))
+    except Exception as e:
+        await ms.edit(e)
+        return
+    splitpath = path.split("/downloads/")
+    dow_file_name = splitpath[1]
+    old_file_name = f"downloads/{dow_file_name}"
+    os.rename(old_file_name, file_path)
+    duration = 0
+    try:
         metadata = extractMetadata(createParser(file_path))
         if metadata.has("duration"):
-           duration = metadata.get('duration').seconds
+            duration = metadata.get('duration').seconds
      except:
         pass
      user_id = int(update.message.chat.id) 
