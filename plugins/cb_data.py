@@ -1,14 +1,13 @@
-from helper.utils import progress_for_pyrogram, convert
+from helper.utils import progress_for_pyrogram, convert, humanbytes
 from pyrogram import Client, filters
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, ForceReply
 from hachoir.metadata import extractMetadata
 from hachoir.parser import createParser
 from helper.database import db
 from plugins.start import validate_user  # import the validate_user function from start.py
-import os
-import humanize
+import os, time
+from asyncio import sleep
 from PIL import Image
-import time
 
 @Client.on_callback_query(filters.regex('cancel'))
 async def cancel(bot, update):
@@ -63,7 +62,7 @@ async def doc(bot, update):
     c_thumb = await db.get_thumbnail(update.message.chat.id)
     if c_caption:
         try:
-            caption = c_caption.format(filename=new_filename, filesize=humanize.naturalsize(media.file_size), duration=convert(duration))
+            caption = c_caption.format(filename=new_filename, filesize=humanbytes(media.file_size), duration=convert(duration))
         except Exception as e:
             await ms.edit(text=f"Your caption Error unexpected keyword ●> ({e})")
             return
