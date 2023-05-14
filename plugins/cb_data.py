@@ -26,6 +26,7 @@ async def rename(bot, update):
                                      reply_to_message_id=update.message.reply_to_message.message_id,
                                      reply_markup=ForceReply(True))
 	
+
 @Client.on_callback_query(filters.regex("upload"))
 async def doc(bot, update):
     type = update.data.split("_")[1]
@@ -114,8 +115,4 @@ except Exception as e:
     if ph_path:
         os.remove(ph_path)
     return
-
-await ms.delete()
-os.remove(file_path)
-if ph_path:
-    os.remove(ph_path)
+	
