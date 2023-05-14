@@ -13,6 +13,7 @@ async def validate_user(client, message):
     if data is None:
         data = {}
         await db.update_user_data(userid, data)
+    input_token = None
     if Config.TOKEN_TIMEOUT:
         expire = data.get('time')
         isExpired = (expire is None or (time() - expire) > Config.TOKEN_TIMEOUT)
@@ -48,7 +49,7 @@ async def validate_user(client, message):
     if len(message.command) > 1:
         input_token = message.command[1]
         while True:
-            if 'token' not in data or data['token'] != input_token:
+            if input_token is not None and ('token' not in data or data['token'] != input_token):
                 button = InlineKeyboardButton(text='Refresh Token', url=shortened_url)
                 await client.send_message(
                     chat_id=message.chat.id,
