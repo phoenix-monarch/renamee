@@ -25,21 +25,18 @@ async def validate_user(client, message):
             await db.update_user_data(userid, data)
             url = f'https://t.me/{Config.BOT_NAME}?start={data["token"]}'
             shortened_url = shorten_url(url)
-            button = InlineKeyboardButton(text='Refresh Token', url=shortened_url)
-            loop = asyncio.get_event_loop()
-            with ThreadPoolExecutor() as pool:
-                while True:
-                    await client.send_message(
-                        chat_id=message.chat.id,
-                        text='Token is expired, refresh your token and try again.',
-                        reply_markup=InlineKeyboardMarkup([[button]])
-                    )
-                    await asyncio.sleep(10)
-                    data = await loop.run_in_executor(pool, db.get_user_data, userid)
-                    if data is None:
-                        data = {}
-                    if 'token' in data and data['token'] != input_token:
-                        break
+            reply_markup = ForceReply()
+            while True:
+                await client.send_message(
+                    chat_id=message.chat.id,
+                    text='Token is expired, please enter your new token.',
+                    reply_markup=reply_markup
+                )
+                reply = await client.expect_message(
+                    filters.text & filters.private & filters.user(userid),
+                    timeout=Config.TOKEN_TIMEOUT
+                )
+                input_token = reply.text.strip()
                 if 'token' not in data or data['token'] != input_token:
                     await client.send_message(
                         chat_id=message.chat.id,
@@ -48,8 +45,9 @@ async def validate_user(client, message):
                     return False
                 data['token'] = str(uuid4())
                 data['time'] = time()
-                await loop.run_in_executor(pool, db.update_user_data, userid, data)
-    if len(message.command) > 1:
+                await db.update_user_data(userid, data)
+                break
+    elif len(message.command) > 1:
         input_token = message.command[1]
         if 'token' not in data or data['token'] != input_token:
             await client.send_message(
