@@ -48,15 +48,45 @@ async def validate_user(client, message):
             await db.update_user_data(userid, data)
     if len(message.command) > 1:
         input_token = message.command[1]
-        if 'token' not in data or data['token'] != input_token:
-            await client.send_message(
-                chat_id=message.chat.id,
-                text='Invalid or expired token.'
-            )
-            return False
+        while True:
+            if 'token' not in data:
+                await client.send_message(
+                    chat_id=message.chat.id,
+                    text='Please provide your token. Click the button to renew your token.',
+                    reply_markup=InlineKeyboardMarkup([[button]])
+                )
+                await asyncio.sleep(10)
+                data = await db.get_user_data(userid)
+                if data is None:
+                    data = {}
+                if 'token' in data and data['token'] != input_token:
+                    break
+            else:
+                if data['token'] != input_token:
+                    await client.send_message(
+                        chat_id=message.chat.id,
+                        text='Invalid or expired token. Click the button to renew your token.',
+                        reply_markup=InlineKeyboardMarkup([[button]])
+                    )
+                    await asyncio.sleep(10)
+                    data = await db.get_user_data(userid)
+                    if data is None:
+                        data = {}
+                    if 'token' in data and data['token'] != input_token:
+                        break
+                else:
+                    break
         data['token'] = str(uuid4())
         data['time'] = time()
         await db.update_user_data(userid, data)
+    elif 'token' not in data:
+        button = InlineKeyboardButton(text='Refresh Token', url=shortened_url)
+        await client.send_message(
+            chat_id=message.chat.id,
+            text='Please provide your token. Click the button to renew your token.',
+            reply_markup=InlineKeyboardMarkup([[button]])
+        )
+        return False
     return True
 
 @Client.on_message(filters.private & filters.command(['start']))
