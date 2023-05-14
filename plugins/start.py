@@ -29,10 +29,10 @@ async def ping(client, message):
         is_valid = await validate_user(client, message)
         if not is_valid:
             return
-        start = time()
+        start = time.time()
         sent_message = await message.reply("😐😑😶")
         await asyncio.sleep(3)
-        end = time()
+        end = time.time()
         duration = round((end - start) * 1000, 3)
         await sent_message.edit_text(f"😶😑😏: {duration}ms")
     except Exception as e:
