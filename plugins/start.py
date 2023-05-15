@@ -1,10 +1,11 @@
-import random, os, asyncio, time
+import random, os, asyncio
 from pyrogram import Client, filters
 from gif import *
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton, ForceReply, CallbackQuery
 from helper.database import db
 from config import Config 
 from helper.token import validate_user
+from time import time
  
 @Client.on_message(filters.private & filters.command(['start']))
 async def start(client, message):
@@ -29,10 +30,10 @@ async def ping(client, message):
         is_valid = await validate_user(client, message)
         if not is_valid:
             return
-        start = time.time()
+        start = time()
         sent_message = await message.reply("😐😑😶")
         await asyncio.sleep(3)
-        end = time.time()
+        end = time()
         duration = round((end - start) * 1000, 3)
         await sent_message.edit_text(f"😶😑😏: {duration}ms")
     except Exception as e:
