@@ -25,7 +25,7 @@ async def validate_user(client, message):
             data['token'] = str(uuid4())
             data['time'] = time()
             url = f'https://t.me/{Config.BOT_NAME}?start={data["token"]}'
-            shortened_url = shorten_url
+            shortened_url = shorten_url(url)
             button = InlineKeyboardButton(text='Refresh Token', url=shortened_url)
             await db.update_user_data(userid, data)
             await client.send_message(
@@ -40,7 +40,7 @@ async def validate_user(client, message):
             data['time'] = time()
             await db.update_user_data(userid, data)
             url = f'https://t.me/{Config.BOT_NAME}?start={data["token"]}'
-            shortened_url = shorten_url
+            shortened_url = shorten_url(url)
             button = InlineKeyboardButton(text='Refresh Token', url=shortened_url)
             await client.send_message(
                 chat_id=message.chat.id,
@@ -54,7 +54,7 @@ async def validate_user(client, message):
             data['time'] = time()
             await db.update_user_data(userid, data)
             url = f'https://t.me/{Config.BOT_NAME}?start={data["token"]}'
-            shortened_url = shorten_url
+            shortened_url = shorten_url(url)
             button = InlineKeyboardButton(text='Get Token', url=shortened_url)
             await client.send_message(
                 chat_id=message.chat.id,
