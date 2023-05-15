@@ -8,7 +8,7 @@ from helper.database import db
 from config import Config
 from shortener import shorten_url
 
- async def validate_user(client, message):
+async def validate_user(client, message):
     userid = message.from_user.id
     data = await db.get_user_data(userid)
     if data is None:
