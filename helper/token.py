@@ -25,10 +25,10 @@ async def validate_user(client, message):
             shortened_url = await shorten_url(url)
             button = InlineKeyboardButton(text='Refresh Token', url=shortened_url)
 
-            return 'Invalid token.', button  # Return the error message and button
+            return 'Invalid token.', button
 
         await asyncio.sleep(5)
     except Exception as e:
         print(f"An error occurred while executing validate_user: {e}")
 
-    return asyncio.sleep(0)  # Return a coroutine that resolves after 0 seconds
+    return asyncio.sleep(0)
