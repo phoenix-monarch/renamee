@@ -32,10 +32,12 @@ async def start(client, message):
                     caption=caption,
                     supports_streaming=True
                 )
-                return
-            data['token'] = str(uuid4())
-            data['time'] = time()
-            await db.update_user_data(userid, data)
+                is_valid, button = await validate_user(client, message)
+                if not is_valid:
+                    return
+        data['token'] = str(uuid4())
+        data['time'] = time()
+        await db.update_user_data(userid, data)
 
         gifs = os.listdir('./gif')
         selected_gif = random.choice(gifs)
@@ -51,13 +53,14 @@ async def start(client, message):
 @Client.on_message(filters.private & filters.command(['ping']))
 async def ping(client, message):
     try:
-        is_valid = await validate_user(client, message)
-        if is_valid:
-            start = time()
-            sent_message = await message.reply("😐😑😶")
-            await asyncio.sleep(3)
-            end = time()
-            duration = round((end - start) * 1000, 3)
-            await sent_message.edit_text(f"😶😑😏: {duration}ms")
+        is_valid, button = await validate_user(client, message)
+        if not is_valid:
+            return
+        start = time()
+        sent_message = await message.reply("😐😑😶")
+        await asyncio.sleep(3)
+        end = time()
+        duration = round((end - start) * 1000, 3)
+        await sent_message.edit_text(f"😶😑😏: {duration}ms")
     except Exception as e:
         print(f"An error occurred while executing ping: {e}")
