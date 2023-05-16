@@ -13,7 +13,14 @@ class Database:
         self.user_data_col = self.db.user_data
 
     def new_user(self, id):
-        return dict(_id=int(id), file_id=None, caption=None, user_data={}, token=str(uuid.uuid4()), time=int(time.time()))
+        return dict(
+            _id=int(id),
+            file_id=None,
+            caption=None,
+            user_data={},
+            token=str(uuid.uuid4()),
+            time=int(time.time()),
+        )
 
     async def add_user(self, b, m):
         u = m.from_user
