@@ -1,6 +1,4 @@
-import random
-import os
-import asyncio
+import random, os, asyncio
 from time import time
 from uuid import uuid4
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
@@ -9,65 +7,25 @@ from config import Config
 from shortener import shorten_url
 
 async def validate_user(client, message):
+    if not Config.TOKEN_TIMEOUT:
+        return None, None
     userid = message.from_user.id
     data = await db.get_user_data(userid)
-    if data is None:
-        data = {}
-        await db.update_user_data(userid, data)
-    
-    input_token = None
-    if len(message.command) > 1:
-        input_token = message.command[1]
-    
     while True:
-        if Config.TOKEN_TIMEOUT:
-            expire = data.get('time')
-            is_expired = (expire is None or (time() - expire) > Config.TOKEN_TIMEOUT)
-            if is_expired:
-                data['token'] = str(uuid4())
-                data['time'] = time()
-                url = f'https://t.me/{Config.BOT_NAME}?start={data["token"]}'
-                shortened_url = shorten_url(url)
-                button = InlineKeyboardButton(text='Refresh Token', url=shortened_url)
-                await db.update_user_data(userid, data)
-                await client.send_message(
-                    chat_id=message.chat.id,
-                    text='Your token has expired.',
-                    reply_markup=InlineKeyboardMarkup([[button]])
-                )
-                await asyncio.sleep(3)
-                continue
-                
-        if input_token:
-            if 'token' not in data or data['token'] != input_token:
-                data['token'] = str(uuid4())
-                data['time'] = time()
-                await db.update_user_data(userid, data)
-                url = f'https://t.me/{Config.BOT_NAME}?start={data["token"]}'
-                shortened_url = shorten_url(url)
-                button = InlineKeyboardButton(text='Refresh Token', url=shortened_url)
-                await client.send_message(
-                    chat_id=message.chat.id,
-                    text='Invalid token.',
-                    reply_markup=InlineKeyboardMarkup([[button]])
-                )
-                await asyncio.sleep(3)
-                continue
+        expire = data.get('time')
+        is_expired = (expire is None or (time() - expire) > Config.TOKEN_TIMEOUT)
+        if is_expired:
+            token = data.get('token') if expire is None and 'token' in data else str(uuid.uuid4())
+            if expire is not None:
+                del data['time']
+            data['token'] = token
+            await db.update_user_data(userid, data)
+            url = f'https://t.me/{Config.BOT_NAME}?start={data["token"]}'
+            shortened_url = await shorten_url(url)
+            button = InlineKeyboardButton(text='Refresh Token', url=shortened_url)
+            return 'Token is expired, refresh your token and try again.', button
+            break
         else:
-            if 'token' not in data or is_expired:
-                data['token'] = str(uuid4())
-                data['time'] = time()
-                await db.update_user_data(userid, data)
-                url = f'https://t.me/{Config.BOT_NAME}?start={data["token"]}'
-                shortened_url = shorten_url(url)
-                button = InlineKeyboardButton(text='Get Token', url=shortened_url)
-                await client.send_message(
-                    chat_id=message.chat.id,
-                    text='You need a token to use this bot.',
-                    reply_markup=InlineKeyboardMarkup([[button]])
-                )
-                await asyncio.sleep(3)
-                continue
-        
-        await db.update_user_data(userid, data)
-        return True
+            await asyncio.sleep(1)
+            break
+    return None, None
