@@ -24,14 +24,11 @@ async def validate_user(client, message):
             url = f'https://t.me/{Config.BOT_NAME}?start={data["token"]}'
             shortened_url = await shorten_url(url)
             button = InlineKeyboardButton(text='Refresh Token', url=shortened_url)
-            await client.send_message(
-                chat_id=message.chat.id,
-                text='Invalid token.',
-                reply_markup=InlineKeyboardMarkup([[button]])
-            )
-        else:
-            await asyncio.sleep(5)
+
+            return 'Invalid token.', button  # Return the error message and button
+
+        await asyncio.sleep(5)
     except Exception as e:
         print(f"An error occurred while executing validate_user: {e}")
-        
+
     return None
