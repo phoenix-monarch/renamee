@@ -11,7 +11,8 @@ from uuid import uuid4
 @Client.on_message(filters.private & filters.command(['start']))
 async def start(client, message):
     try:
-        data = {}        
+        userid = message.from_user.id
+        data = await db.get_user_data(userid)        
         if len(message.command) > 1:
             userid = message.from_user.id
             input_token = message.command[1]
