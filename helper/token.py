@@ -31,4 +31,4 @@ async def validate_user(client, message):
     except Exception as e:
         print(f"An error occurred while executing validate_user: {e}")
 
-    return None
+    return asyncio.sleep(0)  # Return a coroutine that resolves after 0 seconds
