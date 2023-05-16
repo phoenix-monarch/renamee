@@ -8,24 +8,19 @@ from shortener import shorten_url
 
 async def validate_user(client, message):
     if not Config.TOKEN_TIMEOUT:
-        return None, None
+        return None
     userid = message.from_user.id
     data = await db.get_user_data(userid)
-    while True:
-        expire = data.get('time')
-        is_expired = (expire is None or (time() - expire) > Config.TOKEN_TIMEOUT)
-        if is_expired:
-            token = data.get('token') if expire is None and 'token' in data else str(uuid.uuid4())
-            if expire is not None:
-                del data['time']
-            data['token'] = token
-            await db.update_user_data(userid, data)
-            url = f'https://t.me/{Config.BOT_NAME}?start={data["token"]}'
-            shortened_url = await shorten_url(url)
-            button = InlineKeyboardButton(text='Refresh Token', url=shortened_url)
-            return 'Token is expired, refresh your token and try again.', button
-            break
-        else:
-            await asyncio.sleep(1)
-            break
-    return None, None
+    expire = data.get('time')
+    is_expired = (expire is None or (time() - expire) > Config.TOKEN_TIMEOUT)
+    if is_expired:
+        token = data.get('token') if expire is None and 'token' in data else str(uuid.uuid4())
+        if expire is not None:
+            del data['time']
+        data['token'] = token
+        await db.update_user_data(userid, data)
+        url = f'https://t.me/{Config.BOT_NAME}?start={data["token"]}'
+        shortened_url = await shorten_url(url)
+        button = InlineKeyboardButton(text='Refresh Token', url=shortened_url)
+        return 'Token is expired, refresh your token and try again.', button
+    return None
