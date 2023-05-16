@@ -12,7 +12,7 @@ from uuid import uuid4
 async def start(client, message):
     try:
         userid = message.from_user.id
-        data = await db.get_user_data(userid)        
+        data = await db.get_user_data(userid)
         if len(message.command) > 1:
             userid = message.from_user.id
             input_token = message.command[1]
@@ -34,11 +34,15 @@ async def start(client, message):
                     caption=caption,
                     supports_streaming=True
                 )
-                is_valid = await validate_user(client, message)
-                if not is_valid:
+                result = await validate_user(client, message)
+                if result is not None:
+                    error_message, button = result
+                    await client.send_message(
+                        chat_id=message.chat.id,
+                        text=error_message,
+                        reply_markup=InlineKeyboardMarkup([[button]])
+                    )
                     return
-                error_message, button = is_valid
-                return
         data['token'] = str(uuid4())
         data['time'] = time()
         await db.update_user_data(userid, data)
@@ -57,11 +61,15 @@ async def start(client, message):
 @Client.on_message(filters.private & filters.command(['ping']))
 async def ping(client, message):
     try:
-        is_valid = await validate_user(client, message)
-        if not is_valid:
+        result = await validate_user(client, message)
+        if result is not None:
+            error_message, button = result
+            await client.send_message(
+                chat_id=message.chat.id,
+                text=error_message,
+                reply_markup=InlineKeyboardMarkup([[button]])
+            )
             return
-        error_message, button = is_valid
-        return
         start = time()
         sent_message = await message.reply("😐😑😶")
         await asyncio.sleep(3)
