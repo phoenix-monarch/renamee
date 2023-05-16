@@ -34,9 +34,11 @@ async def start(client, message):
                     caption=caption,
                     supports_streaming=True
                 )
-                is_valid, button = await validate_user(client, message)
+                is_valid = await validate_user(client, message)
                 if not is_valid:
                     return
+                error_message, button = is_valid
+                return
         data['token'] = str(uuid4())
         data['time'] = time()
         await db.update_user_data(userid, data)
@@ -55,9 +57,11 @@ async def start(client, message):
 @Client.on_message(filters.private & filters.command(['ping']))
 async def ping(client, message):
     try:
-        is_valid, button = await validate_user(client, message)
+        is_valid = await validate_user(client, message)
         if not is_valid:
             return
+        error_message, button = is_valid
+        return
         start = time()
         sent_message = await message.reply("😐😑😶")
         await asyncio.sleep(3)
