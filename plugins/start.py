@@ -43,10 +43,6 @@ async def start(client, message):
                         reply_markup=InlineKeyboardMarkup([[button]])
                     )
                     return
-        data['token'] = str(uuid4())
-        data['time'] = time()
-        await db.update_user_data(userid, data)
-
         gifs = os.listdir('./gif')
         selected_gif = random.choice(gifs)
         caption = f'Hello {message.from_user.first_name}! Welcome to the bot'
