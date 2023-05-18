@@ -13,14 +13,14 @@ class Database:
         self.user_data_col = self.db.user_data
 
     def new_user(self, id):
-        return dict(
-            _id=int(id),
-            file_id=None,
-            caption=None,
-            user_data={},
-            token=str(uuid.uuid4()),
-            time=int(time.time()),
-        )
+        return {
+            "_id": int(id),
+            "file_id": None,
+            "caption": None,
+            "user_data": {},
+            "token": str(uuid.uuid4()),
+            "time": int(time.time()),
+        }
 
     async def add_user(self, b, m):
         u = m.from_user
@@ -71,5 +71,13 @@ class Database:
             {"user_id": user_id}, {"$set": {"data": data}}, upsert=True
         )
 
+async def main(message):
+    global db
+    userid = message.from_user.id
+    user_data = await db.get_user_data(userid)
+    if user_data is None:
+        user_data = {}
 
 db = Database(Config.DB_URL, Config.DB_NAME)
+
+await main(message)
