@@ -12,6 +12,7 @@ async def start(client, message):
     try:
         userid = message.from_user.id
         data = await db.get_user_data(userid)
+        input_token = None
         if len(message.command) > 1:
             input_token = message.command[1]
         if not await db.is_user_exist(userid):
