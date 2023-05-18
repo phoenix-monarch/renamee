@@ -18,7 +18,7 @@ def validate_user(message, button=None):
     if not Config.TOKEN_TIMEOUT:
         return None, button
     userid = message.from_user.id
-    data = db.get_user_data(userid)
+    data = user_data(userid)
     expire = data.get('time')
     is_expired = (expire is None or (time() - expire) > Config.TOKEN_TIMEOUT)    
     if is_expired:
