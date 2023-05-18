@@ -12,6 +12,7 @@ from uuid import uuid4
 async def start(client, message):
     try:
         none_admin_msg, error_button = await none_admin_utils(message)
+        error_msg = []
         if none_admin_msg:
             error_msg.extend(none_admin_msg)
             await client.send_message(
@@ -65,6 +66,7 @@ async def start(client, message):
 async def ping(client, message):
     try:
         none_admin_msg, error_button = await none_admin_utils(message)
+        error_msg = []
         if none_admin_msg:
             error_msg.extend(none_admin_msg)
             await client.send_message(
