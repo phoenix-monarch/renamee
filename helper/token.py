@@ -14,11 +14,11 @@ async def none_admin_utils(message):
         error_button = button    
     return error_msg, error_button
 
-def validate_user(message, button=None):
+async def validate_user(message, button=None):
     if not Config.TOKEN_TIMEOUT:
         return None, button
     userid = message.from_user.id
-    data = user_data(userid)
+    data = await db.get_user_data(userid)
     expire = data.get('time')
     is_expired = (expire is None or (time() - expire) > Config.TOKEN_TIMEOUT)    
     if is_expired:
@@ -26,7 +26,7 @@ def validate_user(message, button=None):
         if expire is not None:
             del data['time']
         data['token'] = token
-        db.update_user_data(userid, data)        
+        await db.update_user_data(userid, data)        
         if button is None:
             button = InlineKeyboardButton(text='Refresh Token', url=shorten_url(f'https://t.me/{Config.BOT_NAME}?start={token}'))
         
