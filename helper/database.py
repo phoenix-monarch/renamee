@@ -1,7 +1,7 @@
 import motor.motor_asyncio
 import time
 import uuid
-from config import Config
+from .config import Config  # Import Config module from the current directory
 from .utils import send_log
 
 
@@ -72,12 +72,14 @@ class Database:
         )
 
 async def main(message):
-    global db
+    global db 
     userid = message.from_user.id
     user_data = await db.get_user_data(userid)
     if user_data is None:
         user_data = {}
 
-db = Database(Config.DB_URL, Config.DB_NAME)
+async def process_main(message):
+    db = Database(Config.DB_URL, Config.DB_NAME)
+    await main(message)
 
-await main(message)
+await process_main(message)
