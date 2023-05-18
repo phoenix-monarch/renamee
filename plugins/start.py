@@ -6,7 +6,6 @@ from pyrogram.types import InputMediaAnimation, InlineKeyboardMarkup
 from helper.database import db
 from helper.token import none_admin_utils
 from time import time
-from uuid import uuid4
 
 @Client.on_message(filters.private & filters.command(['start']))
 async def start(client, message):
@@ -14,32 +13,42 @@ async def start(client, message):
         userid = message.from_user.id
         data = await db.get_user_data(userid)
         if len(message.command) > 1:
-            userid = message.from_user.id
             input_token = message.command[1]
-            if not await db.is_user_exist(userid):
-                gif_url = 'https://graph.org/file/a58b959cc11443ac4e70b.mp4'
-                caption = 'Who are you?'
-                await message.reply_animation(
-                    animation=gif_url,
-                    caption=caption,
-                    supports_streaming=True
-                )
-                return
-            data = await db.get_user_data(userid)
-            if 'token' not in data or data['token'] != input_token:
-                gif_url = 'https://graph.org/file/f6e6beb62a16a46642fb4.mp4'
-                caption = 'This is a token already expired'
-                await message.reply_animation(
-                    animation=gif_url,
-                    caption=caption,
-                    supports_streaming=True
-                )
-                return
+        if not await db.is_user_exist(userid):
+            gif_url = 'https://graph.org/file/a58b959cc11443ac4e70b.mp4'
+            caption = 'Who are you?'
+            await message.reply_animation(
+                animation=gif_url,
+                caption=caption,
+                supports_streaming=True
+            )
+            return
 
-        data['token'] = str(uuid4())
+        if 'token' not in data or data['token'] != input_token:
+            gif_url = 'https://graph.org/file/f6e6beb62a16a46642fb4.mp4'
+            caption = 'This is a token already expired'
+            await message.reply_animation(
+                animation=gif_url,
+                caption=caption,
+                supports_streaming=True
+            )
+            return
+
+        none_admin_msg, error_button = await none_admin_utils(message)
+        error_msg = []
+        if none_admin_msg:
+            error_msg.extend(none_admin_msg)
+            await client.send_message(
+                chat_id=message.chat.id,
+                text='\n'.join(error_msg),
+                reply_markup=InlineKeyboardMarkup([[error_button]])
+            )
+            return
+
+        data['token'] = input_token
         data['time'] = time()
         await db.update_user_data(userid, data)
-
+        
         gifs = os.listdir('./gif')
         selected_gif = random.choice(gifs)
         caption = f'Hello {message.from_user.first_name}! Welcome to the bot'
