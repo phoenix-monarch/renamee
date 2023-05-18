@@ -30,6 +30,7 @@ def validate_user(message, button=None):
         if button is None:
             button = InlineKeyboardButton(text='Refresh Token', url=shorten_url(f'https://t.me/{Config.BOT_NAME}?start={token}'))
         
-        return 'Token is expired, refresh your token and try again.', button
+        error_msg = 'Token is expired, refresh your token and try again.'
+        return error_msg, button
     
     return None, button
