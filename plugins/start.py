@@ -38,16 +38,6 @@ async def start(client, message):
         data['token'] = str(uuid4())
         data['time'] = time()
         await db.update_user_data(userid, data)
-        none_admin_msg, error_button = await none_admin_utils(message)
-        error_msg = []
-        if none_admin_msg:
-            error_msg.extend(none_admin_msg)
-            await client.send_message(
-                chat_id=message.chat.id,
-                text='\n'.join(error_msg),
-                reply_markup=InlineKeyboardMarkup([[error_button]])
-            )
-            return
  
         gifs = os.listdir('./gif')
         selected_gif = random.choice(gifs)
