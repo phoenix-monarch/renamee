@@ -1,7 +1,7 @@
 import motor.motor_asyncio
 import time
 import uuid
-from .config import Config  # Import Config module from the current directory
+from config import Config  # Import Config module from the current directory
 from .utils import send_log
 
 
