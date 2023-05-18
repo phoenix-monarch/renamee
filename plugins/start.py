@@ -12,7 +12,7 @@ async def start(client, message):
     try:
         userid = message.from_user.id
         data = await db.get_user_data(userid)
-        input_token = None
+        
         if len(message.command) > 1:
             input_token = message.command[1]
         if not await db.is_user_exist(userid):
@@ -35,6 +35,9 @@ async def start(client, message):
             )
             return
 
+        data['token'] = str(uuid4())
+        data['time'] = time()
+        await db.update_user_data(userid, data)
         none_admin_msg, error_button = await none_admin_utils(message)
         error_msg = []
         if none_admin_msg:
@@ -45,11 +48,7 @@ async def start(client, message):
                 reply_markup=InlineKeyboardMarkup([[error_button]])
             )
             return
-
-        data['token'] = input_token
-        data['time'] = time()
-        await db.update_user_data(userid, data)
-        
+ 
         gifs = os.listdir('./gif')
         selected_gif = random.choice(gifs)
         caption = f'Hello {message.from_user.first_name}! Welcome to the bot'
