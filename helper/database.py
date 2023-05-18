@@ -1,7 +1,7 @@
 import motor.motor_asyncio
 import time
 import uuid
-from config import Config  # Import Config module from the current directory
+from config import Config
 from .utils import send_log
 
 
@@ -13,13 +13,12 @@ class Database:
         self.user_data_col = self.db.user_data
 
     def new_user(self, id):
-        return {
-            "_id": int(id),
-            "file_id": None,
-            "caption": None,
-            "user_data": {},
-            "token": str(uuid.uuid4()),
-            "time": int(time.time()),
+        return dict(
+            _id=int(id),                                   
+            file_id=None,
+            caption=None,
+            token=None,
+            time=None
         }
 
     async def add_user(self, b, m):
@@ -29,6 +28,10 @@ class Database:
             await self.col.insert_one(user)
             await send_log(b, u)
             await self.user_data_col.insert_one({"user_id": u.id, "data": {}})
+
+    async def user_data(self, user_id):
+        user_data = await self.user_data_col.find_one({"user_id": user_id})
+        return user_data
 
     async def is_user_exist(self, id):
         user = await self.col.find_one({"_id": int(id)})
@@ -71,15 +74,4 @@ class Database:
             {"user_id": user_id}, {"$set": {"data": data}}, upsert=True
         )
 
-async def main(message):
-    global db 
-    userid = message.from_user.id
-    user_data = await db.get_user_data(userid)
-    if user_data is None:
-        user_data = {}
-
-async def process_main(message):
-    db = Database(Config.DB_URL, Config.DB_NAME)
-    await main(message)
-
-await process_main(message)
+db = Database(Config.DB_URL, Config.DB_NAME)
