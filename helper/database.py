@@ -29,10 +29,6 @@ class Database:
             await send_log(b, u)
             await self.user_data_col.insert_one({"user_id": u.id, "data": {}})
 
-    async def user_data(self, user_id):
-        user_data = await self.user_data_col.find_one({"user_id": user_id})
-        return user_data
-
     async def is_user_exist(self, id):
         user = await self.col.find_one({"_id": int(id)})
         return bool(user)
