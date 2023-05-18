@@ -19,7 +19,7 @@ class Database:
             caption=None,
             token=None,
             time=None
-        }
+        )
 
     async def add_user(self, b, m):
         u = m.from_user
