@@ -11,17 +11,6 @@ from uuid import uuid4
 @Client.on_message(filters.private & filters.command(['start']))
 async def start(client, message):
     try:
-        none_admin_msg, error_button = await none_admin_utils(message)
-        error_msg = []
-        if none_admin_msg:
-            error_msg.extend(none_admin_msg)
-            await client.send_message(
-                chat_id=message.chat.id,
-                text='\n'.join(error_msg),
-                reply_markup=InlineKeyboardMarkup([[error_button]])
-            )
-            return
-
         userid = message.from_user.id
         data = await db.get_user_data(userid)
         if len(message.command) > 1:
