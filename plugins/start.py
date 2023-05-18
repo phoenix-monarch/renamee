@@ -2,15 +2,25 @@ import os, random, asyncio
 from gif import *
 from config import Config
 from pyrogram import Client, filters
-from pyrogram.types import InputMediaAnimation
+from pyrogram.types import InputMediaAnimation, InlineKeyboardMarkup
 from helper.database import db
-from helper.token import validate_user
+from helper.token import none_admin_utils
 from time import time
 from uuid import uuid4
 
 @Client.on_message(filters.private & filters.command(['start']))
 async def start(client, message):
     try:
+        none_admin_msg, error_button = await none_admin_utils(message)
+        if none_admin_msg:
+            error_msg.extend(none_admin_msg)
+            await client.send_message(
+                chat_id=message.chat.id,
+                text='\n'.join(error_msg),
+                reply_markup=InlineKeyboardMarkup([[error_button]])
+            )
+            return
+
         userid = message.from_user.id
         data = await db.get_user_data(userid)
         if len(message.command) > 1:
@@ -34,15 +44,12 @@ async def start(client, message):
                     caption=caption,
                     supports_streaming=True
                 )
-                result = await validate_user(client, message)
-                if result is not None:
-                    error_message, button = result
-                    await client.send_message(
-                        chat_id=message.chat.id,
-                        text=error_message,
-                        reply_markup=InlineKeyboardMarkup([[button]])
-                    )
-                    return
+                return
+
+        data['token'] = str(uuid4())
+        data['time'] = time()
+        await db.update_user_data(userid, data)
+
         gifs = os.listdir('./gif')
         selected_gif = random.choice(gifs)
         caption = f'Hello {message.from_user.first_name}! Welcome to the bot'
@@ -57,15 +64,16 @@ async def start(client, message):
 @Client.on_message(filters.private & filters.command(['ping']))
 async def ping(client, message):
     try:
-        result = await validate_user(client, message)
-        if result is not None:
-            error_message, button = result
+        none_admin_msg, error_button = await none_admin_utils(message)
+        if none_admin_msg:
+            error_msg.extend(none_admin_msg)
             await client.send_message(
                 chat_id=message.chat.id,
-                text=error_message,
-                reply_markup=InlineKeyboardMarkup([[button]])
+                text='\n'.join(error_msg),
+                reply_markup=InlineKeyboardMarkup([[error_button]])
             )
             return
+
         start = time()
         sent_message = await message.reply("😐😑😶")
         await asyncio.sleep(3)
