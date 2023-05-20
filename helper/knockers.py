@@ -13,8 +13,11 @@ async def handle_callback(callback_query: CallbackQuery):
     inline_keyboard = get_inline_keyboard(page_number)
 
     try:
-        video = callback_query.message.video
-        if not video:
+        edit_video = False
+        if not callback_query.message.video:
+            edit_video = True
+
+        if edit_video:
             video_path = get_page_gif(page_number)
             video = InputMediaVideo(media=video_path, caption=caption)
             await callback_query.message.edit_media(
@@ -22,7 +25,7 @@ async def handle_callback(callback_query: CallbackQuery):
                 reply_markup=InlineKeyboardMarkup(inline_keyboard)
             )
         else:
-            await callback_query.edit_message_caption(caption)
-            await callback_query.edit_message_reply_markup(reply_markup=InlineKeyboardMarkup(inline_keyboard))
+            await callback_query.message.edit_caption(caption)
+            await callback_query.message.edit_reply_markup(reply_markup=InlineKeyboardMarkup(inline_keyboard))
     except Exception as e:
         print(f"An error occurred: {e}")
