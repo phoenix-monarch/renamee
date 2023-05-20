@@ -59,7 +59,7 @@ async def start(client, message):
             supports_streaming=True,
             reply_markup=InlineKeyboardMarkup(inline_keyboard)
         )
-    print("After reply_video)    
+        print("After reply_video")    
     except Exception as e:
         print(f"An error occurred while executing start: {e}")
 
