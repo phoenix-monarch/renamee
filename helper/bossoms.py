@@ -1,6 +1,7 @@
 import os, random
 from gif import *
 from config import Config
+from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 
 def get_page_gif(page_number):
     gifs = os.listdir('./gif')
