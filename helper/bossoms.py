@@ -24,6 +24,7 @@ def get_page_caption(page_number, first_name):
     return f"Hello {first_name}!\n\n{page_text}"
 
 def get_inline_keyboard(page_number):
+    print("Inside get_inline_keyboard")
     inline_keyboard = []
 
     if page_number > 0:
