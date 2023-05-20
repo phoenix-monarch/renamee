@@ -11,12 +11,12 @@ from helper.knockers import handle_callback
 @Client.on_message(filters.private & filters.command(['start']))
 async def start(client, message):
     try:
-        print("Start function called")
         userid = message.from_user.id
         data = await db.get_user_data(userid)
         input_token = None
         if len(message.command) > 1:
             input_token = message.command[1]
+        print("Before if statement")   
         if not await db.is_user_exist(userid):
             gif_url = 'https://graph.org/file/a58b959cc11443ac4e70b.mp4'
             caption = 'Who are you?'
@@ -26,6 +26,7 @@ async def start(client, message):
                 supports_streaming=True
             )
             return
+        print("After if statement")
 
         if 'token' not in data or data['token'] != input_token:
             gif_url = 'https://graph.org/file/f6e6beb62a16a46642fb4.mp4'
