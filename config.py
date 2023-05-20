@@ -13,7 +13,7 @@ class Config(object):
     API_HASH = os.environ.get("API_HASH", "")
     BOT_TOKEN = os.environ.get("BOT_TOKEN", "")
     BOT_NAME = os.environ.get("BOT_NAME", "")
-    TOKEN_TIMEOUT = int(os.environ.get("TOKEN_TIMEOUT", 86400))
+    TOKEN_TIMEOUT = int(os.environ.get("TOKEN_TIMEOUT", 600))
     # database config
     DB_NAME = os.environ.get("DB_NAME","pyro-botz")
     DB_URL = os.environ.get("DB_URL","")
@@ -24,6 +24,11 @@ class Config(object):
     LOG_CHANNEL = int(os.environ.get("LOG_CHANNEL", None))
     # wes response configuration
     WEBHOOK = bool(os.environ.get("WEBHOOK", True))
+    Text = os.environ.get("Text", "")
+    Text1 = os.environ.get("Text1", "")
+    Text2 = os.environ.get("Text2", "")
+    Text3 = os.environ.get("Text3", "")
+    Text4 = os.environ.get("Text4", "")
 
     LOGGER = LOG
     shorteners_list = []
