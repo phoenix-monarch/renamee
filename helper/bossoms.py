@@ -24,16 +24,14 @@ def get_page_caption(page_number, first_name):
     return f"Hello {first_name}!\n\n{page_text}"
 
 def get_inline_keyboard(page_number):
-    print("Inside get_inline_keyboard")
     inline_keyboard = []
 
+    row = []
     if page_number > 0:
-        inline_keyboard.append(
-            [InlineKeyboardButton("👈", callback_data="previous")]
-        )
+        row.append(InlineKeyboardButton("👈 Previous", callback_data="previous"))
     if page_number < 4 and (page_number != 3 or Config.Text):
-        inline_keyboard.append(
-            [InlineKeyboardButton("👉", callback_data="next")]
-        )
+        row.append(InlineKeyboardButton("Next 👉", callback_data="next"))
 
-    return [inline_keyboard]
+    inline_keyboard.append(row)
+
+    return inline_keyboard
