@@ -43,23 +43,16 @@ async def start(client, message):
         data['time'] = time()
         await db.update_user_data(userid, data)
 
-        print("Before page_number")
         page_number = 0
-        print("Inside page_number")
-        print("Before caption")
         caption = get_page_caption(page_number, message.from_user.first_name)
-        print("Inside caption")
-        print("Before inline_keyboard")
         inline_keyboard = get_inline_keyboard(page_number)
-        print("Inside inline_keyboard")
-        print("Before message.reply_video")
         await message.reply_video(
             video=get_page_gif(page_number),
             caption=caption,
             supports_streaming=True,
             reply_markup=InlineKeyboardMarkup(inline_keyboard)
         )
-        print("Inside reply_video")    
+        
     except Exception as e:
         print(f"An error occurred while executing start: {e}")
 
