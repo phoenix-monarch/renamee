@@ -29,9 +29,9 @@ async def start(client, message):
         if 'token' not in data or data['token'] != input_token:
             gif_url = 'https://graph.org/file/f6e6beb62a16a46642fb4.mp4'
             caption = '''This token is already expired.
-1. After updating the token if you use /start again, you will get this message.
-2. Don't worry because other functions will work.
-3. Only refresh the token after 24 hours using the /ping command. I will fix this soon.'''
+            1. After updating the token if you use /start again, you will get this message.
+            2. Don't worry because other functions will work.
+            3. Only refresh the token after 24 hours using the /ping command. I will fix this soon.'''
             await message.reply_video(
                 video=gif_url,
                 caption=caption,
