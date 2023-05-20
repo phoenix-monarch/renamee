@@ -38,16 +38,6 @@ async def cancel(client, update):
 @Client.on_callback_query(filters.regex('rename'))
 async def rename(client, update):
     try:
-        none_admin_msg, error_button = await none_admin_utils(message)
-        error_msg = []
-        if none_admin_msg:
-            error_msg.extend(none_admin_msg)
-            await client.send_message(
-                chat_id=message.chat.id,
-                text='\n'.join(error_msg),
-                reply_markup=InlineKeyboardMarkup([[error_button]])
-            )
-            return
         message = update.message
         file = getattr(message, message.media.value)
         filename = file.file_name
