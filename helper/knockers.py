@@ -1,4 +1,4 @@
-from pyrogram.types import CallbackQuery
+from pyrogram.types import CallbackQuery, InlineKeyboardMarkup, InlineKeyboardButton
 from helper.bossoms import get_page_gif, get_page_caption, get_inline_keyboard
 
 async def handle_callback(callback_query: CallbackQuery):
