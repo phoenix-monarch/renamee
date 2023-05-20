@@ -20,8 +20,6 @@ def get_page_caption(page_number, first_name):
         page_text = Config.Text3
     elif page_number == 4:
         page_text = Config.Text4
-    else:
-        page_text = ""
 
     return f"Hello {first_name}!\n\n{page_text}"
 
@@ -37,4 +35,4 @@ def get_inline_keyboard(page_number):
             [InlineKeyboardButton("👉", callback_data="next")]
         )
 
-    return inline_keyboard
+    return [inline_keyboard]
