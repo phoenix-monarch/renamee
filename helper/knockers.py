@@ -12,7 +12,11 @@ async def handle_callback(callback_query: CallbackQuery):
     caption = get_page_caption(page_number, callback_query.from_user.first_name)
     inline_keyboard = get_inline_keyboard(page_number)
 
+    media = await callback_query.message.reply_to_message.media
+
     await callback_query.edit_message_media(
-        media=get_page_gif(page_number),
+        media=media,
         reply_markup=InlineKeyboardMarkup(inline_keyboard)
     )
+
+    await callback_query.edit_message_caption(caption)
