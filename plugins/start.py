@@ -11,6 +11,7 @@ from helper.knockers import handle_callback
 @Client.on_message(filters.private & filters.command(['start']))
 async def start(client, message):
     try:
+        print("Start function called")
         userid = message.from_user.id
         data = await db.get_user_data(userid)
         input_token = None
