@@ -2,7 +2,7 @@
     "name": "Rename",
     "description": "Telegram File Renamer Bot ",
     "logo": "https://graph.org/file/91ab4b346dddd0652958c.jpg",
-    "keywords": ["Rename", "Mongo DB"],    
+    "keywords": ["Rename", "Mongo DB"],
     "repository": "https://github.com/KIRITOAK4/Rename",
     "env": {
         "API_ID": {
@@ -26,7 +26,7 @@
         },
         "TOKEN_TIMEOUT": {
             "description": "Token for recheck",
-            "value": "86400",
+            "value": "600",
             "required": true
         },
         "FORCE_SUB": {
@@ -46,7 +46,7 @@
         "LOG_CHANNEL": {
             "description":"Bot Log Sending Channel (just create a private channel and add bot to admin and take channel id to add this variable) ⚠️ id startswith -100 must",
             "value": "-1001774339410",
-            "required": false           
+            "required": false
         },
         "DB_URL": {
             "description": "Your Mongo DB URL Obtained From mongodb.com",
@@ -56,6 +56,31 @@
             "description":"Your Mongo DB Database Name ",
             "value": "pyro-botz",
             "required": false
+        },
+        "Text":{
+            "description":"Text start",
+            "value": "Hii",
+            "required": true
+        },
+        "Text1":{
+            "description":"Text for 1st page",
+            "value": "welcome",
+            "required": true
+        },
+        "Text2":{
+            "description":"Text for 2nd page",
+            "value": "boom",
+            "required": true
+        },
+        "Text3":{
+            "description":"Text for 4th page",
+            "value": "YUITOAKASH",
+            "required": true
+        },
+        "Text4":{
+            "description":"Text for 5th page",
+            "value": "kirito",
+            "required": true
         }
     },
     "buildpacks": [
