@@ -5,7 +5,7 @@ from helper.database import db
 from helper.token import none_admin_utils
 from time import time
 from uuid import uuid4
-from helper.page import get_page_gif, get_page_caption, get_inline_keyboard
+from helper.bossoms import get_page_gif, get_page_caption, get_inline_keyboard
 from helper.knockers import handle_callback
 
 @Client.on_message(filters.private & filters.command(['start']))
