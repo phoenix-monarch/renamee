@@ -1,12 +1,12 @@
 import os, random, asyncio
-from gif import *
-from config import Config
 from pyrogram import Client, filters
-from pyrogram.types import InputMediaAnimation, InlineKeyboardMarkup
+from pyrogram.types import InputMediaAnimation, InlineKeyboardMarkup, InlineKeyboardButton
 from helper.database import db
 from helper.token import none_admin_utils
 from time import time
 from uuid import uuid4
+from helper.page import get_page_gif, get_page_caption, get_inline_keyboard
+from helper.knockers import handle_callback
 
 @Client.on_message(filters.private & filters.command(['start']))
 async def start(client, message):
@@ -43,16 +43,24 @@ async def start(client, message):
         data['time'] = time()
         await db.update_user_data(userid, data)
 
-        gifs = os.listdir('./gif')
-        selected_gif = random.choice(gifs)
-        caption = f'Hello {message.from_user.first_name}! Welcome to the bot'
+        page_number = 0
+        caption = get_page_caption(page_number, message.from_user.first_name)
+        inline_keyboard = get_inline_keyboard(page_number)
         await message.reply_video(
-            video=f'./gif/{selected_gif}',
+            video=get_page_gif(page_number),
             caption=caption,
-            supports_streaming=True
+            supports_streaming=True,
+            reply_markup=InlineKeyboardMarkup(inline_keyboard)
         )
     except Exception as e:
         print(f"An error occurred while executing start: {e}")
+
+@Client.on_callback_query()
+async def callback_query(client, callback_query):
+    try:
+        await handle_callback(callback_query)
+    except Exception as e:
+        print(f"An error occurred while handling callback query: {e}")
 
 @Client.on_message(filters.private & filters.command(['ping']))
 async def ping(client, message):
