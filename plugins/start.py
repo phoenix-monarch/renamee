@@ -16,15 +16,18 @@ async def start(client, message):
         input_token = None
         if len(message.command) > 1:
             input_token = message.command[1]
-        print("Before if statement")   
+        print("Before if statement")
         if not await db.is_user_exist(userid):
+            print("Inside if statement")
             gif_url = 'https://graph.org/file/a58b959cc11443ac4e70b.mp4'
             caption = 'Who are you?'
+            print("Before reply_video")
             await message.reply_video(
                 video=gif_url,
                 caption=caption,
                 supports_streaming=True
             )
+            print("After reply_video")
             return
         print("After if statement")
 
