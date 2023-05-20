@@ -30,7 +30,7 @@ def get_inline_keyboard(page_number):
         inline_keyboard.append(
             [InlineKeyboardButton("👈", callback_data="previous")]
         )
-    if page_number < 4:
+    if page_number < 4 and (page_number != 3 or Config.Text):
         inline_keyboard.append(
             [InlineKeyboardButton("👉", callback_data="next")]
         )
