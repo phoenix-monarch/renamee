@@ -18,7 +18,8 @@ class Database:
             file_id=None,
             caption=None,
             token=None,
-            time=None
+            time=None,
+            page=0
         )
 
     async def add_user(self, b, m):
@@ -67,7 +68,7 @@ class Database:
 
     async def update_user_data(self, user_id, data):
         await self.user_data_col.update_one(
-            {"user_id": user_id}, {"$set": {"data": data}}, upsert=True
+            {"user_id": user_id}, {"$set": {"data": data, "page": data.get("page", 0)}}, upsert=True
         )
 
 db = Database(Config.DB_URL, Config.DB_NAME)
