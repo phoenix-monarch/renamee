@@ -17,8 +17,8 @@ async def handle_callback(callback_query: CallbackQuery):
         if not video:
             video_path = get_page_gif(page_number)
             video = InputMediaVideo(media=video_path)
-            await callback_query.message.edit_media(
-                media=video,
+            await callback_query.message.edit_video(
+                video=video,
                 caption=caption,
                 reply_markup=InlineKeyboardMarkup(inline_keyboard)
             )
