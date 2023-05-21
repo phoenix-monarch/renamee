@@ -11,25 +11,18 @@ def get_page_gif(page_number):
 
 def get_page_caption(page_number, first_name):
     page_text = ""
-    print(f"Page number: {page_number}")
     if page_number == 0:
         page_text = Config.Text
-        print(f"Using Config.Text: {page_text}")
     elif page_number == 1:
         page_text = Config.Text1
-        print(f"Using Config.Text1: {page_text}")
     elif page_number == 2:
         page_text = Config.Text2
-        print(f"Using Config.Text2: {page_text}")
     elif page_number == 3:
         page_text = Config.Text3
-        print(f"Using Config.Text3: {page_text}")
     elif page_number == 4:
         page_text = Config.Text4
-        print(f"Using Config.Text4: {page_text}")
 
     caption = f"Hello {first_name}!\n\n{page_text}"
-    print(f"Caption: {caption}")
     return caption
 
 def get_inline_keyboard(page_number):
@@ -38,7 +31,7 @@ def get_inline_keyboard(page_number):
     row = []
     if page_number > 0:
         row.append(InlineKeyboardButton("👈 Previous", callback_data="previous"))
-    if page_number < 4 and (page_number != 3 or Config.Text):
+    if page_number < 4 and (page_number != 3 and not Config.Text):
         row.append(InlineKeyboardButton("Next 👉", callback_data="next"))
 
     inline_keyboard.append(row)
