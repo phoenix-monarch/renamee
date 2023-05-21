@@ -59,9 +59,10 @@ async def start(client, message):
 @Client.on_callback_query()
 async def callback_query(client, callback_query):
     try:
-        await handle_callback(callback_query)
+        current_page = 0
+        await handle_callback(callback_query, current_page)
     except Exception as e:
-        print(f"An error occurred while handling callback query: {e}")
+        print(f"An error occurred while handling callback in start query: {e}")
 
 @Client.on_message(filters.private & filters.command(['ping']))
 async def ping(client, message):
