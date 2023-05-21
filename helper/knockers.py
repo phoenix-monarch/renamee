@@ -2,12 +2,13 @@ from pyrogram.types import InputMediaVideo, InputMediaAnimation, CallbackQuery, 
 from helper.bossoms import get_page_gif, get_page_caption, get_inline_keyboard
 
 async def handle_callback(callback_query: CallbackQuery):
-    page_number = 0
     data = callback_query.data
+    current_page = int(data.split('_')[1])  # Extract the current page number from the callback data
+
     if data == "previous":
-        page_number -= 1
+        page_number = current_page - 1
     elif data == "next":
-        page_number += 1
+        page_number = current_page + 1
 
     caption = get_page_caption(page_number, callback_query.from_user.first_name)
     inline_keyboard = get_inline_keyboard(page_number)
