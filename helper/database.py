@@ -23,7 +23,6 @@ class Database:
         )
 
     async def add_user(self, b, m):
-        print("add_user method called")
         u = m.from_user
         if not await self.is_user_exist(u.id):
             user = self.new_user(u.id)
