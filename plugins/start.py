@@ -46,7 +46,7 @@ async def start(client, message):
         page_number = 0
         caption = get_page_caption(page_number, message.from_user.first_name)
         inline_keyboard = get_inline_keyboard(page_number)
-        reply_markup=InlineKeyboardMarkup(inline_keyboard)
+        reply_markup = InlineKeyboardMarkup(inline_keyboard)
         await message.reply_video(
             video=get_page_gif(page_number),
             caption=caption,
@@ -60,7 +60,7 @@ async def start(client, message):
 @Client.on_callback_query()
 async def callback_query(client, callback_query):
     try:
-        current_page = 0
+        current_page = [0]
         await handle_callback(callback_query, current_page)
     except Exception as e:
         print(f"An error occurred while handling callback in start query: {e}")
