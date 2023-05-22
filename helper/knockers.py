@@ -2,7 +2,7 @@ from pyrogram.types import InputMediaVideo, InputMediaAnimation, CallbackQuery, 
 from helper.bossoms import get_page_gif, get_page_caption, get_inline_keyboard
 
 async def handle_callback(callback_query: CallbackQuery, current_page):
-    data = callback_query.data
+    data = CallBackQuery.data
 
     if data == "previous":
         if current_page[0] == 0:
@@ -15,7 +15,7 @@ async def handle_callback(callback_query: CallbackQuery, current_page):
         else:
             current_page[0] += 1
 
-    caption = get_page_caption(current_page, callback_query.from_user.first_name)
+    caption = get_page_caption(current_page, CallbackQuery.from_user.first_name)
     inline_keyboard = get_inline_keyboard(current_page)
 
     try:
