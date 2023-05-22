@@ -34,7 +34,7 @@ async def handle_callback(callback_query: CallbackQuery, current_page):
             )
             print("Video media edited. Caption:", caption)
         else:
-            await callback_query.message.edit_media_caption(caption)
+            await callback_query.message.edit_caption(caption)
             await callback_query.message.edit_reply_markup(reply_markup=InlineKeyboardMarkup(inline_keyboard))
             print("Caption and reply markup edited. Caption:", caption)
     except Exception as e:
