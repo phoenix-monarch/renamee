@@ -19,17 +19,17 @@ async def handle_callback(callback_query: CallbackQuery, current_page):
     inline_keyboard = get_inline_keyboard(current_page)
 
     try:
-        edit_video = not callback_query.message.video
+        edit_video = not CallBackQuery.message.video
 
         if edit_video:
             video_path = get_page_gif(current_page)
             video = InputMediaVideo(media=video_path, caption=caption)
-            await callback_query.message.edit_media(
+            await CallBackQuery.message.edit_media(
                 media=video,
                 reply_markup=InlineKeyboardMarkup(inline_keyboard)
             )
         else:
-            await callback_query.message.edit_caption(caption)
-            await callback_query.message.edit_reply_markup(reply_markup=InlineKeyboardMarkup(inline_keyboard))
+            await CallBackQuery.message.edit_caption(caption)
+            await CallBackQuery.message.edit_reply_markup(reply_markup=InlineKeyboardMarkup(inline_keyboard))
     except Exception as e:
         print(f"An error occurred in handle_callback: {e}")
