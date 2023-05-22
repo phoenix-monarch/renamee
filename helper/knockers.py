@@ -10,7 +10,7 @@ async def handle_callback(callback_query: CallbackQuery, current_page):
         else:
             current_page[0] -= 1
     elif data == "next":
-        if current_page[0] == 4:
+        if current_page[0] >= 4:
             current_page[0] = 4
         else:
             current_page[0] += 1
