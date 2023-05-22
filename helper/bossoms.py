@@ -7,7 +7,8 @@ def get_page_gif(page_number):
     gifs = os.listdir('./gif')
     selected_gif = random.choice(gifs)
     gif_path = selected_gif
-    print(f"GIF Path: {gif_path}")
+    print(f"Page Number: {page_number}")
+    print(f"Selected GIF Path: {gif_path}")
     return f'./gif/{gif_path}'
 
 def get_page_caption(page_number, first_name):
