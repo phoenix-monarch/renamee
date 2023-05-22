@@ -46,11 +46,12 @@ async def start(client, message):
         page_number = 0
         caption = get_page_caption(page_number, message.from_user.first_name)
         inline_keyboard = get_inline_keyboard(page_number)
+        reply_markup=InlineKeyboardMarkup(inline_keyboard)
         await message.reply_video(
             video=get_page_gif(page_number),
             caption=caption,
             supports_streaming=True,
-            reply_markup=InlineKeyboardMarkup(inline_keyboard)
+            reply_markup=reply_markup
         )
         
     except Exception as e:
