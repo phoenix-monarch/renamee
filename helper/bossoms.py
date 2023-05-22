@@ -36,4 +36,4 @@ def get_inline_keyboard(page_number):
 
     inline_keyboard.append(row)
 
-    return inline_keyboard
+    return InlineKeyboardMarkup(inline_keyboard)
