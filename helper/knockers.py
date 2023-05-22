@@ -8,14 +8,10 @@ async def handle_callback(callback_query: CallbackQuery, current_page):
 
     if data == "previous":
         if current_page[0] == 0:
-            current_page[0] = 0
-        else:
             current_page[0] -= 1
         print("Previous button clicked. Current page:", current_page[0])
     elif data == "next":
         if current_page[0] == 4:
-            current_page[0] = 4
-        else:
             current_page[0] += 1
         print("Next button clicked. Current page:", current_page[0])
 
@@ -27,7 +23,6 @@ async def handle_callback(callback_query: CallbackQuery, current_page):
         if edit_video:
             video_path = get_page_gif(current_page[0])
             video = InputMediaVideo(media=video_path, caption=caption)
-            if callback_query.message.caption.text != caption or callback_query.message.reply_markup != InlineKeyboardMarkup(inline_keyboard):
                 await callback_query.message.edit_media(
                     media=video
                 )
@@ -37,7 +32,7 @@ async def handle_callback(callback_query: CallbackQuery, current_page):
                 )
                 print("Video media, caption, and reply markup edited. Caption:", caption)
         else:
-            if callback_query.message.caption.text != caption or callback_query.message.reply_markup != InlineKeyboardMarkup(inline_keyboard):
+            if callback_query.message.caption != caption or callback_query.message.reply_markup != InlineKeyboardMarkup(inline_keyboard):
                 await callback_query.message.edit_caption(
                     caption,
                     reply_markup=InlineKeyboardMarkup(inline_keyboard)
