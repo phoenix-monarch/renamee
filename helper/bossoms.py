@@ -5,12 +5,12 @@ from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 
 def get_page_gif(page_number):
     print("Inside get_page_gif")
-    gifs = os.listdir('./gif')
-    selected_gif = random.choice(gifs)
-    gif_path = selected_gif
+    mp4_files = [file for file in os.listdir('./gif') if file.endswith('.mp4')]
+    selected_mp4 = random.choice(mp4_files)
+    mp4_path = selected_mp4
     print(f"Page Number: {page_number}")
     print(f"Selected GIF Path: {gif_path}")
-    return f'./gif/{gif_path}'
+    return f'./gif/{mp4_path}'
 
 def get_page_caption(page_number, first_name):
     page_text = ""
