@@ -8,10 +8,14 @@ async def handle_callback(callback_query: CallbackQuery, current_page):
 
     if data == "previous":
         if current_page[0] == 0:
+            current_page[0] = 0
+        else:
             current_page[0] -= 1
         print("Previous button clicked. Current page:", current_page[0])
     elif data == "next":
         if current_page[0] == 4:
+            current_page[0] = 4
+        else:
             current_page[0] += 1
         print("Next button clicked. Current page:", current_page[0])
 
