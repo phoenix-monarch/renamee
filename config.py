@@ -42,22 +42,6 @@ class Config(object):
                     if len(temp) == 2:
                         self.shorteners_list.append({'domain': temp[0], 'api_key': temp[1]})
 
-    async def sendMessage(client, message, text):
-        try:
-            return await message.reply_text(
-                text=text,
-                quote=True,
-                disable_web_page_preview=True,
-                disable_notification=True
-            )
-        except FloodWait as f:
-            LOGGER.warning(str(f))
-            await sleep(f.value * 1.2)
-            return await Config.sendMessage(client, message, text)
-        except RPCError as e:
-            LOGGER.error(f"{e.NAME}: {e.MESSAGE}")
-        except Exception as e:
-            LOGGER.error(str(e))
 LOG.info('Config loaded successfully')
 
 
