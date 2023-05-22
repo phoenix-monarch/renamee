@@ -23,7 +23,7 @@ async def handle_callback(callback_query: CallbackQuery, current_page):
     inline_keyboard = get_inline_keyboard(current_page[0])
 
     try:
-        edit_video = not callback_query.message.video
+        edit_video = isinstance(callback_query.message.video, (InputMediaVideo, InputMediaAnimation))
 
         if edit_video:
             video_path = get_page_gif(current_page[0])
