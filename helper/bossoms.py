@@ -4,6 +4,7 @@ from config import Config
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 
 def get_page_gif(page_number):
+    print("Inside get_page_gif")
     gifs = os.listdir('./gif')
     selected_gif = random.choice(gifs)
     gif_path = selected_gif
