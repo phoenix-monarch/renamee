@@ -23,14 +23,14 @@ async def handle_callback(callback_query: CallbackQuery, current_page):
         if edit_video:
             video_path = get_page_gif(current_page[0])
             video = InputMediaVideo(media=video_path, caption=caption)
-                await callback_query.message.edit_media(
-                    media=video
-                )
-                await callback_query.message.edit_caption(
-                    caption,
-                    reply_markup=InlineKeyboardMarkup(inline_keyboard)
-                )
-                print("Video media, caption, and reply markup edited. Caption:", caption)
+            await callback_query.message.edit_media(
+                media=video
+            )
+            await callback_query.message.edit_caption(
+                caption,
+                reply_markup=InlineKeyboardMarkup(inline_keyboard)
+            )
+            print("Video media, caption, and reply markup edited. Caption:", caption)
         else:
             if callback_query.message.caption != caption or callback_query.message.reply_markup != InlineKeyboardMarkup(inline_keyboard):
                 await callback_query.message.edit_caption(
