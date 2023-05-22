@@ -22,6 +22,10 @@ def get_page_caption(page_number, first_name):
     elif page_number == 4:
         page_text = Config.Text4
 
+    print(f"Page Number: {page_number}")
+    print(f"First Name: {first_name}")
+    print(f"Page Text: {page_text}")
+
     caption = f"Hello {first_name}!\n\n{page_text}"
     return caption
 
