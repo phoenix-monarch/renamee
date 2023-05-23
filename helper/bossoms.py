@@ -3,13 +3,13 @@ from gif import *
 from config import Config
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 
-def get_page_gif(page_number):
+def get_page_gif(current_page):
     gifs = os.listdir('./gif')
     selected_gif = random.choice(gifs)
     gif_path = f'./gif/{selected_gif}'
     return gif_path
 
-def get_page_caption(page_number, first_name, last_name, username, mention, id):
+def get_page_caption(current_page, first_name, last_name, username, mention, id):
     if page_number == 0:
         page_text = Config.Text
     elif page_number == 1:
@@ -24,7 +24,7 @@ def get_page_caption(page_number, first_name, last_name, username, mention, id):
     caption = f"{page_text}"
     return caption
 
-def get_inline_keyboard(page_number):
+def get_inline_keyboard(current_page):
     inline_keyboard = []
 
     row = []
