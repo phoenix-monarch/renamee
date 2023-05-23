@@ -8,6 +8,8 @@ from uuid import uuid4
 from helper.bossoms import get_page_gif, get_page_caption, get_inline_keyboard
 from helper.knockers import handle_callback
 
+current_page = [0]
+
 @Client.on_message(filters.private & filters.command(['start']))
 async def start(client, message):
     try:
@@ -60,7 +62,6 @@ async def start(client, message):
 @Client.on_callback_query()
 async def callback_query(client, callback_query):
     try:
-        current_page = [0]
         await handle_callback(callback_query, current_page)
     except Exception as e:
         print(f"An error occurred while handling callback in start query: {e}")
