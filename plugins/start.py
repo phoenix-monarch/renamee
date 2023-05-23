@@ -8,7 +8,7 @@ from uuid import uuid4
 from helper.bossoms import get_page_gif, get_page_caption, get_inline_keyboard
 from helper.knockers import handle_callback
 
-current_page = [0]
+page_number = [0]
 
 @Client.on_message(filters.private & filters.command(['start']))
 async def start(client, message):
@@ -45,7 +45,6 @@ async def start(client, message):
         data['time'] = time()
         await db.update_user_data(userid, data)
 
-        page_number = 0
         caption = get_page_caption(page_number, message.from_user.first_name, message.from_user.last_name, None if not message.from_user.username else '@' + message.from_user.username, message.from_user.mention, message.from_user.id)
         inline_keyboard = get_inline_keyboard(page_number)
         reply_markup = InlineKeyboardMarkup(inline_keyboard)
@@ -62,7 +61,7 @@ async def start(client, message):
 @Client.on_callback_query()
 async def callback_query(client, callback_query):
     try:
-        await handle_callback(callback_query, current_page)
+        await handle_callback(callback_query, page_number)
     except Exception as e:
         print(f"An error occurred while handling callback in start query: {e}")
 
