@@ -8,7 +8,7 @@ from uuid import uuid4
 from helper.bossoms import get_page_gif, get_page_caption, get_inline_keyboard
 from helper.knockers import handle_callback
 
-global page_number = [0]
+page_number = [0]
 
 @Client.on_message(filters.private & filters.command(['start']))
 async def start(client, message):
