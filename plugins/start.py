@@ -46,7 +46,7 @@ async def start(client, message):
         await db.update_user_data(userid, data)
 
         page_number = 0
-        caption = get_page_caption(page_number, message.from_user.first_name)
+        caption = get_page_caption(page_number, message.from_user.first_name, message.from_user.last_name, None if not message.from_user.username else '@' + message.from_user.username, message.from_user.mention, message.from_user.id)
         inline_keyboard = get_inline_keyboard(page_number)
         reply_markup = InlineKeyboardMarkup(inline_keyboard)
         await message.reply_video(
