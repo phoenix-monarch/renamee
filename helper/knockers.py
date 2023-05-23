@@ -13,12 +13,16 @@ async def handle_callback(callback_query: CallbackQuery, current_page):
             current_page[0] -= 1
         print("Previous button clicked. Current page:", current_page[0])
     elif data == "next":
-        if current_page[0] < 4:
+        if current_page[0] == 4:
+            current_page[0] = 4
+        else:
             current_page[0] += 1
         print("Next button clicked. Current page:", current_page[0])
         print("Debug: Inside 'next' section")
 
     caption = get_page_caption(current_page[0], callback_query.from_user.first_name)
+    print("Current page:", current_page[0])
+    print("Caption:", caption)    
     inline_keyboard = get_inline_keyboard(current_page[0])
 
     try:
