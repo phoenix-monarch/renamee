@@ -4,12 +4,12 @@ from config import Config
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 
 def get_page_gif(page_number):
-    mp4_files = [file for file in os.listdir('./gif') if file.endswith('.mp4')]
-    selected_mp4 = random.choice(mp4_files)
-    mp4_path = f'./gif/{selected_mp4}'
-    return mp4_path
+    gifs = os.listdir('./gif')
+    selected_gif = random.choice(gifs)
+    gif_path = f'./gif/{selected_gif}'
+    return gif_path
 
-def get_page_caption(page_number, first_name):
+def get_page_caption(page_number, first_name, last_name, username, mention, id):
     if page_number == 0:
         page_text = Config.Text
     elif page_number == 1:
@@ -20,12 +20,8 @@ def get_page_caption(page_number, first_name):
         page_text = Config.Text3
     elif page_number == 4:
         page_text = Config.Text4
-
-    print(f"Page Number: {page_number}")
-    print(f"First Name: {first_name}")
-    print(f"Page Text: {page_text}")
-
-    caption = f"Hello {first_name}!\n\n{page_text}"
+        
+    caption = f"{page_text}"
     return caption
 
 def get_inline_keyboard(page_number):
