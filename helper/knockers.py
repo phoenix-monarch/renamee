@@ -1,7 +1,7 @@
 from pyrogram.types import CallbackQuery, InlineKeyboardMarkup, InlineKeyboardButton, InputMediaAnimation, InputMediaVideo
 from helper.bossoms import get_page_caption, get_inline_keyboard, get_page_gif 
 
-async def handle_callback(callback_query: CallbackQuery, page_number[0]):
+async def handle_callback(callback_query: CallbackQuery, page_number):
     data = callback_query.data
 
     if data == "previous":
