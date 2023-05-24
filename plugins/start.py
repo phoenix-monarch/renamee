@@ -5,8 +5,8 @@ from helper.database import db
 from helper.token import none_admin_utils
 from time import time
 from uuid import uuid4
-from helper.bossoms import get_page_gif, get_page_caption, get_inline_keyboard
-from helper.knockers import handle_callback
+from gif import *
+from config import Config, Txt
 
 @Client.on_message(filters.private & filters.command(['start']))
 async def start(client, message):
@@ -25,7 +25,7 @@ async def start(client, message):
                 supports_streaming=True
             )
             return
- 
+
         if 'token' not in data or data['token'] != input_token:
             gif_url = 'https://graph.org/file/f6e6beb62a16a46642fb4.mp4'
             caption = '''This token is already expired.
@@ -38,31 +38,60 @@ async def start(client, message):
                 supports_streaming=True
             )
             return
-        
+
         data['token'] = str(uuid4())
         data['time'] = time()
         await db.update_user_data(userid, data)
-         
-        page_number = [0]
-        caption = get_page_caption(page_number, message.from_user.first_name, message.from_user.last_name, None if not message.from_user.username else '@' + message.from_user.username, message.from_user.mention, message.from_user.id)
-        inline_keyboard = get_inline_keyboard(page_number)
-        reply_markup = InlineKeyboardMarkup(inline_keyboard)
+
+        button = InlineKeyboardMarkup([[
+            InlineKeyboardButton("👨‍💻 Dᴇᴠꜱ 👨‍💻", url='tg://settings')
+        ], [
+            InlineKeyboardButton('📯 Uᴩᴅᴀᴛᴇꜱ', url='https://t.me/kirigayaakash'),
+            InlineKeyboardButton('💁‍♂️ Sᴜᴩᴩᴏʀᴛ', url='https://t.me/kirigaya_asuna')
+        ], [
+            InlineKeyboardButton('🛠️ Hᴇʟᴩ', callback_data='help')
+        ]])
+
+        gifs = os.listdir('./gif')
+        selected_gif = random.choice(gifs)
+        caption = '''Hello {message.from_user.mention}!
+
+1. 🙏 𝚆𝚎𝚕𝚌𝚘𝚖𝚎 𝚃𝚘 𝚃𝚑𝚎 𝙱𝚘𝚝.!
+2. 👋 𝚂𝚒𝚗𝚌𝚎 𝚈𝚘𝚞 𝚂𝚝𝚊𝚛𝚝𝚎𝚍 𝚃𝚑𝚒𝚜 𝙱𝚘𝚝 𝙸 𝙷𝚘𝚙𝚎 𝚈𝚘𝚞 𝙰𝚕𝚕 𝙺𝚗𝚘𝚠 𝚆𝚑𝚊𝚝 𝚃𝚑𝚒𝚜 𝙱𝚘𝚝 𝙳𝚘.......𝙸𝚏 𝙽𝚘𝚝 𝙰 𝙱𝚛𝚒𝚎𝚏 𝙽𝚘𝚝𝚎.....
+3. ✍ 𝚃𝚑𝚒𝚜 𝙱𝚘𝚝 𝙲𝚊𝚗 𝚁𝚎𝚗𝚊𝚖𝚎 𝙵𝚒𝚕𝚎𝚜.
+4. 🧑‍💻 𝚃𝚑𝚒𝚜 𝙱𝚘𝚝 𝙲𝚘𝚛𝚎 𝚁𝚎𝚙𝚘 𝙸𝚜 𝙿𝚢𝚛𝚘 𝙱𝚘𝚝𝚣 𝚁𝚎𝚙𝚘 𝙱𝚞𝚝 𝙸 𝙷𝚊𝚟𝚎 𝙴𝚍𝚒𝚝𝚎𝚍 𝚃𝚑𝚎 𝙱𝚘𝚝  𝚁𝚎𝚙𝚘 𝙵𝚘𝚛 𝙼𝚢 𝙿𝚞𝚛𝚙𝚘𝚜𝚎.
+5. 🤝 𝙸𝚏 𝚈𝚘𝚞 𝚆𝚒𝚜𝚑 𝚃𝚘 𝚄𝚜𝚎 𝚃𝚑𝚒𝚜 𝙱𝚘𝚝 . 𝚈𝚘𝚞 𝙲𝚊𝚗 𝚄𝚜𝚎 𝙸𝚝.'''
         await message.reply_video(
-            video=get_page_gif(page_number),
+            video=f'./gif/{selected_gif}',
             caption=caption,
-            supports_streaming=True,
-            reply_markup=reply_markup
+            reply_markup=button,
+            disable_web_page_preview=True,
+            supports_streaming=True
         )
-        
     except Exception as e:
         print(f"An error occurred while executing start: {e}")
 
+
 @Client.on_callback_query()
-async def callback_query(client, callback_query):
-    try:
-        await handle_callback(callback_query, page_number)
-    except Exception as e:
-        print(f"An error occurred while handling callback in start query: {e}")
+async def cb_handler(client, query: CallbackQuery):
+    data = query.data
+    if data == "help":
+        await query.message.edit_caption(
+            caption=Txt.HELP_TXT,
+            disable_web_page_preview=True,
+            reply_markup=InlineKeyboardMarkup([[
+                InlineKeyboardButton("🔒 Cʟᴏꜱᴇ", callback_data="close")
+            ]])
+        )
+    elif data == "close":
+        try:
+            await query.message.delete()
+            await query.message.reply_to_message.delete()
+            await query.message.continue_propagation()
+        except:
+            await query.message.delete()
+            await query.message.continue_propagation()
+
 
 @Client.on_message(filters.private & filters.command(['ping']))
 async def ping(client, message):
