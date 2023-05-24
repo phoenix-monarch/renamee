@@ -46,10 +46,10 @@ async def start(client, message):
         await db.update_user_data(userid, data)
 
         caption = get_page_caption(page_number[0], message.from_user.first_name, message.from_user.last_name, None if not message.from_user.username else '@' + message.from_user.username, message.from_user.mention, message.from_user.id)
-        inline_keyboard = get_inline_keyboard(page_number)
+        inline_keyboard = get_inline_keyboard(page_number[0])
         reply_markup = InlineKeyboardMarkup(inline_keyboard)
         await message.reply_video(
-            video=get_page_gif(page_number),
+            video=get_page_gif(page_number[0]),
             caption=caption,
             supports_streaming=True,
             reply_markup=reply_markup
@@ -61,6 +61,6 @@ async def start(client, message):
 @Client.on_callback_query()
 async def callback_query(client, callback_query):
     try:
-        await handle_callback(callback_query, page_number)
+        await handle_callback(callback_query, page_number[0])
     except Exception as e:
         print(f"An error occurred while handling callback in start query: {e}")
