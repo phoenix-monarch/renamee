@@ -17,15 +17,18 @@ async def ping(client, message):
                 reply_markup=InlineKeyboardMarkup([[error_button]])
             )
             return
-        
+
         start = time()
         sent_message = await message.reply("😐😑😶")
         await asyncio.sleep(3)
         end = time()
         duration = round((end - start) * 1000, 3)
         await sent_message.edit_text(f"😶😑😏: {duration}ms")
+    except AttributeError:
+        print("The 'message.chat' object is None or doesn't have the 'write' attribute.")
     except Exception as e:
         print(f"An error occurred while executing ping: {e}")
+
 
 @Client.on_message(filters.private & filters.command('set_caption'))
 async def add_caption(client, message):
