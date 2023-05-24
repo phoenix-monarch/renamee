@@ -8,13 +8,13 @@ from shortener import shorten_url
 async def none_admin_utils(client, message):
     error_msg = []
     error_button = None
-    token_msg, button = await validate_user(message)
+    token_msg, button = await validate_user(client, message)
     if token_msg is not None:
         error_msg.append(token_msg)
         error_button = button    
     return error_msg, error_button
 
-async def validate_user(message, button=None):
+async def validate_user(client, message, button=None):
     if not Config.TOKEN_TIMEOUT:
         return None, button
     userid = message.from_user.id
