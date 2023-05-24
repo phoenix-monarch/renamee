@@ -8,9 +8,13 @@ from helper.token import none_admin_utils
 @Client.on_message(filters.private & filters.command('ping'))
 async def ping(client, message):
     try:
+        print("After Ping Command")
         none_admin_msg, error_button = await none_admin_utils(client, message)
+        print("Inside none_admin_utils")
         error_msg = []
+        print("Inside error"f'{error_msg})
         if none_admin_msg:
+            print("After If")  
             error_msg.extend(none_admin_msg)
             await client.send_message(
                 chat_id=message.chat.id,
@@ -18,6 +22,7 @@ async def ping(client, message):
                 reply_markup=InlineKeyboardMarkup([[error_button]])
             )
             return
+        print("Before return")
         start = time()
         sent_message = await message.reply("😐😑😶")
         await asyncio.sleep(3)
@@ -114,9 +119,7 @@ async def viewthumb(client, message):
 @Client.on_message(filters.private & filters.command(['del_thumb', 'delthumb']))
 async def removethumb(client, message):
     try:
-        print("Before none_admin_utils")
         none_admin_msg, error_button = await none_admin_utils(client, message)
-        print("Inside none_admin_utils")
         error_msg = []
         if none_admin_msg:
             error_msg.extend(none_admin_msg)
@@ -125,11 +128,8 @@ async def removethumb(client, message):
                 text='\n'.join(error_msg),
                 reply_markup=InlineKeyboardMarkup([[error_button]])
             )
-            print("Before return")
             return
-        print("After return")
         await db.set_thumbnail(message.from_user.id, file_id=None)
-        print("Before reply_text")
         await message.reply_text("❌️ Tʜᴜᴍʙɴᴀɪʟ Dᴇʟᴇᴛᴇᴅ")
     except Exception as e:
         print(f"An error occurred while executing removethumb: {e}")        
