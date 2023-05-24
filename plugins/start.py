@@ -8,7 +8,7 @@ from uuid import uuid4
 from helper.bossoms import get_page_gif, get_page_caption, get_inline_keyboard
 from helper.knockers import handle_callback
 
-page_number = 0
+page_number = [0]
 
 @Client.on_message(filters.private & filters.command(['start']))
 async def start(client, message):
@@ -45,11 +45,11 @@ async def start(client, message):
         data['time'] = time()
         await db.update_user_data(userid, data)
 
-        caption = get_page_caption(page_number, message.from_user.first_name, message.from_user.last_name, None if not message.from_user.username else '@' + message.from_user.username, message.from_user.mention, message.from_user.id)
-        inline_keyboard = get_inline_keyboard(page_number)
+        caption = get_page_caption(page_number[0], message.from_user.first_name, message.from_user.last_name, None if not message.from_user.username else '@' + message.from_user.username, message.from_user.mention, message.from_user.id)
+        inline_keyboard = get_inline_keyboard(page_number[0])
         reply_markup = InlineKeyboardMarkup(inline_keyboard)
         await message.reply_video(
-            video=get_page_gif(page_number),
+            video=get_page_gif(page_number[0]),
             caption=caption,
             supports_streaming=True,
             reply_markup=reply_markup
