@@ -10,7 +10,6 @@ def get_page_gif(page_number):
     return gif_path
 
 def get_page_caption(page_number, first_name, last_name, username, mention, id):
-    page_number = page_number[0]
     if page_number == 0:
         page_text = Config.Text
     elif page_number == 1:
@@ -29,9 +28,9 @@ def get_inline_keyboard(page_number):
     inline_keyboard = []
 
     row = []
-    if page_number[0] > 0:
+    if page_number > 0:
         row.append(InlineKeyboardButton("👈 Previous", callback_data="previous"))
-    if page_number[0] < 4 and (page_number != 5 or Config.Text):
+    if page_number < 4 and (page_number != 5 or Config.Text):
         row.append(InlineKeyboardButton("Next 👉", callback_data="next"))
     inline_keyboard.append(row)
 
