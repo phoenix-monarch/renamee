@@ -5,7 +5,6 @@ from pyrogram.types import InlineKeyboardMarkup
 from helper.database import db
 from helper.token import none_admin_utils
 
-
 @Client.on_message(filters.private & filters.command('ping'))
 async def ping(client, message):
     try:
@@ -28,7 +27,6 @@ async def ping(client, message):
     except Exception as e:
         print(f"An error occurred while executing ping: {e}")
 
-
 @Client.on_message(filters.private & filters.command('set_caption'))
 async def add_caption(client, message):
     try:
@@ -50,7 +48,6 @@ async def add_caption(client, message):
     except Exception as e:
         print(f"An error occurred while executing set_caption: {e}")
 
-
 @Client.on_message(filters.private & filters.command('del_caption'))
 async def delete_caption(client, message):
     try:
@@ -67,11 +64,10 @@ async def delete_caption(client, message):
         caption = await db.get_caption(message.from_user.id)
         if not caption:
             return await message.reply_text("__**😔 Yᴏᴜ Dᴏɴ'ᴛ Hᴀᴠᴇ Aɴy Cᴀᴩᴛɪᴏɴ**__")
-    await db.set_caption(message.from_user.id, caption=None)
-    await message.reply_text("__**❌️ Cᴀᴩᴛɪᴏɴ Dᴇʟᴇᴛᴇᴅ**__")
+        await db.set_caption(message.from_user.id, caption=None)
+        await message.reply_text("__**❌️ Cᴀᴩᴛɪᴏɴ Dᴇʟᴇᴛᴇᴅ**__")
     except Exception as e:
         print(f"An error occurred while executing del_caption: {e}")
-
 
 @Client.on_message(filters.private & filters.command(['see_caption', 'view_caption']))
 async def see_caption(client, message):
@@ -94,7 +90,6 @@ async def see_caption(client, message):
     except Exception as e:
         print(f"An error occurred while executing see_caption: {e}")
 
-
 @Client.on_message(filters.private & filters.command(['view_thumb', 'viewthumb']))
 async def viewthumb(client, message):
     try:
@@ -116,11 +111,10 @@ async def viewthumb(client, message):
     except Exception as e:
         print(f"An error occurred while executing viewthumb: {e}")
 
-
 @Client.on_message(filters.private & filters.command(['del_thumb', 'delthumb']))
 async def removethumb(client, message):
     try:
-        none_admin_msg, error_button = await none_admin_utils(message)
+        none_admin_msg, error_button = await none_admin_utils(client, message)
         error_msg = []
         if none_admin_msg:
             error_msg.extend(none_admin_msg)
@@ -134,7 +128,6 @@ async def removethumb(client, message):
         await message.reply_text("❌️ __**Tʜᴜᴍʙɴᴀɪʟ Dᴇʟᴇᴛᴇᴅ**__")
     except Exception as e:
         print(f"An error occurred while executing removethumb: {e}")
-
 
 @Client.on_message(filters.private & filters.photo)
 async def addthumbs(client, message):
