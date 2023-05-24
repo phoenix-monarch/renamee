@@ -92,7 +92,6 @@ async def cb_handler(client, query: CallbackQuery):
             await query.message.delete()
             await query.message.continue_propagation()
 
-
 @Client.on_message(filters.private & filters.command(['ping']))
 async def ping(client, message):
     try:
@@ -113,5 +112,9 @@ async def ping(client, message):
         end = time()
         duration = round((end - start) * 1000, 3)
         await sent_message.edit_text(f"😶😑😏: {duration}ms")
+        
+        # Debug Logs and Print Statements
+        print("Ping command executed successfully")
     except Exception as e:
         print(f"An error occurred while executing ping: {e}")
+        
