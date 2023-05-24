@@ -12,7 +12,7 @@ async def ping(client, message):
         none_admin_msg, error_button = await none_admin_utils(client, message)
         print("Inside none_admin_utils")
         error_msg = []
-        print("Inside error"f'{error_msg}')
+        print("Inside error", error_msg)
         if none_admin_msg:
             print("After If")  
             error_msg.extend(none_admin_msg)
