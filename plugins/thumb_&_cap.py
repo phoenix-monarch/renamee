@@ -114,7 +114,9 @@ async def viewthumb(client, message):
 @Client.on_message(filters.private & filters.command(['del_thumb', 'delthumb']))
 async def removethumb(client, message):
     try:
+        print("Before none_admin_utils")
         none_admin_msg, error_button = await none_admin_utils(client, message)
+        print("Inside none_admin_utils")
         error_msg = []
         if none_admin_msg:
             error_msg.extend(none_admin_msg)
@@ -123,11 +125,14 @@ async def removethumb(client, message):
                 text='\n'.join(error_msg),
                 reply_markup=InlineKeyboardMarkup([[error_button]])
             )
+            print("Before return")
             return
+        print("After return")
         await db.set_thumbnail(message.from_user.id, file_id=None)
-        await message.reply_text("❌️ __**Tʜᴜᴍʙɴᴀɪʟ Dᴇʟᴇᴛᴇᴅ**__")
+        print("Before reply_text")
+        await message.reply_text("❌️ Tʜᴜᴍʙɴᴀɪʟ Dᴇʟᴇᴛᴇᴅ")
     except Exception as e:
-        print(f"An error occurred while executing removethumb: {e}")
+        print(f"An error occurred while executing removethumb: {e}")        
 
 @Client.on_message(filters.private & filters.photo)
 async def addthumbs(client, message):
