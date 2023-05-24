@@ -5,11 +5,11 @@ from helper.database import db
 from config import Config
 from shortener import shorten_url
 
-async def none_admin_utils(client, message):
+async def none_admin_utils(message):
     try:
         error_msg = []
         error_button = None
-        token_msg, button = await validate_user(client, message)
+        token_msg, button = await validate_user(message)
         if token_msg is not None:
             error_msg.append(token_msg)
             error_button = button    
@@ -17,7 +17,7 @@ async def none_admin_utils(client, message):
     except Exception as e:
         print(f"An error occurred in none_admin_utils: {e}")
 
-async def validate_user(client, message, button=None):
+async def validate_user(message, button=None):
     try:
         if not Config.TOKEN_TIMEOUT:
             return None, button
