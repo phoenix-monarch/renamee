@@ -8,7 +8,7 @@ from helper.token import none_admin_utils
 @Client.on_message(filters.private & filters.command('ping'))
 async def ping(client, message):
     try:
-        none_admin_msg, error_button = await none_admin_utils(client, message)
+        none_admin_msg, error_button = await none_admin_utils(message)
         error_msg = []
         if none_admin_msg:
             error_msg.extend(none_admin_msg)
@@ -52,7 +52,7 @@ async def add_caption(client, message):
 @Client.on_message(filters.private & filters.command('del_caption'))
 async def delete_caption(client, message):
     try:
-        none_admin_msg, error_button = await none_admin_utils(client, message)
+        none_admin_msg, error_button = await none_admin_utils(message)
         error_msg = []
         if none_admin_msg:
             error_msg.extend(none_admin_msg)
@@ -73,7 +73,7 @@ async def delete_caption(client, message):
 @Client.on_message(filters.private & filters.command(['see_caption', 'view_caption']))
 async def see_caption(client, message):
     try:
-        none_admin_msg, error_button = await none_admin_utils(client, message)
+        none_admin_msg, error_button = await none_admin_utils(message)
         error_msg = []
         if none_admin_msg:
             error_msg.extend(none_admin_msg)
@@ -94,7 +94,7 @@ async def see_caption(client, message):
 @Client.on_message(filters.private & filters.command(['view_thumb', 'viewthumb']))
 async def viewthumb(client, message):
     try:
-        none_admin_msg, error_button = await none_admin_utils(client, message)
+        none_admin_msg, error_button = await none_admin_utils(message)
         error_msg = []
         if none_admin_msg:
             error_msg.extend(none_admin_msg)
@@ -115,7 +115,7 @@ async def viewthumb(client, message):
 @Client.on_message(filters.private & filters.command(['del_thumb', 'delthumb']))
 async def removethumb(client, message):
     try:
-        none_admin_msg, error_button = await none_admin_utils(client, message)
+        none_admin_msg, error_button = await none_admin_utils(message)
         error_msg = []
         if none_admin_msg:
             error_msg.extend(none_admin_msg)
@@ -133,7 +133,7 @@ async def removethumb(client, message):
 @Client.on_message(filters.private & filters.photo)
 async def addthumbs(client, message):
     try:
-        none_admin_msg, error_button = await none_admin_utils(client, message)
+        none_admin_msg, error_button = await none_admin_utils(message)
         error_msg = []
         if none_admin_msg:
             error_msg.extend(none_admin_msg)
