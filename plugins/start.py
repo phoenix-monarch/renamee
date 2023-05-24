@@ -64,26 +64,3 @@ async def callback_query(client, callback_query):
         await handle_callback(callback_query, page_number)
     except Exception as e:
         print(f"An error occurred while handling callback in start query: {e}")
-
-@Client.on_message(filters.private & filters.command(['ping']))
-async def ping(client, message):
-    try:
-        none_admin_msg, error_button = await none_admin_utils(message)
-        error_msg = []
-        if none_admin_msg:
-            error_msg.extend(none_admin_msg)
-            await client.send_message(
-                chat_id=message.chat.id,
-                text='\n'.join(error_msg),
-                reply_markup=InlineKeyboardMarkup([[error_button]])
-            )
-            return
-
-        start = time()
-        sent_message = await message.reply("😐😑😶")
-        await asyncio.sleep(3)
-        end = time()
-        duration = round((end - start) * 1000, 3)
-        await sent_message.edit_text(f"😶😑😏: {duration}ms")
-    except Exception as e:
-        print(f"An error occurred while executing ping: {e}")
