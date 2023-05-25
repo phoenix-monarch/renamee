@@ -12,7 +12,8 @@ async def ping(client, message):
         error_msg = []
         if none_admin_msg:
             error_msg.extend(none_admin_msg)
-            await message.reply_text(
+            await client.send_message(
+                chat_id=message.chat.id,
                 text='\n'.join(error_msg),
                 reply_markup=InlineKeyboardMarkup([[error_button]])
             )
@@ -24,8 +25,6 @@ async def ping(client, message):
         end = time()
         duration = round((end - start) * 1000, 3)
         await sent_message.edit_text(f"😶😑😏: {duration}ms")
-    except AttributeError:
-        print("The 'message.chat' object is None or doesn't have the 'write' attribute.")
     except Exception as e:
         print(f"An error occurred while executing ping: {e}")
 
@@ -37,7 +36,8 @@ async def add_caption(client, message):
         error_msg = []
         if none_admin_msg:
             error_msg.extend(none_admin_msg)
-            await message.reply_text(
+            await client.send_message(
+                chat_id=message.chat.id,
                 text='\n'.join(error_msg),
                 reply_markup=InlineKeyboardMarkup([[error_button]])
             )
@@ -57,7 +57,8 @@ async def delete_caption(client, message):
         error_msg = []
         if none_admin_msg:
             error_msg.extend(none_admin_msg)
-            await message.reply_text(
+            await client.send_message(
+                chat_id=message.chat.id,
                 text='\n'.join(error_msg),
                 reply_markup=InlineKeyboardMarkup([[error_button]])
             )
@@ -77,7 +78,8 @@ async def see_caption(client, message):
         error_msg = []
         if none_admin_msg:
             error_msg.extend(none_admin_msg)
-            await message.reply_text(
+            await client.send_message(
+                chat_id=message.chat.id,
                 text='\n'.join(error_msg),
                 reply_markup=InlineKeyboardMarkup([[error_button]])
             )
@@ -97,7 +99,8 @@ async def viewthumb(client, message):
         error_msg = []
         if none_admin_msg:
             error_msg.extend(none_admin_msg)
-            await message.reply_text(
+            await client.send_message(
+                chat_id=message.chat.id,
                 text='\n'.join(error_msg),
                 reply_markup=InlineKeyboardMarkup([[error_button]])
             )
@@ -135,7 +138,8 @@ async def addthumbs(client, message):
         error_msg = []
         if none_admin_msg:
             error_msg.extend(none_admin_msg)
-            await message.reply_text(
+            await client.send_message(
+                chat_id=message.chat.id,
                 text='\n'.join(error_msg),
                 reply_markup=InlineKeyboardMarkup([[error_button]])
             )
