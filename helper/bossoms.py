@@ -4,10 +4,10 @@ from config import Config
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 
 def get_page_gif(page_number):
-    gifs = os.listdir('./gif')
-    selected_gif = random.choice(gifs)
+    gif = [file for file in os.listdir('./gif') if file.endswith('.mp4')]
+    selected_gif = random.choice(gif)
     gif_path = f'./gif/{selected_gif}'
-    return gif_path
+    return mp4_path
 
 def get_page_caption(page_number, first_name, last_name, username, mention, id):
     if page_number == 0:
