@@ -1,4 +1,4 @@
-import re, os, time, logging 
+import re, os, time, logging, random
 from pyrogram.errors import FloodWait, RPCError
 
 logging.basicConfig(level=logging.INFO, filename='error.log')
@@ -37,6 +37,7 @@ class Config(object):
         if os.path.exists('shorteners.txt'):
             with open('shorteners.txt', 'r') as f:
                 lines = f.readlines()
+                random.sfhuffle(lines)
                 for line in lines:
                     temp = line.strip().split()
                     if len(temp) == 2:
