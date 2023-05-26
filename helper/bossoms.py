@@ -22,7 +22,7 @@ def get_page_caption(page_number, first_name, last_name, mention, username, id):
         page_text = Config.Text4
         
     username = None if not username else '@' + username
-    caption = page_text.format(first_name, last_name, username, mention, id)
+    caption = page_text.format(first_name=first_name, last_name=last_name, username=username, mention=mention, id=id)
     return caption
 
 def get_inline_keyboard(page_number):
