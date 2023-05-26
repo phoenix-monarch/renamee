@@ -19,7 +19,7 @@ async def handle_callback(callback_query: CallbackQuery, page_number, user: User
     inline_keyboard = get_inline_keyboard(page_number[0])
 
     try:
-        if callback_query.message is not None and isinstance(callback_query.message.media, (InputMediaVideo, InputMediaAnimation)):
+        if isinstance(callback_query.message.media, (InputMediaVideo, InputMediaAnimation)):
             video_path = get_page_gif(page_number[0])
             video = InputMediaVideo(media=video_path, caption=caption)
             await callback_query.message.edit_media(
