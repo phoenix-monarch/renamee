@@ -7,7 +7,7 @@ def get_page_gif(page_number):
     gif = [file for file in os.listdir('./gif') if file.endswith('.mp4')]
     selected_gif = random.choice(gif)
     gif_path = f'./gif/{selected_gif}'
-    return mp4_path
+    return gif_path
 
 def get_page_caption(page_number, first_name, last_name, mention, username, id):
     if page_number == 0:
