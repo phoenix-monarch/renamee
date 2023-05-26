@@ -14,6 +14,8 @@ async def none_admin_utils(message):
             error_msg.append(token_msg)
             error_button = button    
         return error_msg, error_button
+    except AttributeError:
+        raise AttributeError("The 'message.chat' object is None or doesn't have the 'write' attribute.")
     except Exception as e:
         print(f"An error occurred in none_admin_utils: {e}")
 
