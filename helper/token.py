@@ -47,5 +47,7 @@ async def validate_user(message, button=None):
             return error_msg, button
 
         return None, button
+    except AttributeError as e:
+        print(f"An error occurred in none_admin_utils: {e}")
     except Exception as e:
         print(f"An error occurred in validate_user: {e}")
