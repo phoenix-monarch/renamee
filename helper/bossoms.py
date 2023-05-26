@@ -21,7 +21,7 @@ def get_page_caption(page_number, first_name, last_name, mention, username, id):
     elif page_number == 4:
         page_text = Config.Text4
         
-    username = None if not username else '@' + username 
+    username = None if not username else '@' + username
     caption = page_text.format(first_name, last_name, username, mention, id)
     return caption
 
