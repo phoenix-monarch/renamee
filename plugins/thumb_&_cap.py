@@ -8,7 +8,7 @@ from helper.token import none_admin_utils
 @Client.on_message(filters.private & filters.command('ping'))
 async def ping(client, message):
     try:
-        none_admin_msg, error_button = await none_admin_utils(client, message)
+        none_admin_msg, error_button = await none_admin_utils(message)
         error_msg = none_admin_msg
         if error_msg:
             reply_markup = None
