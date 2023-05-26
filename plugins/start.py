@@ -61,6 +61,6 @@ async def start(client, message):
 @Client.on_callback_query()
 async def callback_query(client, callback_query):
     try:
-        await handle_callback(callback_query, page_number)
+        await handle_callback(callback_query, page_number, callback_query.from_user)
     except Exception as e:
         print(f"An error occurred while handling callback in start query: {e}")
