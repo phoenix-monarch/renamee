@@ -14,10 +14,10 @@ async def none_admin_utils(message):
             error_msg.append(token_msg)
             error_button = button    
         return error_msg, error_button
+    
     except Exception as e:
         print(f"An error occurred in none_admin_utils: {e}")
         traceback.print_exc()
-        return [], None
  
 async def validate_user(message, button=None):
     try:
@@ -40,7 +40,7 @@ async def validate_user(message, button=None):
             return error_msg, button
         
         return None, button
+    
     except Exception as e:
         print(f"An error occurred in validate_user: {e}")
         traceback.print_exc()
-        return None, button
