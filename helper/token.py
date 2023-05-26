@@ -28,7 +28,9 @@ async def validate_user(message, button=None):
             return None, button
 
         if message.chat is None or not hasattr(message.chat, 'write'):
-            raise AttributeError("The 'message.chat' object is None or doesn't have the 'write' attribute.")
+            error_msg = "The 'message.chat' object is None or doesn't have the 'write' attribute."
+            error_button = None
+            return error_msg, error_button
 
         userid = message.from_user.id
         data = await db.get_user_data(userid)
@@ -52,8 +54,6 @@ async def validate_user(message, button=None):
             return error_msg, button
 
         return None, button
-    
-    except AttributeError as e:
-        print(f"An error occurred in validate_user: {e}")
+
     except Exception as e:
         print(f"An error occurred in validate_user: {e}")
