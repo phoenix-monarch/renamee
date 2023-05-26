@@ -12,8 +12,7 @@ async def ping(client, message):
         error_msg = []
         if none_admin_msg:
             error_msg.extend(none_admin_msg)
-            await client.send_message(
-                chat_id=message.chat.id,
+            await message.reply_text(
                 text='\n'.join(error_msg),
                 reply_markup=InlineKeyboardMarkup([[error_button]])
             )
@@ -120,8 +119,7 @@ async def removethumb(client, message):
         error_msg = []
         if none_admin_msg:
             error_msg.extend(none_admin_msg)
-            await client.send_message(
-                chat_id=message.chat.id,
+            await message.reply_text(
                 text='\n'.join(error_msg),
                 reply_markup=InlineKeyboardMarkup([[error_button]])
             )
