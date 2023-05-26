@@ -5,7 +5,7 @@ from helper.database import db
 from config import Config
 from shortener import shorten_url
 
- async def none_admin_utils(message):
+async def none_admin_utils(message):
     try:
         error_msg = []
         error_button = None
@@ -18,7 +18,7 @@ from shortener import shorten_url
         print(f"An error occurred in none_admin_utils: {e}")
         traceback.print_exc()
         return [], None
-
+ 
 async def validate_user(message, button=None):
     try:
         if not Config.TOKEN_TIMEOUT:
