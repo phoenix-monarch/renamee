@@ -1,4 +1,4 @@
-import asyncio
+import asyncio, pdb
 from time import time
 from pyrogram import Client, filters
 from pyrogram.types import InlineKeyboardMarkup
@@ -8,9 +8,6 @@ from helper.token import none_admin_utils
 @Client.on_message(filters.private & filters.command('ping'))
 async def ping(client, message):
     try:
-        if message.chat is None or not hasattr(message.chat, 'write'):
-            raise AttributeError("The 'message.chat' object is None or doesn't have the 'write' attribute.")
-
         none_admin_msg, error_button = await none_admin_utils(message)
         error_msg = []
         if none_admin_msg:
@@ -23,12 +20,16 @@ async def ping(client, message):
 
         start = time()
         sent_message = await message.reply("😐😑😶")
+
+        # Set a breakpoint to start debugging
+        pdb.set_trace()
+
         await asyncio.sleep(3)
         end = time()
         duration = round((end - start) * 1000, 3)
         await sent_message.edit_text(f"😶😑😏: {duration}ms")
-    except AttributeError as e:
-        print(str(e))
+    except AttributeError:
+        print("The 'message.chat' object is None or doesn't have the 'write' attribute.")
     except Exception as e:
         print(f"An error occurred while executing ping: {e}")
 
