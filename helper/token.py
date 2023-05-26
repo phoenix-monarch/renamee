@@ -19,10 +19,10 @@ async def none_admin_utils(message):
         traceback.print_exc()
         return [], None
  
-async def validate_user(message):
+async def validate_user(message, button=None):
     try:
         if not Config.TOKEN_TIMEOUT:
-            return None, None
+            return None, button
         userid = message.from_user.id
         data = await db.get_user_data(userid)
         expire = data.get('time')
@@ -39,8 +39,8 @@ async def validate_user(message):
             error_msg = 'Token is expired, refresh your token and try again.'
             return error_msg, button
         
-        return None, None
+        return None, button
     except Exception as e:
         print(f"An error occurred in validate_user: {e}")
         traceback.print_exc()
-        return None, None
+        return None, button
