@@ -5,7 +5,7 @@ from helper.database import db
 from config import Config
 from shortener import shorten_url
 
-async def none_admin_utils(client, message):
+async def none_admin_utils(message):
     try:
         error_msg = []
         error_button = None
