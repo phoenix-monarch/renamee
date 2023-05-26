@@ -5,11 +5,11 @@ from helper.database import db
 from config import Config
 from shortener import shorten_url
 
-async def none_admin_utils(message):
+async def none_admin_utils(client, message):
     try:
         error_msg = []
         error_button = None
-        token_msg, button = await validate_user(message)
+        token_msg, button = await validate_user(message, button)
         if token_msg is not None:
             error_msg.append(token_msg)
             error_button = button    
@@ -22,7 +22,7 @@ async def none_admin_utils(message):
 async def validate_user(message, button=None):
     try:
         if not Config.TOKEN_TIMEOUT:
-            return None, None
+            return None, button
         userid = message.from_user.id
         data = await db.get_user_data(userid)
         expire = data.get('time')
@@ -39,8 +39,8 @@ async def validate_user(message, button=None):
             error_msg = 'Token is expired, refresh your token and try again.'
             return error_msg, button
         
-        return None, None
+        return None, button
     except Exception as e:
         print(f"An error occurred in validate_user: {e}")
         traceback.print_exc()
-        return None, None
+        return None, button
