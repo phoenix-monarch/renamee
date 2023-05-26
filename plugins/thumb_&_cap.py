@@ -1,4 +1,4 @@
-import asyncio
+import asyncio, traceback
 from time import time
 from pyrogram import Client, filters
 from pyrogram.types import InlineKeyboardMarkup
@@ -26,6 +26,7 @@ async def ping(client, message):
         await sent_message.edit_text(f"😶😑😏: {duration}ms")
     except Exception as e:
         print(f"An error occurred while executing ping: {e}")
+        traceback.print_exc()
 
 @Client.on_message(filters.private & filters.command('set_caption'))
 async def add_caption(client, message):
