@@ -9,7 +9,7 @@ async def none_admin_utils(message):
     try:
         error_msg = []
         error_button = None
-        token_msg, button = await validate_user(message, button)
+        token_msg, button = await validate_user(message)
         if token_msg is not None:
             error_msg.append(token_msg)
             error_button = button    
