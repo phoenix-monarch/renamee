@@ -8,10 +8,12 @@ from helper.token import none_admin_utils
 @Client.on_message(filters.private & filters.command('ping'))
 async def ping(client, message):
     try:
-        none_admin_msg, error_button = await none_admin_utils(message)        
+        none_admin_msg, error_button = await none_admin_utils(message)
+        print(f"none_admin_msg: {none_admin_msg}")
+        print(f"error_button: {error_button}")
         if none_admin_msg:
             error_msg = none_admin_msg
-            reply_markup = InlineKeyboardMarkup([[error_button]]) if error_button else None          
+            reply_markup = InlineKeyboardMarkup([[error_button]]) if not None else None          
             await message.reply_text(
                 text='\n'.join(error_msg),
                 reply_markup=reply_markup
