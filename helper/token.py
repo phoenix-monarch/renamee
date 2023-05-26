@@ -1,4 +1,4 @@
-import random, os, asyncio, uuid
+import os, asyncio, uuid
 from time import time
 from pyrogram.types import InlineKeyboardButton
 from helper.database import db
@@ -7,13 +7,18 @@ from shortener import shorten_url
 
 async def none_admin_utils(message):
     try:
+        result = await validate_user(message)
         error_msg = []
         error_button = None
-        token_msg, button = await validate_user(message)
-        if token_msg is not None:
-            error_msg.append(token_msg)
-            error_button = button    
+        
+        if result and isinstance(result, tuple):
+            token_msg, button = result
+            if token_msg is not None:
+                error_msg.append(token_msg)
+                error_button = button
+    
         return error_msg, error_button
+
     except Exception as e:
         print(f"An error occurred in none_admin_utils: {e}")
 
@@ -47,7 +52,8 @@ async def validate_user(message, button=None):
             return error_msg, button
 
         return None, button
+    
     except AttributeError as e:
-        print(f"An error occurred in none_admin_utils: {e}")
+        print(f"An error occurred in validate_user: {e}")
     except Exception as e:
         print(f"An error occurred in validate_user: {e}")
