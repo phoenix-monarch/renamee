@@ -43,4 +43,4 @@ async def validate_user(message):
     except Exception as e:
         print(f"An error occurred in validate_user: {e}")
         traceback.print_exc()
-        return [], None
+        return None, None
