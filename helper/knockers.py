@@ -15,7 +15,7 @@ async def handle_callback(callback_query: CallbackQuery, page_number):
         else:
             page_number[0] += 1
 
-    caption = get_page_caption(page_number[0], callback_query.from_user.first_name, callback_query.from_user.last_name, None if not callback_query.from_user.username else '@' + callback_query.from_user.username, callback_query.from_user.mention, callback_query.from_user.id)
+    caption = get_page_caption(page_number[0], callback_query.from_user.first_name, callback_query.from_user.last_name, callback_query.from_user.username, callback_query.from_user.mention, callback_query.from_user.id)
     inline_keyboard = get_inline_keyboard(page_number[0])
 
     try:
