@@ -9,7 +9,7 @@ def get_page_gif(page_number):
     gif_path = f'./gif/{selected_gif}'
     return mp4_path
 
-def get_page_caption(page_number, first_name, last_name, username, mention, id):
+def get_page_caption(page_number, first_name, last_name, mention, username, id):
     if page_number == 0:
         page_text = Config.Text
     elif page_number == 1:
@@ -21,7 +21,8 @@ def get_page_caption(page_number, first_name, last_name, username, mention, id):
     elif page_number == 4:
         page_text = Config.Text4
         
-    caption = f"{page_text}"
+    username = None if not username else '@' + username 
+    caption = page_text.format(first_name, last_name, username, mention, id)
     return caption
 
 def get_inline_keyboard(page_number):
