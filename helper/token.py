@@ -34,8 +34,8 @@ async def validate_user(message):
             data['token'] = token
             await db.update_user_data(userid, data)        
             if button is None:
-                button = InlineKeyboardButton(text='Refresh Token', url=https://t.me/{Config.BOT_NAME}?start={token}')
-                                              
+                button = InlineKeyboardButton(text='Refresh Token', url=https://t.me/{Config.BOT_NAME}?start={token})
+                
             error_msg = 'Token is expired, refresh your token and try again.'
             return error_msg, button
         
