@@ -13,7 +13,7 @@ async def ping(client, message):
         print(f"error_button: {error_button}")
         if none_admin_msg:
             error_msg = none_admin_msg
-            reply_markup = InlineKeyboardMarkup([[error_button]]) if not None else None          
+            reply_markup = InlineKeyboardMarkup([[error_button]])          
             await message.reply_text(
                 text='\n'.join(error_msg),
                 reply_markup=reply_markup
