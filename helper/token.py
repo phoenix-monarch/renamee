@@ -18,6 +18,7 @@ async def none_admin_utils(message):
     except Exception as e:
         print(f"An error occurred in none_admin_utils: {e}")
         traceback.print_exc()
+        return [], None
  
 async def validate_user(message, button=None):
     try:
