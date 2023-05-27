@@ -16,8 +16,8 @@ async def ping(client, message):
             reply_markup = InlineKeyboardMarkup([[error_button]])          
             await message.reply_text(
                 text='\n'.join(error_msg),
-                print(f"text: {text}")
-                reply_markup=reply_markup
+                print(f"text: {text}"),
+                reply_markup=reply_markup,
                 print(f"reply_markup: {reply_markup}")    
             )
             return
