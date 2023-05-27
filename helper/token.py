@@ -13,7 +13,7 @@ async def none_admin_utils(message):
         if token_msg is not None:
             error_msg.append(token_msg)
             error_button = button
-        return error_msg, error_button if error_button else None
+        return error_msg, error_button
     
     except Exception as e:
         print(f"An error occurred in none_admin_utils: {e}")
@@ -22,7 +22,7 @@ async def none_admin_utils(message):
 async def validate_user(message, button=None):
     try:
         if not Config.TOKEN_TIMEOUT:
-            return None
+            return None, button
         userid = message.from_user.id
         data = await db.get_user_data(userid)
         expire = data.get('time')
@@ -39,7 +39,7 @@ async def validate_user(message, button=None):
             error_msg = 'Token is expired, refresh your token and try again.'
             return error_msg, button
         
-        return None
+        return None, button
     
     except Exception as e:
         print(f"An error occurred in validate_user: {e}")
