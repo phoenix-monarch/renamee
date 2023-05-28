@@ -1,7 +1,7 @@
-import asyncio, traceback
+import asyncio
 from time import time
 from pyrogram import Client, filters
-from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
+from pyrogram.types import InlineKeyboardMarkup
 from helper.database import db
 from helper.token import none_admin_utils
 
@@ -9,12 +9,13 @@ from helper.token import none_admin_utils
 async def ping(client, message):
     try:
         none_admin_msg, error_button = await none_admin_utils(message)
+        error_msg = []
         if none_admin_msg:
-            error_msg = none_admin_msg
-            reply_markup = InlineKeyboardMarkup([[error_button]])         
-            await message.reply_text(
-                text=error_msg,
-                reply_markup=reply_markup
+            error_msg.extend(none_admin_msg)
+            await client.send_message(
+                chat_id=message.chat.id,
+                text='\n'.join(error_msg),
+                reply_markup=InlineKeyboardMarkup([[error_button]])
             )
             return
 
