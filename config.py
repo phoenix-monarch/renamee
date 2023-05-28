@@ -28,7 +28,6 @@ class Config(object):
     Text1 = os.environ.get("Text1", "")
     Text2 = os.environ.get("Text2", "")
     Text3 = os.environ.get("Text3", "")
-    Text4 = os.environ.get("Text4", "")
 
     LOGGER = LOG
     shorteners_list = []
