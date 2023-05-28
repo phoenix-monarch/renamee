@@ -1,4 +1,4 @@
-import os, asyncio, uuid, traceback
+import os, asyncio, uuid
 from time import time
 from pyrogram.types import InlineKeyboardButton
 from helper.database import db
@@ -17,8 +17,6 @@ async def none_admin_utils(message):
     
     except Exception as e:
         print(f"An error occurred in none_admin_utils: {e}")
-        traceback.print_exc()
-        return [], None
  
 async def validate_user(message, button=None):
     try:
@@ -44,4 +42,3 @@ async def validate_user(message, button=None):
     
     except Exception as e:
         print(f"An error occurred in validate_user: {e}")
-        traceback.print_exc()
