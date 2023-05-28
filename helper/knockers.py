@@ -10,8 +10,8 @@ async def handle_callback(callback_query: CallbackQuery, page_number, user: User
         else:
             page_number[0] -= 1
     elif data == "next":
-        if page_number[0] == 4:
-            page_number[0] = 4
+        if page_number[0] == 3:
+            page_number[0] = 3
         else:
             page_number[0] += 1
 
