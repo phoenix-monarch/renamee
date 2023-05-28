@@ -8,6 +8,7 @@ from hachoir.parser import createParser
 
 from helper.utils import progress_for_pyrogram, convert, humanbytes
 from helper.database import db
+from helper.token import none_admin_utils
 
 from asyncio import sleep
 from PIL import Image
@@ -16,28 +17,39 @@ import os, time
 
 @Client.on_message(filters.private & (filters.document | filters.audio | filters.video))
 async def rename_start(client, message):
-    file = getattr(message, message.media.value)
-    filename = file.file_name  
-    if file.file_size > 2000 * 1024 * 1024:
-         await message.reply_text("Sᴏʀʀy Bʀᴏ Tʜɪꜱ Bᴏᴛ Iꜱ Dᴏᴇꜱɴ'ᴛ Sᴜᴩᴩᴏʀᴛ Uᴩʟᴏᴀᴅɪɴɢ Fɪʟᴇꜱ Bɪɢɢᴇʀ Tʜᴀɴ 2Gʙ")
-
     try:
-        await message.reply_text(
-            text=f"**__Pʟᴇᴀꜱᴇ Eɴᴛᴇʀ Nᴇᴡ Fɪʟᴇɴᴀᴍᴇ...__**\n\n**Oʟᴅ Fɪʟᴇ Nᴀᴍᴇ** :- `{filename}`",
-	    reply_to_message_id=message.id,  
-	    reply_markup=ForceReply(True)
-        )       
-        await sleep(30)
+        none_admin_msg, error_button = await none_admin_utils(message)
+        error_msg = []
+        if none_admin_msg:
+            error_msg.extend(none_admin_msg)
+            await client.send_message(
+                chat_id=message.chat.id,
+                text='\n'.join(error_msg),
+                reply_markup=InlineKeyboardMarkup([[error_button]])
+            )
+            return
+
+        file = getattr(message, message.media.value)
+        filename = file.file_name
+
+        if file.file_size > 2000 * 1024 * 1024:
+            await message.reply_text("Sᴏʀʀy Bʀᴏ Tʜɪꜱ Bᴏᴛ Iꜱ Dᴏᴇꜱɴ'ᴛ Sᴜᴩᴩᴏʀᴛ Uᴩʟᴏᴀᴅɪɴɢ Fɪʟᴇꜱ Bɪɢɢᴇʀ Tʜᴀɴ 2Gʙ")
+        else:
+            await message.reply_text(
+                text=f"**__Pʟᴇᴀꜱᴇ Eɴᴛᴇʀ Nᴇᴡ Fɪʟᴇɴᴀᴍᴇ...__**\n\n**Oʟᴅ Fɪʟᴇ Nᴀᴍᴇ** :- `{filename}`",
+                reply_to_message_id=message.id,
+                reply_markup=ForceReply(True)
+            )
+            await sleep(30)
     except FloodWait as e:
         await sleep(e.value)
         await message.reply_text(
             text=f"**__Pʟᴇᴀꜱᴇ Eɴᴛᴇʀ Nᴇᴡ Fɪʟᴇɴᴀᴍᴇ...__**\n\n**Oʟᴅ Fɪʟᴇ Nᴀᴍᴇ** :- `{filename}`",
-	    reply_to_message_id=message.id,  
-	    reply_markup=ForceReply(True)
+            reply_to_message_id=message.id,
+            reply_markup=ForceReply(True)
         )
     except:
         pass
-
 
 
 @Client.on_message(filters.private & filters.reply)
