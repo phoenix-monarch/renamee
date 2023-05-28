@@ -18,8 +18,6 @@ def get_page_caption(page_number, first_name, last_name, mention, username, id):
         page_text = Config.Text2
     elif page_number == 3:
         page_text = Config.Text3
-    elif page_number == 4:
-        page_text = Config.Text4
         
     username = None if not username else '@' + username
     caption = page_text.format(first_name=first_name, last_name=last_name, username=username, mention=mention, id=id)
@@ -31,7 +29,7 @@ def get_inline_keyboard(page_number):
     row = []
     if page_number > 0:
         row.append(InlineKeyboardButton("👈 Previous", callback_data="previous"))
-    if page_number < 4 and (page_number != 5 or Config.Text):
+    if page_number < 3 and (page_number != 4 or Config.Text):
         row.append(InlineKeyboardButton("Next 👉", callback_data="next"))
     inline_keyboard.append(row)
 
