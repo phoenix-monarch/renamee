@@ -73,13 +73,8 @@
             "required": true
         },
         "Text3":{
-            "description":"Text for 4th page",
+            "description":"Text for 3rd page",
             "value": "YUITOAKASH",
-            "required": true
-        },
-        "Text4":{
-            "description":"Text for 5th page",
-            "value": "kirito",
             "required": true
         }
     },
