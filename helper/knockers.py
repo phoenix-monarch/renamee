@@ -22,9 +22,8 @@ async def handle_callback(callback_query: CallbackQuery, page_number, user: User
         if isinstance(callback_query.message.media, (InputMediaVideo, InputMediaAnimation)):
             video_path = get_page_gif(page_number[0])
             video = InputMediaVideo(media=video_path, caption=caption)
-            await callback_query.message.edit_media(
-                media=video
-            )
+            await callback_query.message.edit_media(media=video)
+
         if callback_query.message.caption != caption or callback_query.message.reply_markup != InlineKeyboardMarkup(inline_keyboard):
             await callback_query.message.edit_caption(
                 caption,
@@ -32,4 +31,4 @@ async def handle_callback(callback_query: CallbackQuery, page_number, user: User
             )
             
     except Exception as e:
-        print(f"An error occurred in handle_callback: {e}")
+        print(f"An error occurred in knocker: {e}")
