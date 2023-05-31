@@ -65,7 +65,7 @@
         },
         "Text1": {
             "description": "Text for 1st page",
-            "value": "welcome",
+            "value": "",
             "required": false
         },
         "Text2": {
