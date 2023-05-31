@@ -52,6 +52,7 @@ async def start(client, message):
             video=get_page_gif(page_number[0]),
             caption=caption,
             supports_streaming=True,
+            disable_web_page_preview=True,
             reply_markup=reply_markup
         )
         
