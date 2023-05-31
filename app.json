@@ -70,12 +70,12 @@
         },
         "Text2": {
             "description": "Text for 2nd page",
-            "value": "boom",
+            "value": "[boom](https://t.me/kiritoakash)",
             "required": true
         },
         "Text3": {
             "description": "Text for 3rd page",
-            "value": "YUITOAKASH",
+            "value": "",
             "required": true
         }
     },
