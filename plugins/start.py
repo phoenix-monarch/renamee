@@ -27,7 +27,20 @@ async def start(client, message):
                 supports_streaming=True
             )
             return
- 
+        
+        if userid in Config.ADMIN: 
+            caption = get_page_caption(page_number[0], message.from_user.first_name, message.from_user.last_name, message.from_user.username, message.from_user.mention, message.from_user.id)
+            inline_keyboard = get_inline_keyboard(page_number[0])
+            reply_markup = InlineKeyboardMarkup(inline_keyboard)
+            await message.reply_video(
+                video=get_page_gif(page_number[0]),
+                caption=caption,
+                supports_streaming=True,
+                disable_notification=True,
+                reply_markup=reply_markup
+            )
+            return
+
         if 'token' not in data or data['token'] != input_token:
             gif_url = 'https://graph.org/file/f6e6beb62a16a46642fb4.mp4'
             caption = '''This token is already expired.
