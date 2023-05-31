@@ -1,26 +1,26 @@
 {
     "name": "Rename",
-    "description": "Telegram File Renamer Bot ",
+    "description": "Telegram File Renamer Bot",
     "logo": "https://graph.org/file/91ab4b346dddd0652958c.jpg",
     "keywords": ["Rename", "Mongo DB"],
     "repository": "https://github.com/KIRITOAK4/Rename",
     "env": {
         "API_ID": {
-            "description": "Your APP ID From my.telegram.org ",
+            "description": "Your APP ID From my.telegram.org",
             "value": "14712540",
             "required": true
         },
         "API_HASH": {
-            "description": "Your API Hash From my.telegram.org ",
+            "description": "Your API Hash From my.telegram.org",
             "value": "e61b996dc037d969a4f8cf6411bb6165",
             "required": true
         },
         "WEBHOOK": {
-            "description": "if your server is need web service! value = True else value = False",
+            "description": "If your server needs web service! Value = True, else value = False",
             "value": "False"
         },
         "BOT_NAME": {
-            "description": "Your Bot userName without [@]",
+            "description": "Your Bot username without [@]",
             "value": "ya_muxbot",
             "required": true
         },
@@ -30,9 +30,9 @@
             "required": true
         },
         "FORCE_SUB": {
-            "description": "Your force sub channel user name without [@] ",
+            "description": "Your force sub channel username without [@]",
             "value": "YUITOAKASH",
-            "required": false 
+            "required": false
         },
         "BOT_TOKEN": {
             "description": "Your Bot Token From @BotFather",
@@ -40,48 +40,41 @@
             "required": true
         },
         "ADMIN": {
-            "description":"Add Your User ID multiple is use space to split",
-            "value": "2009088107"
+            "description": "Add your User ID(s). If multiple, use space to split",
+            "value": "2009088107",
             "required": true
         },
         "LOG_CHANNEL": {
-            "description":"Bot Log Sending Channel (just create a private channel and add bot to admin and take channel id to add this variable) ⚠️ id startswith -100 must",
+            "description": "Bot Log Sending Channel (just create a private channel and add bot as admin and take channel ID to add this variable) ⚠️ ID must start with -100",
             "value": "-1001774339410",
             "required": false
         },
         "DB_URL": {
-            "description": "Your Mongo DB URL Obtained From mongodb.com",
+            "description": "Your MongoDB URL obtained from mongodb.com",
             "value": "mongodb+srv://botlover:botlover@cluster0.mt5ww.mongodb.net/test?retryWrites=true&w=majority"
         },
-        "DB_NAME":{ 
-            "description":"Your Mongo DB Database Name ",
+        "DB_NAME": {
+            "description": "Your MongoDB Database Name",
             "value": "pyro-botz",
             "required": false
         },
-        "Text":{
-            "description":"Text start",
-            "value": '''●     °    •      ○    ●   •  ●    ○   •  ●
-○       ●      °    ●    •     ○   ●   ○  •
-ㅤㅤㅤㅤㅤㅤ(*≧ω≦*)
-┏━━━━━━━  ✦  ✦ ━━━━━━━━┓
-┃𝙽𝙰𝙼𝙴   ○○○   {first_name}●●●
-┃𝙼𝙴𝙽𝚃𝙸𝙾𝙽   ○○○   {mention}●●●
-┃𝙸𝙳   ○○○   {id}●●●
-┗━━━━━━━━ ✦ ✦━━━━━━━━┛''',
+        "Text": {
+            "description": "Text start",
+            "value": "●     °    •      ○    ●   •  ●    ○   •  ●\n○       ●      °    ●    •     ○   ●   ○  •\nㅤㅤㅤㅤㅤㅤ(*≧ω≦*)\n┏━━━━━━━  ✦  ✦ ━━━━━━━━┓\n┃𝙽𝙰𝙼𝙴   ○○○   {first_name}●●●\n┃𝙼𝙴𝙽𝚃𝙸𝙾𝙽   ○○○   {mention}●●●\n┃𝙸𝙳   ○○○   {id}●●●\n┗━━━━━━━━ ✦ ✦━━━━━━━━┛",
             "required": true
         },
-        "Text1":{
-            "description":"Text for 1st page",
+        "Text1": {
+            "description": "Text for 1st page",
             "value": "welcome",
             "required": true
         },
-        "Text2":{
-            "description":"Text for 2nd page",
+        "Text2": {
+            "description": "Text for 2nd page",
             "value": "boom",
             "required": true
         },
-        "Text3":{
-            "description":"Text for 3rd page",
+        "Text3": {
+            "description": "Text for 3rd page",
             "value": "YUITOAKASH",
             "required": true
         }
