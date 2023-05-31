@@ -42,6 +42,7 @@
         "ADMIN": {
             "description":"Add Your User ID multiple is use space to split",
             "value": "2009088107"
+            "required": true
         },
         "LOG_CHANNEL": {
             "description":"Bot Log Sending Channel (just create a private channel and add bot to admin and take channel id to add this variable) ⚠️ id startswith -100 must",
@@ -59,7 +60,14 @@
         },
         "Text":{
             "description":"Text start",
-            "value": "Hii",
+            "value": '''●     °    •      ○    ●   •  ●    ○   •  ●
+○       ●      °    ●    •     ○   ●   ○  •
+ㅤㅤㅤㅤㅤㅤ(*≧ω≦*)
+┏━━━━━━━  ✦  ✦ ━━━━━━━━┓
+┃𝙽𝙰𝙼𝙴   ○○○   {first_name}●●●
+┃𝙼𝙴𝙽𝚃𝙸𝙾𝙽   ○○○   {mention}●●●
+┃𝙸𝙳   ○○○   {id}●●●
+┗━━━━━━━━ ✦ ✦━━━━━━━━┛''',
             "required": true
         },
         "Text1":{
