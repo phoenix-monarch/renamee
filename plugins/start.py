@@ -1,6 +1,6 @@
 import os, random, asyncio
 from pyrogram import Client, filters
-from pyrogram.types import InputMediaAnimation, InlineKeyboardMarkup, InlineKeyboardButton, InputMediaVedio
+from pyrogram.types import InputMediaAnimation, InlineKeyboardMarkup, InlineKeyboardButton, InputMediaVideo
 from helper.database import db
 from helper.token import none_admin_utils
 from time import time
