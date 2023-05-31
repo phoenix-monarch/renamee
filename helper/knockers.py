@@ -21,14 +21,19 @@ async def handle_callback(callback_query: CallbackQuery, page_number, user: User
     try:
         if isinstance(callback_query.message.media, (InputMediaVideo, InputMediaAnimation)):
             video_path = get_page_gif(page_number[0])
-            video = InputMediaVideo(media=video_path, caption=caption)
-            await callback_query.message.edit_media(media=video)
+            video_type = "video" if video_path.endswith(".mp4") else "animation"
+            video = None
+            if video_type == "video":
+                video = InputMediaVideo(media=media_path, caption=caption)
+            elif video_type == "animation":
+                video = InputMediaAnimation(media=media_path, caption=caption)
+            await callback_query.message.edit_media(media=media)
 
         if callback_query.message.caption != caption or callback_query.message.reply_markup != InlineKeyboardMarkup(inline_keyboard):
             await callback_query.message.edit_caption(
                 caption,
                 reply_markup=InlineKeyboardMarkup(inline_keyboard)
             )
-            
+
     except Exception as e:
         print(f"An error occurred in knocker: {e}")
