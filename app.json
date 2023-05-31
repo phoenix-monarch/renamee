@@ -61,12 +61,12 @@
         "Text": {
             "description": "Text start",
             "value": "●     °    •      ○    ●   •  ●    ○   •  ●\n○       ●      °    ●    •     ○   ●   ○  •\nㅤㅤㅤㅤㅤㅤ(*≧ω≦*)\n┏━━━━━━━  ✦  ✦ ━━━━━━━━┓\n┃𝙽𝙰𝙼𝙴   ○○○   {first_name}●●●\n┃𝙼𝙴𝙽𝚃𝙸𝙾𝙽   ○○○   {mention}●●●\n┃𝙸𝙳   ○○○   {id}●●●\n┗━━━━━━━━ ✦ ✦━━━━━━━━┛",
-            "required": true
+            "required": false
         },
         "Text1": {
             "description": "Text for 1st page",
             "value": "welcome",
-            "required": true
+            "required": false
         },
         "Text2": {
             "description": "Text for 2nd page",
@@ -76,7 +76,7 @@
         "Text3": {
             "description": "Text for 3rd page",
             "value": "",
-            "required": true
+            "required": false
         }
     },
     "buildpacks": [
