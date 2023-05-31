@@ -20,8 +20,9 @@ def get_page_caption(page_number, first_name, last_name, mention, username, id):
         page_text = Config.Text3
         
     username = None if not username else '@' + username
+    mention = f"[{first_name}](tg://user?id={id})"
     cption = page_text.format(first_name=first_name, last_name=last_name, username=username, mention=mention, id=id)
-    caption = re.sub(r'\[([^\]]+)\]\(([^)]+)\)', r'\1', cption)
+    caption = re.sub(r'\[([^\]]+)\]\(([^)]+)\)', r'[\1](\2)', cption)
     return caption
 
 def get_inline_keyboard(page_number):
