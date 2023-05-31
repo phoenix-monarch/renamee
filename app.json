@@ -65,7 +65,7 @@
         },
         "Text1": {
             "description": "Text for 1st page",
-            "value": "",
+            "value": "Hᴏᴡ Tᴏ Sᴇᴛ Tʜᴜᴍʙɪɴɪʟ\n\nSᴇɴᴅ Aɴy Pʜᴏᴛᴏ Tᴏ Aᴜᴛᴏᴍᴀᴛɪᴄᴀʟʟy Sᴇᴛ Tʜᴜᴍʙɴᴀɪʟᴇ.\n/del_thumb Uꜱᴇ Tʜɪꜱ Cᴏᴍᴍᴀɴᴅ Tᴏ Dᴇʟᴇᴛᴇ Yᴏᴜʀ Oʟᴅ Tʜᴜᴍʙɴᴀɪʟᴇ.\n/view_thumb Uꜱᴇ Tʜɪꜱ Cᴏᴍᴍᴀɴᴅ Tᴏ Vɪᴇᴡ Yᴏᴜʀ Cᴜʀʀᴇɴᴛ Tʜᴜᴍʙɴᴀɪʟᴇ.\n\n📑 Hᴏᴡ Tᴏ Sᴇᴛ Cᴜꜱᴛᴏᴍ Cᴀᴘᴛɪᴏɴ\n\n/set_caption - Uꜱᴇ Tʜɪꜱ Cᴏᴍᴍᴀɴᴅ Tᴏ Sᴇᴛ ᴀ Cᴜꜱᴛᴏᴍ Cᴀᴘᴛɪᴏɴ\n/see_caption - Uꜱᴇ Tʜɪꜱ Cᴏᴍᴍᴀɴᴅ Tᴏ Vɪᴇᴡ Yᴏᴜʀ Cᴜꜱᴛᴏᴍ Cᴀᴘᴛɪᴏɴ\n/del_caption - Uꜱᴇ Tʜɪꜱ Cᴏᴍᴍᴀɴᴅ Tᴏ Dᴇʟᴇᴛᴇ Yᴏᴜʀ Cᴜꜱᴛᴏᴍ Cᴀᴘᴛɪᴏɴ\nExᴀᴍᴘʟᴇ:- /set_caption 📕 Fɪʟᴇ Nᴀᴍᴇ: {filename}\n💾 Sɪᴢᴇ: {filesize}\n⏰ Dᴜʀᴀᴛɪᴏɴ: {duration}\n✏️ Hᴏᴡ Tᴏ Rᴇɴᴀᴍᴇ A Fɪʟᴇ\n Sᴇɴᴅ Aɴʏ Fɪʟᴇ Aɴᴅ Tyᴘᴇ Nᴇᴡ Fɪʟᴇ Nᴀᴍᴇ \nAɴᴅ Aᴇʟᴇᴄᴛ Tʜᴇ Fᴏʀᴍᴀᴛ [ document, video, audio ].\n\nℹ️ 𝗔𝗻𝘆 𝗢𝘁𝗵𝗲𝗿 𝗛𝗲𝗹𝗽:- [𝗖𝗼𝗻𝘁𝗮𝗰𝘁](https://t.me/devil_testing_bot) [Group](https://t.me/kirigaya_asuna) [Channel](https://t.me/kirigayaakash)",
             "required": false
         },
         "Text2": {
@@ -75,7 +75,7 @@
         }, 
         "Text3": {
             "description": "Text for 2nd page",
-            "value": "ㅤㅤㅤㅤㅤㅤ[ᴄʀᴇᴅɪᴛs](tg://settings)ㅤㅤㅤ\nㅤㅤㅤ  ●●●●●●●●●●●●●●●●ㅤㅤㅤ\nㅤㅤㅤ𝙲𝚛𝚎𝚊𝚝𝚘𝚛𝚜 𝙾𝚏 𝙿𝚢𝚛𝚘-𝙱𝚘𝚝𝚣.ㅤㅤㅤ\nㅤㅤㅤ𝙾𝚝𝚑𝚎𝚛 𝙲𝚛𝚎𝚊𝚝𝚘𝚛𝚜 𝙸𝚍𝚎𝚊𝚜...ㅤㅤㅤ\nㅤㅤㅤ𝙰𝚗𝚍 𝙼𝚢𝚜𝚎𝚕𝚏 𝙵𝚘𝚛...ㅤ\nㅤㅤ   𝙰𝚍𝚍𝚒𝚗𝚐 𝙸𝚗 𝚝𝚑𝚒𝚜 𝚁𝚎𝚙𝚘...ㅤㅤㅤ",
+            "value": "ㅤㅤㅤㅤㅤㅤ[ᴄʀᴇᴅɪᴛs](tg://user?id={id})ㅤㅤㅤ\nㅤㅤㅤ  ●●●●●●●●●●●●●●●●ㅤㅤㅤ\nㅤㅤㅤ𝙲𝚛𝚎𝚊𝚝𝚘𝚛𝚜 𝙾𝚏 𝙿𝚢𝚛𝚘-𝙱𝚘𝚝𝚣.ㅤㅤㅤ\nㅤㅤㅤ𝙾𝚝𝚑𝚎𝚛 𝙲𝚛𝚎𝚊𝚝𝚘𝚛𝚜 𝙸𝚍𝚎𝚊𝚜...ㅤㅤㅤ\nㅤㅤㅤ𝙰𝚗𝚍 𝙼𝚢𝚜𝚎𝚕𝚏 𝙵𝚘𝚛...ㅤ\nㅤㅤ   𝙰𝚍𝚍𝚒𝚗𝚐 𝙸𝚗 𝚝𝚑𝚒𝚜 𝚁𝚎𝚙𝚘...ㅤㅤㅤ",
             "required": true
         }
     },
