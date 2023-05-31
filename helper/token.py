@@ -24,7 +24,7 @@ async def validate_user(message, button=None):
             return None, button
         userid = message.from_user.id
         data = await db.get_user_data(userid)
-        if userid == Config.Admin:
+        if userid == Config.ADMIN:
             return None, button
         expire = data.get('time')
         is_expired = (expire is None or (time() - expire) > Config.TOKEN_TIMEOUT)    
