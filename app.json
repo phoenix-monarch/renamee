@@ -75,7 +75,7 @@
         },
         "Text3": {
             "description": "Text for 3rd page",
-            "value": "",
+            "value": "\\         / \n \\       /\n  \\     /\n   \\   /\n    \\ /\n     X\n    / \\\n   /   \\\n  /     \\\n /       \\\n/         \\",
             "required": false
         }
     },
