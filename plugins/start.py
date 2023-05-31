@@ -5,6 +5,7 @@ from helper.database import db
 from helper.token import none_admin_utils
 from time import time
 from uuid import uuid4
+from config import Config
 from helper.lameda import get_page_gif, get_page_caption, get_inline_keyboard
 from helper.knockers import handle_callback
 
