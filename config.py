@@ -24,20 +24,28 @@ class Config(object):
     LOG_CHANNEL = int(os.environ.get("LOG_CHANNEL", None))
     # wes response configuration
     WEBHOOK = bool(os.environ.get("WEBHOOK", True))
-    Text = os.environ.get("Text", "")
+    Text = os.environ.get("Text", """●     °    •      ○    ●   •  ●    ○   •  ●
+
+○       ●      °    ●    •     ○   ●   ○  •
+ㅤㅤㅤㅤㅤㅤ(*≧ω≦*)
+┏━━━━━━━  ✦  ✦ ━━━━━━━━┓
+┃🔈𝙽𝙰𝙼𝙴   ○○○   {first_name}●●●
+┃👥 𝙼𝙴𝙽𝚃𝙸𝙾𝙽   ○○○   {mention}●●●
+┃🆔 𝙸𝙳   ○○○   {id}●●●
+┗━━━━━━━━ ✦ ✦━━━━━━━━┛""")
     Text1 = os.environ.get("Text1", "")
     Text2 = os.environ.get("Text2", "")
-    Text3 = os.environ.get("Text3", '''\         / 
- \       /
-  \     /
-   \   /
-    \ /
+    Text3 = os.environ.get("Text3", '''\\         / 
+ \\       /
+  \\     /
+   \\   /
+    \\ /
      X
     / \\
    /   \\
   /     \\
  /       \\
-/         \'''
+/         \\'''
 )
 
     LOGGER = LOG
