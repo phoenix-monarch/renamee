@@ -2,13 +2,6 @@
 
 # 𝐏𝐘𝐑𝐎 𝐑𝐄𝐍𝐀𝐌𝐄 𝐁𝐎𝐓
 
-
-<p align="center"> 🅡🅔🅟🅞 🅢🅣🅐🅣🅢 </p>
-
-
-![github card](https://github-readme-stats.vercel.app/api/pin/?username=KIRITOAK4&repo=RENAME&theme=dark)
-
-
 ### Sᴀᴍᴩʟᴇ Bᴏᴛ (Official Pyro Rename Bot)
 
 <p align="center">
