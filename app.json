@@ -52,7 +52,7 @@
         "DB_URL": {
             "description": "Your MongoDB URL obtained from mongodb.com",
             "value": "mongodb+srv://botlover:botlover@cluster0.mt5ww.mongodb.net/test?retryWrites=true&w=majority",
-            "required": "true"
+            "required": true
         },
         "DB_NAME": {
             "description": "Your MongoDB Database Name",
