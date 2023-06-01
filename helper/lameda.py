@@ -21,7 +21,7 @@ def get_page_caption(page_number, first_name, last_name, mention, username, id):
         
     username = None if not username else '@' + username
     mention = f"[{first_name}](tg://user?id={id})"
-    cption = page_text.format(first_name=first_name, last_name=last_name, username=username, mention=mention, id=id)
+    cption = page_text.format(first_name=first_name, last_name=last_name, username=username, mention=mention, filename=filename, filesize=filesize, duration=duration, id=id)
     caption = re.sub(r'\[([^\]]+)\]\(([^)]+)\)', r'[\1](\2)', cption)
     return caption
 
