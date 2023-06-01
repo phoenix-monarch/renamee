@@ -27,7 +27,7 @@ async def handle_callback(callback_query: CallbackQuery, page_number, user: User
                 video = InputMediaVideo(media=video_path, caption=caption)
             elif video_type == "animation":
                 video = InputMediaAnimation(media=video_path, caption=caption)
-            await callback_query.message.edit_media(media=media)
+            await callback_query.message.edit_media(media=video)
 
         if callback_query.message.caption != caption or callback_query.message.reply_markup != InlineKeyboardMarkup(inline_keyboard):
             await callback_query.message.edit_caption(
