@@ -19,7 +19,7 @@ def get_page_caption(page_number, first_name, last_name, mention, username, id):
     elif page_number == 3:
         page_text = Config.Text3
         
-    username = None if not username else '@' + username
+    username = f"[@{username}](tg://user?username={username})" if username else None
     mention = f"[{first_name}](tg://user?id={id})"
     cption = page_text.format(first_name=first_name, last_name=last_name, username=username, mention=mention, id=id)
     caption = re.sub(r'\[([^\]]+)\]\(([^)]+)\)', r'[\1](\2)', cption)
