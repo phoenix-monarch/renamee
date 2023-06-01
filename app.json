@@ -66,7 +66,7 @@
         },
         "Text1": {
             "description": "Text for 1st page",
-            "value": "Hᴏᴡ Tᴏ Sᴇᴛ Tʜᴜᴍʙɪɴɪʟ\n\nSᴇɴᴅ Aɴy Pʜᴏᴛᴏ Tᴏ Aᴜᴛᴏᴍᴀᴛɪᴄᴀʟʟʏ Sᴇᴛ Tʜᴜᴍʙɴᴀɪʟᴇ.\n/del_thumb Uꜱᴇ Tʜɪꜱ Cᴏᴍᴍᴀɴᴅ Tᴏ Dᴇʟᴇᴛᴇ Yᴏᴜʀ Oʟᴅ Tʜᴜᴍʙɴᴀɪʟᴇ.\n/view_thumb Uꜱᴇ Tʜɪꜱ Cᴏᴍᴍᴀɴᴅ Tᴏ Vɪᴇᴡ Yᴏᴜʀ Cᴜʀʀᴇɴᴛ Tʜᴜᴍʙɴᴀɪʟᴇ.\n\n📑 Hᴏᴡ Tᴏ Sᴇᴛ Cᴜꜱᴛᴏᴍ Cᴀᴘᴛɪᴏɴ\n\n/set_caption - Uꜱᴇ Tʜɪꜱ Cᴏᴍᴍᴀɴᴅ Tᴏ Sᴇᴛ ᴀ Cᴜꜱᴛᴏᴍ Cᴀᴘᴛɪᴏɴ\n/see_caption - Uꜱᴇ Tʜɪꜱ Cᴏᴍᴍᴀɴᴅ Tᴏ Vɪᴇᴡ Yᴏᴜʀ Cᴜꜱᴛᴏᴍ Cᴀᴘᴛɪᴏɴ\n/del_caption - Uꜱᴇ Tʜɪꜱ Cᴏᴍᴍᴀɴᴅ Tᴏ Dᴇʟᴇᴛᴇ Yᴏᴜʀ Cᴜꜱᴛᴏᴍ Cᴀᴘᴛɪᴏɴ\nExᴀᴍᴘʟᴇ:- /set_caption 📕 Fɪʟᴇ Nᴀᴍᴇ: {filename}\n💾 Sɪᴢᴇ: {filesize}\n⏰ Dᴜʀᴀᴛɪᴏɴ: {duration}\n✏️ Hᴏᴡ Tᴏ Rᴇɴᴀᴍᴇ A Fɪʟᴇ\n Sᴇɴᴅ Aɴʏ Fɪʟᴇ Aɴᴅ Tyᴘᴇ Nᴇᴡ Fɪʟᴇ Nᴀᴍᴇ \nAɴᴅ Aᴇʟᴇᴄᴛ Tʜᴇ Fᴏʀᴍᴀᴛ [ document, video, audio ].\n\nℹ️ 𝗔𝗻𝘆 𝗢𝘁𝗵𝗲𝗿 𝗛𝗲𝗹𝗽:- [𝗖𝗼𝗻𝘁𝗮𝗰𝘁](https://t.me/devil_testing_bot) [Group](https://t.me/kirigaya_asuna) [Channel](https://t.me/kirigayaakash)",
+            "value": "",
             "required": false
         },
         "Text2": {
