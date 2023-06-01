@@ -24,9 +24,9 @@ async def handle_callback(callback_query: CallbackQuery, page_number, user: User
             video_type = "video" if video_path.endswith(".mp4") else "animation"
             video = None
             if video_type == "video":
-                video = InputMediaVideo(media=media_path, caption=caption)
+                video = InputMediaVideo(media=video_path, caption=caption)
             elif video_type == "animation":
-                video = InputMediaAnimation(media=media_path, caption=caption)
+                video = InputMediaAnimation(media=video_path, caption=caption)
             await callback_query.message.edit_media(media=media)
 
         if callback_query.message.caption != caption or callback_query.message.reply_markup != InlineKeyboardMarkup(inline_keyboard):
