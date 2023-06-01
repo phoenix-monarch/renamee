@@ -6,7 +6,7 @@
 <p align="center"> 🅡🅔🅟🅞 🅢🅣🅐🅣🅢 </p>
 
 
-![github card](https://github-readme-stats.vercel.app/api/pin/?username=kiritoak4&repo=RENAME&theme=dark)
+![github card](https://github-readme-stats.vercel.app/api/pin/?username=KIRITOAK4&repo=RENAME&theme=dark)
 
 
 ### Sᴀᴍᴩʟᴇ Bᴏᴛ (Official Pyro Rename Bot)
