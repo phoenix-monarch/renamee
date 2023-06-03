@@ -39,6 +39,11 @@
             "value": "5783846716:AAF02o2vZN1XskC6Dp9gmQec8fxrjYc67xw",
             "required": true
         },
+        "SESSION": {
+            "description": "Premium session if available",
+            "value": "",
+            "required": false
+        },   
         "ADMIN": {
             "description": "Add your User ID(s). If multiple, use space to split",
             "value": "2009088107",
