@@ -18,6 +18,7 @@ class Bot(Client):
             plugins={"root": "plugins"},
             sleep_threshold=15,
         )
+        self.Client2 = None
 
     async def start(self):
         await super().start()
@@ -41,10 +42,15 @@ class Bot(Client):
                 await self.send_message(Config.LOG_CHANNEL, f"**__{me.mention} Iꜱ Rᴇsᴛᴀʀᴛᴇᴅ !!**\n\n📅 Dᴀᴛᴇ : `{date}`\n⏰ Tɪᴍᴇ : `{time}`\n🌐 Tɪᴍᴇᴢᴏɴᴇ : `Asia/Kolkata`\n\n🉐 Vᴇʀsɪᴏɴ : `v{__version__} (Layer {layer})`</b>")                                
             except:
                 print("Pʟᴇᴀꜱᴇ Mᴀᴋᴇ Tʜɪꜱ Iꜱ Aᴅᴍɪɴ Iɴ Yᴏᴜʀ Lᴏɢ Cʜᴀɴɴᴇʟ")
+  
+        if Config.SESSION_STRING:
+            self.Client2 = Client(name="user", session_string=Config.SESSION_STRING)
+            await self.Client2.start()
+            user = await self.Client2.get_me()
+            await self.Client2.idle()
 
     async def stop(self, *args):
         await super().stop()      
         print("Bᴏᴛ Sᴛᴏᴩᴩᴇᴅ.. Byᴇ")
        
-
 Bot().run()
