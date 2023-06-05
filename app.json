@@ -39,7 +39,7 @@
             "value": "5783846716:AAF02o2vZN1XskC6Dp9gmQec8fxrjYc67xw",
             "required": true
         },
-        "SESSION": {
+        "SESSION_STRING": {
             "description": "Premium session if available",
             "value": "",
             "required": false
