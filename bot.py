@@ -18,8 +18,7 @@ class Bot(Client):
             plugins={"root": "plugins"},
             sleep_threshold=15,
         )
-        self.Client2 = None
-
+        
     async def start(self):
         await super().start()
         me = await self.get_me()
@@ -43,12 +42,6 @@ class Bot(Client):
             except:
                 print("Pʟᴇᴀꜱᴇ Mᴀᴋᴇ Tʜɪꜱ Iꜱ Aᴅᴍɪɴ Iɴ Yᴏᴜʀ Lᴏɢ Cʜᴀɴɴᴇʟ")
   
-        if Config.SESSION_STRING:
-            self.Client2 = Client(name="user", session_string=Config.SESSION_STRING)
-            await self.Client2.start()
-            user = await self.Client2.get_me()
-            await self.Client2.idle()
-
     async def stop(self, *args):
         await super().stop()      
         print("Bᴏᴛ Sᴛᴏᴩᴩᴇᴅ.. Byᴇ")
