@@ -8,14 +8,14 @@ from helper.token import none_admin_utils
 @Client.on_message(filters.private & filters.command('ping'))
 async def ping(client, message):
     try:
-        none_admin_msg, error_button = await none_admin_utils(message)
+        none_admin_msg, error_buttons = await none_admin_utils(message)
         error_msg = []
         if none_admin_msg:
             error_msg.extend(none_admin_msg)
             await client.send_message(
                 chat_id=message.chat.id,
                 text='\n'.join(error_msg),
-                reply_markup=InlineKeyboardMarkup([[error_button]])
+                reply_markup=InlineKeyboardMarkup([[error_buttons]])
             )
             return
 
@@ -32,14 +32,14 @@ async def ping(client, message):
 @Client.on_message(filters.private & filters.command('set_caption'))
 async def add_caption(client, message):
     try:
-        none_admin_msg, error_button = await none_admin_utils(message)
+        none_admin_msg, error_buttons = await none_admin_utils(message)
         error_msg = []
         if none_admin_msg:
             error_msg.extend(none_admin_msg)
             await client.send_message(
                 chat_id=message.chat.id,
                 text='\n'.join(error_msg),
-                reply_markup=InlineKeyboardMarkup([[error_button]])
+                reply_markup=InlineKeyboardMarkup([[error_buttons]])
             )
             return
         if len(message.command) == 1:
@@ -53,14 +53,14 @@ async def add_caption(client, message):
 @Client.on_message(filters.private & filters.command('del_caption'))
 async def delete_caption(client, message):
     try:
-        none_admin_msg, error_button = await none_admin_utils(message)
+        none_admin_msg, error_buttons = await none_admin_utils(message)
         error_msg = []
         if none_admin_msg:
             error_msg.extend(none_admin_msg)
             await client.send_message(
                 chat_id=message.chat.id,
                 text='\n'.join(error_msg),
-                reply_markup=InlineKeyboardMarkup([[error_button]])
+                reply_markup=InlineKeyboardMarkup([[error_buttons]])
             )
             return
         caption = await db.get_caption(message.from_user.id)
@@ -74,14 +74,14 @@ async def delete_caption(client, message):
 @Client.on_message(filters.private & filters.command(['see_caption', 'view_caption']))
 async def see_caption(client, message):
     try:
-        none_admin_msg, error_button = await none_admin_utils(message)
+        none_admin_msg, error_buttons = await none_admin_utils(message)
         error_msg = []
         if none_admin_msg:
             error_msg.extend(none_admin_msg)
             await client.send_message(
                 chat_id=message.chat.id,
                 text='\n'.join(error_msg),
-                reply_markup=InlineKeyboardMarkup([[error_button]])
+                reply_markup=InlineKeyboardMarkup([[error_buttons]])
             )
             return	
         caption = await db.get_caption(message.from_user.id)
@@ -95,14 +95,14 @@ async def see_caption(client, message):
 @Client.on_message(filters.private & filters.command(['view_thumb', 'viewthumb']))
 async def viewthumb(client, message):
     try:
-        none_admin_msg, error_button = await none_admin_utils(message)
+        none_admin_msg, error_buttons = await none_admin_utils(message)
         error_msg = []
         if none_admin_msg:
             error_msg.extend(none_admin_msg)
             await client.send_message(
                 chat_id=message.chat.id,
                 text='\n'.join(error_msg),
-                reply_markup=InlineKeyboardMarkup([[error_button]])
+                reply_markup=InlineKeyboardMarkup([[error_buttons]])
             )
             return
         thumb = await db.get_thumbnail(message.from_user.id)
@@ -116,13 +116,13 @@ async def viewthumb(client, message):
 @Client.on_message(filters.private & filters.command(['del_thumb', 'delthumb']))
 async def removethumb(client, message):
     try:
-        none_admin_msg, error_button = await none_admin_utils(message)
+        none_admin_msg, error_buttons = await none_admin_utils(message)
         error_msg = []
         if none_admin_msg:
             error_msg.extend(none_admin_msg)
             await message.reply_text(
                 text='\n'.join(error_msg),
-                reply_markup=InlineKeyboardMarkup([[error_button]])
+                reply_markup=InlineKeyboardMarkup([[error_buttons]])
             )
             return
         await db.set_thumbnail(message.from_user.id, file_id=None)
@@ -133,14 +133,14 @@ async def removethumb(client, message):
 @Client.on_message(filters.private & filters.photo)
 async def addthumbs(client, message):
     try:
-        none_admin_msg, error_button = await none_admin_utils(message)
+        none_admin_msg, error_buttons = await none_admin_utils(message)
         error_msg = []
         if none_admin_msg:
             error_msg.extend(none_admin_msg)
             await client.send_message(
                 chat_id=message.chat.id,
                 text='\n'.join(error_msg),
-                reply_markup=InlineKeyboardMarkup([[error_button]])
+                reply_markup=InlineKeyboardMarkup([[error_buttons]])
             )
             return
         mkn = await message.reply_text("Please Wait ...")
