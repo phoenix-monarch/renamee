@@ -8,12 +8,12 @@ from shortener import shorten_url
 async def none_admin_utils(message):
     try:
         error_msg = []
-        error_button = None
-        token_msg, button = await validate_user(message)
+        error_buttons = None
+        token_msg, buttons = await validate_user(message)
         if token_msg is not None:
             error_msg.append(token_msg)
-            error_button = button
-        return error_msg, error_button
+            error_buttons = buttons
+        return error_msg, error_buttons
     
     except Exception as e:
         print(f"An error occurred in none_admin_utils: {e}")
@@ -36,7 +36,7 @@ async def validate_user(message, button=None):
             await db.update_user_data(userid, data)        
             if button is None:
                 button = InlineKeyboardButton(text='Refresh Token', url=shorten_url(f'https://t.me/{Config.BOT_NAME}?start={token}'))
-                
+                button = InlineKeyboardButton(text='Tutorial', url='https://t.me/hentai_multiverse/12982')
             error_msg = 'Token is expired, refresh your token and try again.'
             return error_msg, button
         
