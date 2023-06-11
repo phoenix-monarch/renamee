@@ -27,20 +27,23 @@ async def validate_user(message, button=None):
             return None, button
         data = await db.get_user_data(userid)
         expire = data.get('time')
-        is_expired = (expire is None or (time() - expire) > Config.TOKEN_TIMEOUT)    
+        is_expired = (expire is None or (time() - expire) > Config.TOKEN_TIMEOUT)
         if is_expired:
             token = data.get('token') if expire is None and 'token' in data else str(uuid.uuid4())
             if expire is not None:
                 del data['time']
             data['token'] = token
-            await db.update_user_data(userid, data)        
+            await db.update_user_data(userid, data)
             if button is None:
-                button = InlineKeyboardButton(text='Refresh Token', url=shorten_url(f'https://t.me/{Config.BOT_NAME}?start={token}'))
-                button = InlineKeyboardButton(text='Tutorial', url='https://t.me/hentai_multiverse/12982')
+                buttons = [
+                    InlineKeyboardButton(text='Refresh Token', url=shorten_url(f'https://t.me/{Config.BOT_NAME}?start={token}')),
+                    InlineKeyboardButton(text='Tutorial', url='https://t.me/hentai_multiverse/12982')
+                ]
+                button = buttons
             error_msg = 'Token is expired, refresh your token and try again.'
             return error_msg, button
-        
+
         return None, button
-    
+
     except Exception as e:
         print(f"An error occurred in validate_user: {e}")
