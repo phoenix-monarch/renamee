@@ -21,22 +21,22 @@
         },
         "BOT_NAME": {
             "description": "Your Bot username without [@]",
-            "value": "ya_muxbot",
+            "value": "ya_renamebot",
             "required": true
         },
         "TOKEN_TIMEOUT": {
             "description": "Token for recheck",
-            "value": "600",
+            "value": "86400",
             "required": true
         },
         "FORCE_SUB": {
             "description": "Your force sub channel username without [@]",
-            "value": "YUITOAKASH",
+            "value": "kirigayaakash",
             "required": false
         },
         "BOT_TOKEN": {
             "description": "Your Bot Token From @BotFather",
-            "value": "5783846716:AAF02o2vZN1XskC6Dp9gmQec8fxrjYc67xw",
+            "value": "",
             "required": true
         },
         "SESSION_STRING": {
@@ -51,12 +51,12 @@
         },
         "LOG_CHANNEL": {
             "description": "Bot Log Sending Channel (just create a private channel and add bot as admin and take channel ID to add this variable) ⚠️ ID must start with -100",
-            "value": "-1001774339410",
+            "value": "",
             "required": false
         },
         "DB_URL": {
             "description": "Your MongoDB URL obtained from mongodb.com",
-            "value": "mongodb+srv://botlover:botlover@cluster0.mt5ww.mongodb.net/test?retryWrites=true&w=majority",
+            "value": "",
             "required": true
         },
         "DB_NAME": {
