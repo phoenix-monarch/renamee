@@ -18,14 +18,14 @@ import os, time
 @Client.on_message(filters.private & (filters.document | filters.audio | filters.video))
 async def rename_start(client, message):
     try:
-        none_admin_msg, error_button = await none_admin_utils(message)
+        none_admin_msg, error_buttons = await none_admin_utils(message)
         error_msg = []
         if none_admin_msg:
             error_msg.extend(none_admin_msg)
             await client.send_message(
                 chat_id=message.chat.id,
                 text='\n'.join(error_msg),
-                reply_markup=InlineKeyboardMarkup([[error_button]])
+                reply_markup=InlineKeyboardMarkup([[error_buttons]])
             )
             return
 
