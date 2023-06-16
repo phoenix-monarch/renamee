@@ -1,4 +1,5 @@
 import asyncio
+import traceback
 from time import time
 from pyrogram import Client, filters
 from pyrogram.types import InlineKeyboardMarkup
@@ -49,6 +50,7 @@ async def add_caption(client, message):
         await message.reply_text("__**✅ Cᴀᴩᴛɪᴏɴ Sᴀᴠᴇᴅ**__")
     except Exception as e:
         print(f"An error occurred while executing set_caption: {e}")
+        traceback.print_exc()
 
 @Client.on_message(filters.private & filters.command('del_caption'))
 async def delete_caption(client, message):
@@ -70,6 +72,7 @@ async def delete_caption(client, message):
         await message.reply_text("__**❌️ Cᴀᴩᴛɪᴏɴ Dᴇʟᴇᴛᴇᴅ**__")
     except Exception as e:
         print(f"An error occurred while executing del_caption: {e}")
+        traceback.print_exc()
 
 @Client.on_message(filters.private & filters.command(['see_caption', 'view_caption']))
 async def see_caption(client, message):
@@ -91,6 +94,7 @@ async def see_caption(client, message):
             await message.reply_text("__**😔 Yᴏᴜ Dᴏɴ'ᴛ Hᴀᴠᴇ Aɴy Cᴀᴩᴛɪᴏɴ**__")
     except Exception as e:
         print(f"An error occurred while executing see_caption: {e}")
+        traceback.print_exc()
 
 @Client.on_message(filters.private & filters.command(['view_thumb', 'viewthumb']))
 async def viewthumb(client, message):
@@ -112,6 +116,7 @@ async def viewthumb(client, message):
             await message.reply_text("😔 __**Yᴏᴜ Dᴏɴ'ᴛ Hᴀᴠᴇ Aɴy Tʜᴜᴍʙɴᴀɪʟ**__")
     except Exception as e:
         print(f"An error occurred while executing viewthumb: {e}")
+        traceback.print_exc()
 
 @Client.on_message(filters.private & filters.command(['del_thumb', 'delthumb']))
 async def removethumb(client, message):
@@ -128,7 +133,8 @@ async def removethumb(client, message):
         await db.set_thumbnail(message.from_user.id, file_id=None)
         await message.reply_text("❌️ Tʜᴜᴍʙɴᴀɪʟ Dᴇʟᴇᴛᴇᴅ")
     except Exception as e:
-        print(f"An error occurred while executing removethumb: {e}")        
+        print(f"An error occurred while executing removethumb: {e}")
+        traceback.print_exc()
 
 @Client.on_message(filters.private & filters.photo)
 async def addthumbs(client, message):
@@ -148,3 +154,4 @@ async def addthumbs(client, message):
         await mkn.edit("✅️ __**Tʜᴜᴍʙɴᴀɪʟ Sᴀᴠᴇᴅ**__")
     except Exception as e:
         print(f"An error occurred while executing addthumbs: {e}")
+        traceback.print_exc()
