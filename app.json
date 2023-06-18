@@ -31,7 +31,7 @@
         },
         "FORCE_SUB": {
             "description": "Your force sub channel username without [@]",
-            "value": "kirigayaakash",
+            "value": "-1001432409719",
             "required": false
         },
         "BOT_TOKEN": {
