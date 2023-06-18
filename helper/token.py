@@ -37,7 +37,7 @@ async def validate_user(message, button=None):
             if button is None:
                 buttons = [
                     InlineKeyboardButton(text='Refresh Token', url=shorten_url(f'https://t.me/{Config.BOT_NAME}?start={token}')),
-                    InlineKeyboardButton(text='Tutorial', url='https://t.me/hentai_multiverse/12982')
+                    InlineKeyboardButton(text='Tutorial', url='https://t.me/c/1432409719/3')
                 ]
                 button = buttons
             error_msg = 'Token is expired, refresh your token and try again.'
