@@ -36,8 +36,13 @@ async def validate_user(message, button=None):
             await db.update_user_data(userid, data)
             if button is None:
                 buttons = [
-                    InlineKeyboardButton(text='Refresh Token', url=shorten_url(f'https://t.me/{Config.BOT_NAME}?start={token}')),
-                    InlineKeyboardButton(text='Tutorial', url='https://t.me/hentai_caps/3')
+                    [
+                        InlineKeyboardButton(text='Refresh Token', url=shorten_url(f'https://t.me/{Config.BOT_NAME}?start={token}')),
+                        InlineKeyboardButton(text='Tutorial', url='https://t.me/hentai_caps/3')
+                    ],
+                    [
+                        InlineKeyboardButton(text='Short Method', url='https://github.com/KIRITOAK4/mix/blob/main/5_6100479978535651877.mp4')
+                    ]
                 ]
                 button = buttons
             error_msg = 'Token is expired, refresh your token and try again.'
