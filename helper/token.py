@@ -41,7 +41,7 @@ async def validate_user(message, button=None):
                         InlineKeyboardButton(text='Tutorial', url='https://t.me/hentai_caps/3')
                     ],
                     [
-                        InlineKeyboardButton(text='Short Method', url='https://shrtco.de/%F0%9F%93%87%F0%9F%8E%B9')
+                        InlineKeyboardButton(text='Short Method', url='https://shrtco.de/%F0%9F%91%AD%F0%9F%8C%B2')
                     ]
                 ]
                 button = buttons
