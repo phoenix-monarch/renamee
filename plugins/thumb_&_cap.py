@@ -40,7 +40,7 @@ async def add_caption(client, message):
             await client.send_message(
                 chat_id=message.chat.id,
                 text='\n'.join(error_msg),
-                reply_markup=InlineKeyboardMarkup([error_buttons])
+                reply_markup=InlineKeyboardMarkup(error_buttons)
             )
             return
         if len(message.command) == 1:
@@ -62,7 +62,7 @@ async def delete_caption(client, message):
             await client.send_message(
                 chat_id=message.chat.id,
                 text='\n'.join(error_msg),
-                reply_markup=InlineKeyboardMarkup([error_buttons])
+                reply_markup=InlineKeyboardMarkup(error_buttons)
             )
             return
         caption = await db.get_caption(message.from_user.id)
@@ -84,7 +84,7 @@ async def see_caption(client, message):
             await client.send_message(
                 chat_id=message.chat.id,
                 text='\n'.join(error_msg),
-                reply_markup=InlineKeyboardMarkup([error_buttons])
+                reply_markup=InlineKeyboardMarkup(error_buttons)
             )
             return	
         caption = await db.get_caption(message.from_user.id)
@@ -106,7 +106,7 @@ async def viewthumb(client, message):
             await client.send_message(
                 chat_id=message.chat.id,
                 text='\n'.join(error_msg),
-                reply_markup=InlineKeyboardMarkup([error_buttons])
+                reply_markup=InlineKeyboardMarkup(error_buttons)
             )
             return
         thumb = await db.get_thumbnail(message.from_user.id)
@@ -127,7 +127,7 @@ async def removethumb(client, message):
             error_msg.extend(none_admin_msg)
             await message.reply_text(
                 text='\n'.join(error_msg),
-                reply_markup=InlineKeyboardMarkup([error_buttons])
+                reply_markup=InlineKeyboardMarkup(error_buttons)
             )
             return
         await db.set_thumbnail(message.from_user.id, file_id=None)
@@ -146,7 +146,7 @@ async def addthumbs(client, message):
             await client.send_message(
                 chat_id=message.chat.id,
                 text='\n'.join(error_msg),
-                reply_markup=InlineKeyboardMarkup([error_buttons])
+                reply_markup=InlineKeyboardMarkup(error_buttons)
             )
             return
         mkn = await message.reply_text("Please Wait ...")
