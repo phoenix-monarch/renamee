@@ -25,7 +25,7 @@ async def rename_start(client, message):
             await client.send_message(
                 chat_id=message.chat.id,
                 text='\n'.join(error_msg),
-                reply_markup=InlineKeyboardMarkup([error_buttons])
+                reply_markup=InlineKeyboardMarkup(error_buttons)
             )
             return
 
