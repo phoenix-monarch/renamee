@@ -29,6 +29,11 @@
             "value": "86400",
             "required": true
         },
+        "SESSION_STRING": {
+            "description": " Pyro string optional for 4gb support",
+            "value": "None"
+            "required": false
+        },
         "FORCE_SUB": {
             "description": "Your force sub channel username without [@]",
             "value": "",
