@@ -31,7 +31,7 @@
         },
         "SESSION_STRING": {
             "description": " Pyro string optional for 4gb support",
-            "value": "None"
+            "value": "None",
             "required": false
         },
         "FORCE_SUB": {
