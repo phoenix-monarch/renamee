@@ -21,6 +21,7 @@ def create_ubot(session_string):
         workers=200,
         plugins={"root": "plugins"},
         sleep_threshold=15,
+        name="renamebot",
     )
     return ubot
 
