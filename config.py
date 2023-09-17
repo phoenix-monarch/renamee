@@ -19,6 +19,7 @@ class Config(object):
     DB_URL = os.environ.get("DB_URL","mongodb+srv://RENAME:RENAME@cluster0.hqab4rw.mongodb.net/?retryWrites=true&w=majority")
     # other configs
     BOT_UPTIME = time.time()
+    S_TRING = os.environ.get("S_TRING","pyro session")
     ADMIN = [int(admin) if id_pattern.search(admin) else admin for admin in os.environ.get('ADMIN', '2009088107').split()]
     FORCE_SUB = os.environ.get("FORCE_SUB", "kirigayaakash")
     LOG_CHANNEL = int(os.environ.get("LOG_CHANNEL", -1001682783965))
