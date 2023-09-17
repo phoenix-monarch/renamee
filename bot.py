@@ -8,8 +8,7 @@ from route import web_server
 
 # Define the function to create the 4GB RAM-supporting bot
 def create_ubot(session_string):
-    if session_string is None or not isinstance(session_string, str) or session_string.strip() == "":
-        # Handle the case when session_string is None or empty
+    if session_string is None or not isinstance(session_string, str) or session_string.strip() != "":
         print("Invalid or missing session string. Creating bot without session string.")
         return None
 
@@ -60,7 +59,6 @@ class Bot(Client):
             except:
                 print("Pʟᴇᴀꜱᴇ Mᴀᴋᴇ Tʜɪꜱ Iꜱ Aᴅᴍɪɴ Iɴ Yᴏᴜʀ Lᴏɢ Cʜᴀɴɴᴇʟ")
 
-# Your existing code
 if __name__ == "__main__":
     bot = create_ubot(Config.SESSION_STRING)
     if bot:
