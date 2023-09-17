@@ -6,8 +6,20 @@ from config import Config
 from aiohttp import web
 from route import web_server
 
-class Bot(Client):
+# Define the function to create the 4GB RAM-supporting bot
+def create_ubot(session_string):
+    ubot = Client(
+        session_string,
+        api_id=Config.API_ID,
+        api_hash=Config.API_HASH,
+        bot_token=Config.BOT_TOKEN,
+        workers=200,
+        plugins={"root": "plugins"},
+        sleep_threshold=15,
+    )
+    return ubot
 
+class Bot(Client):
     def __init__(self):
         super().__init__(
             name="renamer",
@@ -42,7 +54,11 @@ class Bot(Client):
             except:
                 print("Pʟᴇᴀꜱᴇ Mᴀᴋᴇ Tʜɪꜱ Iꜱ Aᴅᴍɪɴ Iɴ Yᴏᴜʀ Lᴏɢ Cʜᴀɴɴᴇʟ")
 
-    async def stop(self, *args):
-        await super().stop()      
-        print("Bᴏᴛ Sᴛᴏᴩᴩᴇᴅ.. Byᴇ")
-Bot().run()
+# Your existing code
+if __name__ == "__main__":
+    if Config.S_TRING:
+        bot = create_ubot(Config.S_TRING)
+        bot.run()
+    else:
+        bot = Bot()
+        bot.run()
