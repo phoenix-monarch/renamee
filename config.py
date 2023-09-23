@@ -14,12 +14,12 @@ class Config(object):
     BOT_TOKEN = os.environ.get("BOT_TOKEN", "5850980830:AAEu7JOBtdQyRTtnd4PwhheBdkpz7e3yGDI")
     BOT_NAME = os.environ.get("BOT_NAME", "ya_renamebot")
     TOKEN_TIMEOUT = int(os.environ.get("TOKEN_TIMEOUT", 86400))
+    SESSION_STRING = os.environ.get("SESSION_STRING","None") # either give session string or let it be None value 
     # database config
     DB_NAME = os.environ.get("DB_NAME","pyro-botz")
     DB_URL = os.environ.get("DB_URL","mongodb+srv://RENAME:RENAME@cluster0.hqab4rw.mongodb.net/?retryWrites=true&w=majority")
     # other configs
     BOT_UPTIME = time.time()
-    SESSION_STRING = os.environ.get("SESSION_STRING","None")
     ADMIN = [int(admin) if id_pattern.search(admin) else admin for admin in os.environ.get('ADMIN', '2009088107').split()]
     FORCE_SUB = os.environ.get("FORCE_SUB", "kirigayaakash")
     LOG_CHANNEL = int(os.environ.get("LOG_CHANNEL", -1001682783965))
