@@ -6,24 +6,30 @@ from config import Config
 from aiohttp import web
 from route import web_server
 
+import sys 
+
+ubot = None
 # Define the function to create the 4GB RAM-supporting bot
 def create_ubot(session_string):
-    if session_string is None or not isinstance(session_string, str) or session_string.strip() != "":
-        print("Invalid or missing session string. Creating bot without session string.")
+    if session_string == "None":
+        print(session_string)
+        print("Invalid session string.")
         return None
-
-    ubot = Client(
-        session_string=session_string,
+    try:
+        global ubot
+        ubot = Client(
+        name="renamer",
         api_id=Config.API_ID,
-        api_hash=Config.API_HASH,
-        bot_token=Config.BOT_TOKEN,
-        workers=200,
-        plugins={"root": "plugins"},
-        sleep_threshold=15,
-        name="renamebot",
-    )
-    return ubot
-
+        session_string=session_string,
+        api_hash=Config.API_HASH,            
+        plugins={"root": "plugins"}
+        )
+        print("❤️ UBot Connected")
+        return ubot
+    except Exception as e:
+        print('😞 Error While Connecting To Bot')  
+        print(e)
+        sys.exit()    
 class Bot(Client):
     def __init__(self):
         super().__init__(
@@ -60,9 +66,12 @@ class Bot(Client):
                 print("Pʟᴇᴀꜱᴇ Mᴀᴋᴇ Tʜɪꜱ Iꜱ Aᴅᴍɪɴ Iɴ Yᴏᴜʀ Lᴏɢ Cʜᴀɴɴᴇʟ")
 
 if __name__ == "__main__":
-    bot = create_ubot(Config.SESSION_STRING)
-    if bot:
-        bot.run()
+    # ubot = None
+    # global ubot
+    ubot = create_ubot(Config.SESSION_STRING)
+    print(ubot)
+    if ubot:
+        ubot.run()
     else:
         print("Bot creation failed. Creating bot using the Bot class.")
         bot = Bot()
